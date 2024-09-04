@@ -4,7 +4,8 @@ function Login() {
   return (
     <div>
       <h2>Login</h2>
-      {/* Aquí puedes añadir el formulario de login */}
+      {/* Aquí puedes añadir el formulario de login */
+      PEPE}
     </div>
   );
 }

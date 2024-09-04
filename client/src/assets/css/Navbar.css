@@ -1,0 +1,113 @@
+.navbar {
+    display: flex;
+    justify-content: center; /* Centra los elementos dentro del header */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #006adb;
+    position: relative;
+    font-family: 'Roboto, sans-serif';
+  }
+  
+  .logo {
+    height: 50px;
+    margin-right: auto; /* Empuja los botones de navegación hacia el centro */
+  }
+  
+  .right-section {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Empuja la sección de perfil hacia la derecha */
+  }
+  
+  .hamburger {
+    display: none;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+  .hamburgerIcon {
+    font-size: 30px;
+    color: white;
+  }
+  
+  .nav {
+    display: flex;
+    gap: 20px;
+    /* No se necesita ajustar el margen aquí ya que el contenido está centrado por el auto-margin de logo y right-section */
+  }
+  
+  .navButton {
+    background-color: #007cff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .profile {
+    position: relative;
+    padding-left: 20px;
+  }
+  
+  .profileIcon {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .profileMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #007cff;
+    color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px;
+    width: 150px;
+  }
+  
+  .menuButton {
+    background-color: transparent;
+    border: none;
+    padding: 10px 0;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    color: #ffffff;
+    border-bottom: 1px solid #efecec;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .nav {
+      display: none;
+      flex-direction: column;
+      background-color: #006adb;
+      width: 100%;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      padding: 10px 0;
+      z-index: 1;
+    }
+  
+    .nav-open {
+      display: flex;
+    }
+  
+    .hamburger {
+      display: block;
+    }
+  
+    .navButton {
+      text-align: center;
+      width: 100%;
+    }
+  }
+  

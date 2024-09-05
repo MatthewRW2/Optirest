@@ -7,7 +7,7 @@ function Login() {
     <div className="main-container"> {/* Div principal */}
       <div className="login-container">
         <img 
-          src={require('assets/img/logo.png')} 
+          src={require('./assets/img/logo2.png')} 
           alt="Logo"
         />
         <h2>Login</h2>

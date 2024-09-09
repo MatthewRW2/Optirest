@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import Footer from './components/footer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Register.css';
+import {faUser} from '@fortawesome/free-solid-svg-icons'
+import {faLock} from '@fortawesome/free-solid-svg-icons'
 
-const RegistroUsuario = () => {
+const Register = () => {
   const [nombres, setNombres] = useState('');
   const [apellidos, setApellidos] = useState('');
   const [tipoDocumento, setTipoDocumento] = useState('');
@@ -25,10 +29,16 @@ const RegistroUsuario = () => {
   };
 
   return (
+    <div className='container'>
     <div className="form-container">
-      <h2>Registrar usuario</h2>
+      <img 
+          src={require('./assets/img/logo2.png')} 
+          alt="Logo"
+        />
+         <h2>Registrar usuario</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
+        <FontAwesomeIcon icon={faUser} fontSize={20} className='icons'></FontAwesomeIcon>
           <label>Nombres:</label>
           <input
             type="text"
@@ -72,6 +82,7 @@ const RegistroUsuario = () => {
           />
         </div>
         <div className="form-group">
+        <FontAwesomeIcon icon={faLock} fontSize={20} className='icons'></FontAwesomeIcon>
           <label>Contraseña:</label>
           <input
             type="password"
@@ -82,6 +93,7 @@ const RegistroUsuario = () => {
           />
         </div>
         <div className="form-group">
+        <FontAwesomeIcon icon={faLock} fontSize={20}  className='icons'></FontAwesomeIcon>
           <label>Confirmar contraseña:</label>
           <input
             type="password"
@@ -92,9 +104,14 @@ const RegistroUsuario = () => {
           />
         </div>
         <button type="submit">Registrarse</button>
+        <div className="links">
+          <a href="/">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
       </form>
+    </div>
+    <Footer />
     </div>
   );
 };
 
-export default RegistroUsuario;
+export default Register;

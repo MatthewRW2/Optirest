@@ -1,7 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #EFECEC;
+    font-family: 'Roboto', sans-serif;
+}
+
 .form-container {
-    width: 400px;
+    width: 450px;
     margin: 50px auto;
-    padding: 20px;
+    padding: 50px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: white;
@@ -18,21 +28,26 @@
   }
   
   label {
-    display: block;
+    display: flex;
     margin-bottom: 5px;
+    font-weight: bold;
   }
   
   input,
   select {
     width: 100%;
-    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+  
 
   input::placeholder{
     color: #000;
   }  
+
+  .icons{
+    margin-left: 10px;
+  } 
 
   button {
     width: 100%;
@@ -47,3 +62,17 @@
   button:hover {
     background-color: #0056b3;
   }
+
+  .links {
+    margin-top: 30px;
+}
+
+.links a {
+    color: #007bff;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}

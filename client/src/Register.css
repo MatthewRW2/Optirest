@@ -32,6 +32,24 @@ h2 {
     font-weight: bold;
 }
 
+label{
+    margin-left: 10px;
+}
+
+.form-group input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group select {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 input, select {
   width: 109%;
   margin-top: 5px;
@@ -45,7 +63,7 @@ input::placeholder {
 }
 
 .icons {
-    margin-right: -15px;
+    margin-left: 15px;
 }
 
 button {

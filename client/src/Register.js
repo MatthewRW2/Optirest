@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
 import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {faLock} from '@fortawesome/free-solid-svg-icons';
 import './Register.css';
-import {faUser} from '@fortawesome/free-solid-svg-icons'
-import {faLock} from '@fortawesome/free-solid-svg-icons'
+import Axios from 'axios';
+
 
 const Register = () => {
-  const [nombres, setNombres] = useState('');
-  const [apellidos, setApellidos] = useState('');
-  const [tipoDocumento, setTipoDocumento] = useState('');
-  const [numeroDocumento, setNumeroDocumento] = useState('');
-  const [contrasena, setContrasena] = useState('');
-  const [confirmarContrasena, setConfirmarContrasena] = useState('');
+  const [Nombres, setNombres] = useState('');
+  const [Apellidos, setApellidos] = useState('');
+  const [TipoDocumento, setTipoDocumento] = useState('');
+  const [NumeroDocumento, setNumeroDocumento] = useState('');
+  const [Contrasena, setContrasena] = useState('');
+  const [ConfirmarContrasena, setConfirmarContrasena] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (contrasena !== confirmarContrasena) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-    console.log({
-      nombres,
-      apellidos,
-      tipoDocumento,
-      numeroDocumento,
-      contrasena
-    });
-  };
+  const add = () => {
+    Axios.post("http://localhost:3001/registro", {
+      nombres: Nombres,
+      apellidos: Apellidos,
+      tipoDocumento: TipoDocumento,
+      numeroDocumento: NumeroDocumento,
+      contrasena: Contrasena,
+      confirmarContrasena: ConfirmarContrasena
+    }).then(() => {
+      alert("Usuario registrado");
+    })
+   }
+
 
   return (
     <div className='container'>
@@ -36,14 +37,13 @@ const Register = () => {
           alt="Logo"
         />
          <h2>Registrar usuario</h2>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="form-group">
         <FontAwesomeIcon icon={faUser} fontSize={20} className='icons'></FontAwesomeIcon>
           <label>Nombres:</label>
           <input
             type="text"
-            value={nombres}
-            onChange={(e) => setNombres(e.target.value)}
+            onChange={(event) => setNombres(event.target.value)}
             placeholder="Ingrese sus nombres"
             required
           />
@@ -52,8 +52,7 @@ const Register = () => {
           <label>Apellidos:</label>
           <input
             type="text"
-            value={apellidos}
-            onChange={(e) => setApellidos(e.target.value)}
+            onChange={(event) => setApellidos(event.target.value)}
             placeholder="Ingrese sus apellidos"
             required
           />
@@ -61,8 +60,7 @@ const Register = () => {
         <div className="form-group">
           <label>Tipo de Documento:</label>
           <select
-            value={tipoDocumento}
-            onChange={(e) => setTipoDocumento(e.target.value)}
+            onChange={(event) => setTipoDocumento(event.target.value)}
             required
           >
             <option value="">Seleccione su tipo de documento</option>
@@ -75,8 +73,7 @@ const Register = () => {
           <label>N° de Documento:</label>
           <input
             type="text"
-            value={numeroDocumento}
-            onChange={(e) => setNumeroDocumento(e.target.value)}
+            onChange={(event) => setNumeroDocumento(event.target.value)}
             placeholder="Ingrese su número de documento"
             required
           />
@@ -86,8 +83,7 @@ const Register = () => {
           <label>Contraseña:</label>
           <input
             type="password"
-            value={contrasena}
-            onChange={(e) => setContrasena(e.target.value)}
+            onChange={(event) => setContrasena(event.target.value)}
             placeholder="Ingrese su contraseña"
             required
           />
@@ -97,13 +93,12 @@ const Register = () => {
           <label>Confirmar contraseña:</label>
           <input
             type="password"
-            value={confirmarContrasena}
-            onChange={(e) => setConfirmarContrasena(e.target.value)}
+            onChange={(event) => setConfirmarContrasena(event.target.value)}
             placeholder="Confirme su contraseña"
             required
           />
         </div>
-        <button type="submit">Registrarse</button>
+        <button onClick={add} type="submit">Registrarse</button>
         <div className="links">
           <a href="/">¿Ya tienes cuenta? Inicia sesión</a>
         </div>

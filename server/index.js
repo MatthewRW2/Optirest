@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
 const mysql = require("mysql");
+const cors = require('cors');
+
+app.use(cors());
+app.use(express.json());
+
 
 const db = mysql.createConnection({
     host:"localhost",
@@ -9,52 +14,30 @@ const db = mysql.createConnection({
     database:"optirest"
 });
 
-db.connect(function(err){
-    if(err){
-        throw err;
-    }else{
-        console.log("conexion exitosa")
-    }
+app.listen(3001, () => {
+    console.log("Server is running on port 3001");
 });
 
-const nuevoregistro = "INSERT INTO usuario (IdUsuario, Nombres, Apellidos, Rol, tipoDocumento, numeroDocumento, Contraseña) VALUES ('3', 'Juan David', 'Longa', 'Profesor', 'CC', '45127836', 'rikiti');"
-db.query(nuevoregistro, function(error,rows){
-    if(error){
-        throw error;
-    }else{
-        console.log("datos insertados correctamente")
-    }
-})
+app.post("/registro", (req, res) => {
+    const Nombres = req.body.nombres; 
+    const Apellidos = req.body.apellidos; 
+    const TipoDocumento = req.body.tipoDocumento; 
+    const NumeroDocumento = req.body.numeroDocumento; 
+    const Contrasena = req.body.contrasena;
 
-
-
-const modificar = "UPDATE usuario SET Nombres = 'Ozuna' WHERE IdUsuario = 2"
-db.query(modificar, function(error,lista){
-    if(error){
-        throw error;
-    }else{
-        console.log("dato modificado correctamente")
-    }
+    db.query('INSERT INTO usuario (N_Documento,Nombres, Apellidos, tipoDocumento,Contraseña) VALUES (?,?,?,?,?)', [NumeroDocumento, Nombres, Apellidos,TipoDocumento, Contrasena], 
+    (err, result) => {
+        if(err){
+            console.log(err);
+            console.log(Nombres);
+            console.log(Apellidos);
+            console.log(TipoDocumento);
+            console.log(NumeroDocumento);
+            console.log(Contrasena);
+        }else{
+            res.send("registro exitoso");
+        }
+    });
 });
 
-
-const usuarios = "SELECT * FROM usuario";
-db.query(usuarios,function(error,lista){
-    if(error){
-        throw error;
-    }else{
-        console.log(lista);
-    }
-});
-
-
-const borrar = "DELETE FROM usuario WHERE IdUsuario = 2";
-db.query(borrar,function(error,lista){
-    if(error){
-        throw error;
-    }else{
-        console.log("Datos eliminados correctamente")
-    }
-})
- 
 db.end();

@@ -1,0 +1,182 @@
+/* Importación de fuente */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Estilos generales */
+body, input, select, button {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container-forms {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-container {
+    background-color: #f5f5f5;
+}
+
+.container {
+    background-color: #EFECEC;
+}
+
+/* Contenedores */
+.form-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 480px;
+    margin: 65px auto;
+    text-align: center;
+    position: relative;
+}
+
+.form-container {
+    max-width: 450px;
+    padding: 50px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Imágenes */
+.img-forms {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+/* Encabezados */
+.title-form{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Grupos de formularios */
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: inline-block;
+    margin-left: 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Inputs y Selects */
+input, select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+input::placeholder {
+    color: #000;
+}
+
+/* Iconos */
+.icon, .icons, .edit-icon {
+    position: absolute;
+}
+
+.icon {
+    left: 30px;
+    font-size: 18px;
+    color: #555;
+}
+
+.icons {
+    left: -8px;
+    margin-left: 15px;
+}
+
+.edit-icon {
+    right: 10px;
+    top: 35px;
+    color: #000;
+}
+
+/* Botones */
+.form-button{
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-button {
+    width: 60%;
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+
+.form-button {
+    width: 90%;
+}
+
+.form-button:hover, button:hover {
+    background-color: #0056b3;
+}
+
+.save-button {
+    background-color: #007bff;
+}
+
+.save-button:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* Contenedor de botones */
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Enlaces */
+.links {
+    margin-top: 20px;
+}
+
+.links a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    button {
+        padding: 8px;
+    }
+}

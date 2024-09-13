@@ -1,9 +1,7 @@
 import React from 'react';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
-import './assets/css/MenuManagement.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import './assets/css/Styles.css';
 
 const MenuManagement = () => {
   return (

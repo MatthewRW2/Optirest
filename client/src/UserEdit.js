@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faFileLines, faLock, faPeopleGroup, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import './assets/css/UserEdit.css';
+import './assets/css/Forms.css';
 
 const UserEdit = () => {
   const [nombres, setNombres] = useState('');
@@ -29,13 +29,12 @@ const UserEdit = () => {
   };
 
   return (
-    <div className='container'>
+    <div className='container-forms'>
       <div className="form-container">
-        <img 
-          src={require('./assets/img/logo2.png')} 
-          alt="Logo"
-        />
-        <h2>Editar Usuario</h2>
+      <div className="img-forms">
+         src={require('./assets/img/logo2.png')} alt="Logo"
+         </div>
+        <h2 className='title-form'>Editar Usuario</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <FontAwesomeIcon icon={faUser} fontSize={20} className='icons' />
@@ -132,7 +131,7 @@ const UserEdit = () => {
 
           <div className="buttons-container">
             <button type="submit" className="save-button">Guardar Cambios</button>
-            <button type="button" className="delete-button">Eliminar Usuario</button>
+            <button type="submit" className="delete-button">Eliminar Usuario</button>
           </div>
         </form>
       </div>

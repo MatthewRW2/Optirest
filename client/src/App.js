@@ -4,9 +4,11 @@ import Login from './Login';
 import Register from './Register';
 import Home from './Home';
 import UserRegister from './UserRegister';
-import MenuManagement from './MenuManagement'; // Asegúrate de que la ruta sea correcta
+import MenuManagement from './MenuManagement'; 
 import './assets/css/App.css';
-import Cronograma from './Cronograma';
+import Schedule from './Schedule';
+import UserEdit from './UserEdit';
+import ForgotYourPassword from './ForgotYourPassword'
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/UserRegister" element={<UserRegister />} />
           <Route path="/menu-management" element={<MenuManagement />} />
-          <Route path="/cronograma" element={<Cronograma />} />
+          <Route path="/schedule" element={<Schedule />} />
+          <Route path="/userEdit" element={<UserEdit />} />
+          <Route path="/ForgotYourPassword" element={<ForgotYourPassword />} />
         </Routes>
       </div>
     </Router>

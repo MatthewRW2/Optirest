@@ -3,15 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGroup, faUserGraduate, faClock } from '@fortawesome/free-solid-svg-icons';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
-import './assets/css/UserRegister.css';
+import './assets/css/Forms.css';
 
 function UserRegister() {
   return (
-    <div className="main-container">
+    <div className="container-forms">
       <Navbar />
-      <div className="login-container">
-        <img src={require('./assets/img/logo2.png')} alt="Logo" />
-        <h2>Registrar asistencia de estudiantes</h2>
+      <div className="form-container">
+      <div className="img-forms">
+         src={require('./assets/img/logo2.png')} alt="Logo"
+         </div>
+         <h2 className='title-form'>Registrar asistencia de estudiantes</h2>
         <form>
           <div className="form-group">
             <FontAwesomeIcon icon={faUserGroup} className="icon" /> {/* Icono para cantidad de estudiantes */}
@@ -31,7 +33,7 @@ function UserRegister() {
             <label htmlFor="date">Fecha:</label>
             <input type="date" id="date" required />
           </div>
-          <button className="button" type="submit">Registrar</button>
+          <button className="form-button" type="submit">Registrar</button>
         </form>
       </div>
       <Footer />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './assets/css/Login.css';
+import './assets/css/Forms.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from './components/footer';
 import {faLock} from '@fortawesome/free-solid-svg-icons';
@@ -13,13 +13,14 @@ function Login() {
   
 
   return (
-    <div className="container">
-      <div className="login-container">
-        <img 
+    <div className="container-forms">
+      <div className="form-container">
+        <img
+          className='img-forms' 
           src={require('./assets/img/logo2.png')} 
           alt="Logo"
         />
-        <h2>Login</h2>
+         <h2 className='title-form'>Login</h2>
         <form>
           <div className="placeholder-container">
             <div className="form-group">
@@ -49,15 +50,15 @@ function Login() {
               />
             </div>
           </div>
-          <button className='button' type="submit">Enviar</button>
+          <button className='form-button' type="submit">Enviar</button>
         </form>
-        <div className="links"> {/* Links de registro y recuperación */}
+        <div className="links"> 
           <a href="/Register">¿Aún no tienes cuenta? Regístrate</a>
           <br />
-          <a href="/OlvidasteTuContraseña">Olvidaste tu contraseña?</a>
+          <a href="/ForgotYourPassword">Olvidaste tu contraseña?</a>
         </div>
       </div>
-      <Footer /> {/* Usar el componente Footer aquí */}
+      <Footer /> 
     </div>
   );
 }

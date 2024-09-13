@@ -3,7 +3,7 @@ import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {faLock} from '@fortawesome/free-solid-svg-icons';
-import './assets/css/Register.css';
+import './assets/css/Forms.css';
 import Axios from 'axios';
 
 
@@ -30,13 +30,12 @@ const Register = () => {
 
 
   return (
-    <div className='container'>
+    <div className='container-forms'>
     <div className="form-container">
-      <img 
-          src={require('./assets/img/logo2.png')} 
-          alt="Logo"
-        />
-         <h2>Registrar usuario</h2>
+    <div className="img-forms">
+         src={require('./assets/img/logo2.png')} alt="Logo"
+         </div>
+         <h2 className='title-form'>Registrar usuario</h2>
       <form>
         <div className="form-group">
         <FontAwesomeIcon icon={faUser} fontSize={20} className='icons'></FontAwesomeIcon>
@@ -98,7 +97,7 @@ const Register = () => {
             required
           />
         </div>
-        <button onClick={add} type="submit">Registrarse</button>
+        <button className='form-button' onClick={add} type="submit">Registrarse</button>
         <div className="links">
           <a href="/">¿Ya tienes cuenta? Inicia sesión</a>
         </div>

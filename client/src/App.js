@@ -9,6 +9,10 @@ import './assets/css/App.css';
 import Schedule from './Schedule';
 import UserEdit from './UserEdit';
 import ForgotYourPassword from './ForgotYourPassword'
+import Statistics from './Statistics'
+import Reports from './Reports'
+import Settings from './Settings'
+import Profile from './Profile'
 
 function App() {
   return (
@@ -23,6 +27,10 @@ function App() {
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/userEdit" element={<UserEdit />} />
           <Route path="/ForgotYourPassword" element={<ForgotYourPassword />} />
+          <Route path="/statistics" element={<Statistics />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+import './assets/css/Login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from './components/footer';
 import {faLock} from '@fortawesome/free-solid-svg-icons';

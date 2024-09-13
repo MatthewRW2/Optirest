@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from './components/footer';
 import Navbar from './components/navbar';
-import './Cronograma.css';
+import './assets/css/Cronograma.css';
 
 function Cronograma() {
   return (

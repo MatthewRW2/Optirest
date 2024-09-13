@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faFileLines, faLock, faPeopleGroup, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import './UserEdit.css';
+import './assets/css/UserEdit.css';
 
 const UserEdit = () => {
   const [nombres, setNombres] = useState('');

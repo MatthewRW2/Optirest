@@ -5,7 +5,8 @@ import Register from './Register';
 import Home from './Home';
 import UserRegister from './UserRegister';
 import MenuManagement from './MenuManagement'; // Asegúrate de que la ruta sea correcta
-import './App.css';
+import './assets/css/App.css';
+import Cronograma from './Cronograma';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/UserRegister" element={<UserRegister />} />
           <Route path="/menu-management" element={<MenuManagement />} />
+          <Route path="/cronograma" element={<Cronograma />} />
         </Routes>
       </div>
     </Router>

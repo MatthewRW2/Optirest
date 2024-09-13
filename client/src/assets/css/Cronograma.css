@@ -1,0 +1,60 @@
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+.contenedorc {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.cronograma-table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+.cronograma-table th, .cronograma-table td {
+  border: 2px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+.cronograma-table th {
+  background-color: white;
+  color: black;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  width: 20%;
+  margin: 0 auto;
+  margin-top: 170px;
+}
+
+td {
+  background-color: white;
+}
+
+h1{
+  background-color: #006ADB;
+  color: white;
+  width: 90%;
+  margin-left: 100px;
+}

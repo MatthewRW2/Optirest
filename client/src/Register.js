@@ -3,7 +3,7 @@ import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {faLock} from '@fortawesome/free-solid-svg-icons';
-import './Register.css';
+import './assets/css/Register.css';
 import Axios from 'axios';
 
 

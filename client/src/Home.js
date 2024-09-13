@@ -1,13 +1,20 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import './assets/css/Styles.css'; 
 
 const Home = () => {
+  const navigate = useNavigate(); // Hook para navegar
+
+  // Función para manejar la navegación al hacer clic en el botón
+  const handleMenuManagementClick = () => {
+    navigate('/menu-management');
+  };
+
   return (
     <div className="app">
       <Navbar /> {/* Usar el componente Navbar aquí */}
-
       {/* Contenido principal */}
       <main className="main">
         <div className="welcome-text-container">
@@ -20,7 +27,10 @@ const Home = () => {
         </div>
         <div className="main-button-container">
           <h2 className="main-button-title">¡Empieza aquí!</h2>
-          <button className="main-nav-button">Gestión de Menús</button>
+          {/* Asocia el evento onClick con la función de navegación */}
+          <button className="main-nav-button" onClick={handleMenuManagementClick}>
+            Gestión de Menús
+          </button>
         </div>
       </main>
 

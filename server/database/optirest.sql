@@ -1,9 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
---
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-09-2024 a las 22:24:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -11,21 +9,16 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
 -- Base de datos: `optirest`
---
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `alimento`
---
 
 CREATE TABLE `alimento` (
   `IdAlimento` int(11) NOT NULL,
@@ -35,10 +28,7 @@ CREATE TABLE `alimento` (
   `cantidadMinima` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Volcado de datos para la tabla `alimento`
---
-
 INSERT INTO `alimento` (`IdAlimento`, `IdCategoria`, `nombreAlimento`, `cantidadDisponible`, `cantidadMinima`) VALUES
 (2, 1, 'Pollo', '60', '15'),
 (3, 2, 'Arroz', '100', '20'),
@@ -67,9 +57,7 @@ INSERT INTO `alimento` (`IdAlimento`, `IdCategoria`, `nombreAlimento`, `cantidad
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `asignacion_alimenticia`
---
 
 CREATE TABLE `asignacion_alimenticia` (
   `IdAsignaciónAlimenticia` int(11) NOT NULL,
@@ -79,10 +67,7 @@ CREATE TABLE `asignacion_alimenticia` (
   `unidadMedida` enum('Gramos(g)','Unidad','Mililitro(ml)') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Volcado de datos para la tabla `asignacion_alimenticia`
---
-
 INSERT INTO `asignacion_alimenticia` (`IdAsignaciónAlimenticia`, `IdNivelAcademico`, `IdCategoria`, `cantidadAlimento`, `unidadMedida`) VALUES
 (1, 1, 1, 25, 'Gramos(g)'),
 (2, 1, 2, 25, 'Gramos(g)'),
@@ -92,36 +77,27 @@ INSERT INTO `asignacion_alimenticia` (`IdAsignaciónAlimenticia`, `IdNivelAcadem
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `asistencia`
---
 
 CREATE TABLE `asistencia` (
   `IdAsistencia` varchar(11) NOT NULL,
   `fechaAsistencia` datetime NOT NULL,
   `cantidadAsistencia` int(11) NOT NULL,
-  `IdDetalleCronograma` int(11) NOT NULL,
-  `IdUsuario` int(11) NOT NULL,
   `IdGrupo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `categoria`
---
 
 CREATE TABLE `categoria` (
   `IdCategoria` int(11) NOT NULL,
   `nombreCategoria` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Volcado de datos para la tabla `categoria`
---
-
 INSERT INTO `categoria` (`IdCategoria`, `nombreCategoria`) VALUES
-(1, 'Proteina '),
+(1, 'Proteina'),
 (2, 'Carbohidrato'),
 (3, 'Lacteos'),
 (4, 'Frutas'),
@@ -131,9 +107,7 @@ INSERT INTO `categoria` (`IdCategoria`, `nombreCategoria`) VALUES
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `cronograma`
---
 
 CREATE TABLE `cronograma` (
   `IdCronograma` int(11) NOT NULL,
@@ -142,22 +116,17 @@ CREATE TABLE `cronograma` (
   `Observación` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Volcado de datos para la tabla `cronograma`
---
-
 INSERT INTO `cronograma` (`IdCronograma`, `fechaInicio`, `fechaFin`, `Observación`) VALUES
-(1, '2024-09-01', '2024-09-15', 'Inicio de clases y entraga de almuerzos'),
-(2, '2024-09-16', '2024-09-30', 'Cancelacion de clases'),
+(1, '2024-09-01', '2024-09-15', 'Inicio de clases y entrega de almuerzos'),
+(2, '2024-09-16', '2024-09-30', 'Cancelación de clases'),
 (3, '2024-10-01', '2024-10-10', 'Semana de actividades culturales'),
-(4, '2024-10-11', '2024-10-20', 'Receso escolar '),
+(4, '2024-10-11', '2024-10-20', 'Receso escolar'),
 (5, '2024-10-21', '2024-10-31', 'Cierre del periodo');
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `detalle_cronograma`
---
 
 CREATE TABLE `detalle_cronograma` (
   `IdDetalleCronograma` int(11) NOT NULL,
@@ -171,9 +140,7 @@ CREATE TABLE `detalle_cronograma` (
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `detalle_entrada`
---
 
 CREATE TABLE `detalle_entrada` (
   `IdAlimento` int(11) NOT NULL,
@@ -183,9 +150,7 @@ CREATE TABLE `detalle_entrada` (
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `detalle_menu`
---
 
 CREATE TABLE `detalle_menu` (
   `IdDetalleMenu` int(11) NOT NULL,
@@ -194,10 +159,7 @@ CREATE TABLE `detalle_menu` (
   `cantidad` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Volcado de datos para la tabla `detalle_menu`
---
-
 INSERT INTO `detalle_menu` (`IdDetalleMenu`, `IdMenu`, `IdAlimento`, `cantidad`) VALUES
 (1, 1, 2, '20'),
 (2, 1, 3, '30'),
@@ -212,9 +174,7 @@ INSERT INTO `detalle_menu` (`IdDetalleMenu`, `IdMenu`, `IdAlimento`, `cantidad`)
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `detalle_salida`
---
 
 CREATE TABLE `detalle_salida` (
   `IdAlimento` int(11) NOT NULL,
@@ -224,288 +184,208 @@ CREATE TABLE `detalle_salida` (
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `entrada_alimentos`
---
 
 CREATE TABLE `entrada_alimentos` (
   `IdEntradaAlimentos` int(11) NOT NULL,
-  `fechaEntrada` date NOT NULL
+  `fechaEntrada` datetime NOT NULL,
+  `observacion` varchar(500) NOT NULL,
+  `IdUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `grupo`
---
 
 CREATE TABLE `grupo` (
   `IdGrupo` int(11) NOT NULL,
-  `Grado` char(10) NOT NULL,
-  `IdNivelAcademico` int(11) NOT NULL,
-  `cantidadEstudiantes` int(3) NOT NULL,
-  `vigenciaAño` int(4) NOT NULL
+  `nombreGrupo` varchar(50) NOT NULL,
+  `IdNivelAcademico` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `grupo`
---
-
-INSERT INTO `grupo` (`IdGrupo`, `Grado`, `IdNivelAcademico`, `cantidadEstudiantes`, `vigenciaAño`) VALUES
-(1, '1A', 1, 30, 2024),
-(2, '2B', 1, 25, 2024),
-(3, '3C', 2, 28, 2024),
-(4, '4D', 2, 32, 2024),
-(5, '5E', 3, 29, 2024);
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `menu`
---
 
 CREATE TABLE `menu` (
   `IdMenu` int(11) NOT NULL,
-  `Almuezo` tinyint(1) DEFAULT NULL
+  `nombreMenu` varchar(50) NOT NULL,
+  `observacionMenu` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Volcado de datos para la tabla `menu`
---
-
-INSERT INTO `menu` (`IdMenu`, `Almuezo`) VALUES
-(1, 1),
-(2, 0),
-(3, 1),
-(4, 0),
-(5, 1);
+INSERT INTO `menu` (`IdMenu`, `nombreMenu`, `observacionMenu`) VALUES
+(1, 'Almuerzo Infantil', 'Este menú está diseñado para niños entre 6 y 12 años.'),
+(2, 'Desayuno Saludable', 'Menú con opciones bajas en azúcar y grasas.'),
+(3, 'Almuerzo Ejecutivo', 'Menú ideal para adultos con necesidades calóricas altas.'),
+(4, 'Cena Ligera', 'Menú diseñado para una cena baja en calorías.'),
+(5, 'Snack de la Tarde', 'Opción para la merienda de los niños.');
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `nivel_academico`
---
 
 CREATE TABLE `nivel_academico` (
   `IdNivelAcademico` int(11) NOT NULL,
-  `Nombre` varchar(35) NOT NULL
+  `nombreNivel` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Volcado de datos para la tabla `nivel_academico`
---
-
-INSERT INTO `nivel_academico` (`IdNivelAcademico`, `Nombre`) VALUES
+INSERT INTO `nivel_academico` (`IdNivelAcademico`, `nombreNivel`) VALUES
 (1, 'Primaria'),
 (2, 'Secundaria'),
 (3, 'Preescolar'),
-(4, 'Educación Media');
+(4, 'Bachillerato'),
+(5, 'Universitario');
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `salida_alimentos`
---
 
 CREATE TABLE `salida_alimentos` (
   `IdSalidaAlimentos` int(11) NOT NULL,
-  `FechaSalida` date NOT NULL
+  `fechaSalida` datetime NOT NULL,
+  `observacion` varchar(500) NOT NULL,
+  `IdUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `usuario`
---
 
 CREATE TABLE `usuario` (
   `IdUsuario` int(11) NOT NULL,
-  `Nombres` varchar(100) NOT NULL,
-  `Apellidos` varchar(100) NOT NULL,
-  `Rol` enum('Administrador','Docente','PersonalDeCocina') NOT NULL,
-  `tipoDocumento` varchar(3) NOT NULL,
-  `numeroDocumento` int(11) NOT NULL,
-  `Contraseña` varchar(255) NOT NULL
+  `nombreUsuario` varchar(100) NOT NULL,
+  `apellidoUsuario` varchar(100) NOT NULL,
+  `correoUsuario` varchar(100) NOT NULL,
+  `contraseñaUsuario` varchar(255) NOT NULL,
+  `fechaRegistroUsuario` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Volcado de datos para la tabla `usuario`
---
+INSERT INTO `usuario` (`IdUsuario`, `nombreUsuario`, `apellidoUsuario`, `correoUsuario`, `contraseñaUsuario`, `fechaRegistroUsuario`) VALUES
+(1, 'Juan', 'Pérez', 'juan.perez@example.com', '$2y$10$NQdZODhJfjH.w/m4B5kr5OSrzX0kAhnERXS7sTGjX9NiBL6hu9Vcu', '2024-09-01 08:00:00'),
+(2, 'Ana', 'García', 'ana.garcia@example.com', '$2y$10$6db2sf9e.ZDPjzIvzowdfmMBPzE8/UXPUjOfJ3GR.IK/Bz9nUHeWu', '2024-09-02 09:00:00'),
+(3, 'Carlos', 'Rodríguez', 'carlos.rodriguez@example.com', '$2y$10$dI/YzLjFY6eMECPSzQBdOeCpi.I8KxbsO9EhRZzkGZWPAyL3YI4/y', '2024-09-03 10:00:00');
 
-INSERT INTO `usuario` (`IdUsuario`, `Nombres`, `Apellidos`, `Rol`, `tipoDocumento`, `numeroDocumento`, `Contraseña`) VALUES
-(1, 'Juan', 'Pérez', 'Administrador', 'CC', 12345678, 'hashed_password_123'),
-(2, 'Ana', 'Gómez', 'Docente', 'TI', 87654321, 'hashed_password_456'),
-(3, 'Luis', 'Martínez', 'PersonalDeCocina', 'CC', 11223344, 'hashed_password_789'),
-(4, 'María', 'Rodríguez', 'Docente', 'CE', 23456789, 'hashed_password_012'),
-(5, 'Carlos', 'Fernández', 'PersonalDeCocina', 'CC', 34567890, 'hashed_password_345');
-
---
 -- Índices para tablas volcadas
---
 
---
--- Indices de la tabla `alimento`
---
+-- Índices para la tabla `alimento`
 ALTER TABLE `alimento`
   ADD PRIMARY KEY (`IdAlimento`),
-  ADD KEY `IdCategoriaF` (`IdCategoria`);
+  ADD KEY `IdCategoria` (`IdCategoria`);
 
---
--- Indices de la tabla `asignacion_alimenticia`
---
+-- Índices para la tabla `asignacion_alimenticia`
 ALTER TABLE `asignacion_alimenticia`
   ADD PRIMARY KEY (`IdAsignaciónAlimenticia`),
   ADD KEY `IdNivelAcademico` (`IdNivelAcademico`),
-  ADD KEY `IdCategoriaFK` (`IdCategoria`);
+  ADD KEY `IdCategoria` (`IdCategoria`);
 
---
--- Indices de la tabla `asistencia`
---
+-- Índices para la tabla `asistencia`
 ALTER TABLE `asistencia`
   ADD PRIMARY KEY (`IdAsistencia`),
-  ADD KEY `IdDetalleCronogramaFK` (`IdDetalleCronograma`),
-  ADD KEY `IdUsuarioFK` (`IdUsuario`),
-  ADD KEY `IdGrupoFK` (`IdGrupo`);
+  ADD KEY `IdGrupo` (`IdGrupo`);
 
---
--- Indices de la tabla `categoria`
---
+-- Índices para la tabla `categoria`
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`IdCategoria`);
 
---
--- Indices de la tabla `cronograma`
---
+-- Índices para la tabla `cronograma`
 ALTER TABLE `cronograma`
   ADD PRIMARY KEY (`IdCronograma`);
 
---
--- Indices de la tabla `detalle_cronograma`
---
+-- Índices para la tabla `detalle_cronograma`
 ALTER TABLE `detalle_cronograma`
   ADD PRIMARY KEY (`IdDetalleCronograma`),
-  ADD KEY `IdCronogramaFK` (`IdCronograma`),
-  ADD KEY `IdMenuFK` (`IdMenu`);
+  ADD KEY `IdCronograma` (`IdCronograma`),
+  ADD KEY `IdMenu` (`IdMenu`);
 
---
--- Indices de la tabla `detalle_entrada`
---
+-- Índices para la tabla `detalle_entrada`
 ALTER TABLE `detalle_entrada`
-  ADD KEY `IdAlimento_FK` (`IdAlimento`),
-  ADD KEY `IdEntradaAlimentosFK` (`IdEntradaAlimentos`);
+  ADD KEY `IdAlimento` (`IdAlimento`),
+  ADD KEY `IdEntradaAlimentos` (`IdEntradaAlimentos`);
 
---
--- Indices de la tabla `detalle_menu`
---
+-- Índices para la tabla `detalle_menu`
 ALTER TABLE `detalle_menu`
   ADD PRIMARY KEY (`IdDetalleMenu`),
-  ADD KEY `IdMenuF` (`IdMenu`),
-  ADD KEY `IdAlimentoF` (`IdAlimento`);
+  ADD KEY `IdMenu` (`IdMenu`),
+  ADD KEY `IdAlimento` (`IdAlimento`);
 
---
--- Indices de la tabla `detalle_salida`
---
+-- Índices para la tabla `detalle_salida`
 ALTER TABLE `detalle_salida`
-  ADD KEY `IdAlimentoFK` (`IdAlimento`),
-  ADD KEY `IdSalidaAlimentosFK` (`IdSalidaAlimentos`);
+  ADD KEY `IdAlimento` (`IdAlimento`),
+  ADD KEY `IdSalidaAlimentos` (`IdSalidaAlimentos`);
 
---
--- Indices de la tabla `entrada_alimentos`
---
+-- Índices para la tabla `entrada_alimentos`
 ALTER TABLE `entrada_alimentos`
-  ADD PRIMARY KEY (`IdEntradaAlimentos`);
+  ADD PRIMARY KEY (`IdEntradaAlimentos`),
+  ADD KEY `IdUsuario` (`IdUsuario`);
 
---
--- Indices de la tabla `grupo`
---
+-- Índices para la tabla `grupo`
 ALTER TABLE `grupo`
   ADD PRIMARY KEY (`IdGrupo`),
-  ADD KEY `IdNivelAcademicoFK` (`IdNivelAcademico`);
+  ADD KEY `IdNivelAcademico` (`IdNivelAcademico`);
 
---
--- Indices de la tabla `menu`
---
+-- Índices para la tabla `menu`
 ALTER TABLE `menu`
   ADD PRIMARY KEY (`IdMenu`);
 
---
--- Indices de la tabla `nivel_academico`
---
+-- Índices para la tabla `nivel_academico`
 ALTER TABLE `nivel_academico`
   ADD PRIMARY KEY (`IdNivelAcademico`);
 
---
--- Indices de la tabla `salida_alimentos`
---
+-- Índices para la tabla `salida_alimentos`
 ALTER TABLE `salida_alimentos`
-  ADD PRIMARY KEY (`IdSalidaAlimentos`);
+  ADD PRIMARY KEY (`IdSalidaAlimentos`),
+  ADD KEY `IdUsuario` (`IdUsuario`);
 
---
--- Indices de la tabla `usuario`
---
+-- Índices para la tabla `usuario`
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`IdUsuario`);
 
---
 -- Restricciones para tablas volcadas
---
 
---
--- Filtros para la tabla `alimento`
---
+-- Filtros de restricciones para la tabla `alimento`
 ALTER TABLE `alimento`
-  ADD CONSTRAINT `IdCategoriaF` FOREIGN KEY (`IdCategoria`) REFERENCES `categoria` (`IdCategoria`);
+  ADD CONSTRAINT `alimento_ibfk_1` FOREIGN KEY (`IdCategoria`) REFERENCES `categoria` (`IdCategoria`);
 
---
--- Filtros para la tabla `asignacion_alimenticia`
---
+-- Filtros de restricciones para la tabla `asignacion_alimenticia`
 ALTER TABLE `asignacion_alimenticia`
-  ADD CONSTRAINT `IdCategoriaFK` FOREIGN KEY (`IdCategoria`) REFERENCES `categoria` (`IdCategoria`),
-  ADD CONSTRAINT `IdNivelAcademico` FOREIGN KEY (`IdNivelAcademico`) REFERENCES `nivel_academico` (`IdNivelAcademico`);
+  ADD CONSTRAINT `asignacion_alimenticia_ibfk_1` FOREIGN KEY (`IdNivelAcademico`) REFERENCES `nivel_academico` (`IdNivelAcademico`),
+  ADD CONSTRAINT `asignacion_alimenticia_ibfk_2` FOREIGN KEY (`IdCategoria`) REFERENCES `categoria` (`IdCategoria`);
 
---
--- Filtros para la tabla `asistencia`
---
+-- Filtros de restricciones para la tabla `asistencia`
 ALTER TABLE `asistencia`
-  ADD CONSTRAINT `IdDetalleCronogramaFK` FOREIGN KEY (`IdDetalleCronograma`) REFERENCES `detalle_cronograma` (`IdDetalleCronograma`),
-  ADD CONSTRAINT `IdGrupoFK` FOREIGN KEY (`IdGrupo`) REFERENCES `grupo` (`IdGrupo`),
-  ADD CONSTRAINT `IdUsuarioFK` FOREIGN KEY (`IdUsuario`) REFERENCES `usuario` (`IdUsuario`);
+  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`IdGrupo`) REFERENCES `grupo` (`IdGrupo`);
 
---
--- Filtros para la tabla `detalle_cronograma`
---
+-- Filtros de restricciones para la tabla `detalle_cronograma`
 ALTER TABLE `detalle_cronograma`
-  ADD CONSTRAINT `IdCronogramaFK` FOREIGN KEY (`IdCronograma`) REFERENCES `cronograma` (`IdCronograma`),
-  ADD CONSTRAINT `IdMenuFK` FOREIGN KEY (`IdMenu`) REFERENCES `menu` (`IdMenu`);
+  ADD CONSTRAINT `detalle_cronograma_ibfk_1` FOREIGN KEY (`IdCronograma`) REFERENCES `cronograma` (`IdCronograma`),
+  ADD CONSTRAINT `detalle_cronograma_ibfk_2` FOREIGN KEY (`IdMenu`) REFERENCES `menu` (`IdMenu`);
 
---
--- Filtros para la tabla `detalle_entrada`
---
+-- Filtros de restricciones para la tabla `detalle_entrada`
 ALTER TABLE `detalle_entrada`
-  ADD CONSTRAINT `IdAlimento_FK` FOREIGN KEY (`IdAlimento`) REFERENCES `alimento` (`IdAlimento`),
-  ADD CONSTRAINT `IdEntradaAlimentosFK` FOREIGN KEY (`IdEntradaAlimentos`) REFERENCES `entrada_alimentos` (`IdEntradaAlimentos`);
+  ADD CONSTRAINT `detalle_entrada_ibfk_1` FOREIGN KEY (`IdAlimento`) REFERENCES `alimento` (`IdAlimento`),
+  ADD CONSTRAINT `detalle_entrada_ibfk_2` FOREIGN KEY (`IdEntradaAlimentos`) REFERENCES `entrada_alimentos` (`IdEntradaAlimentos`);
 
---
--- Filtros para la tabla `detalle_menu`
---
+-- Filtros de restricciones para la tabla `detalle_menu`
 ALTER TABLE `detalle_menu`
-  ADD CONSTRAINT `IdAlimentoF` FOREIGN KEY (`IdAlimento`) REFERENCES `alimento` (`IdAlimento`),
-  ADD CONSTRAINT `IdMenuF` FOREIGN KEY (`IdMenu`) REFERENCES `menu` (`IdMenu`);
+  ADD CONSTRAINT `detalle_menu_ibfk_1` FOREIGN KEY (`IdMenu`) REFERENCES `menu` (`IdMenu`),
+  ADD CONSTRAINT `detalle_menu_ibfk_2` FOREIGN KEY (`IdAlimento`) REFERENCES `alimento` (`IdAlimento`);
 
---
--- Filtros para la tabla `detalle_salida`
---
+-- Filtros de restricciones para la tabla `detalle_salida`
 ALTER TABLE `detalle_salida`
-  ADD CONSTRAINT `IdAlimentoFK` FOREIGN KEY (`IdAlimento`) REFERENCES `alimento` (`IdAlimento`),
-  ADD CONSTRAINT `IdSalidaAlimentosFK` FOREIGN KEY (`IdSalidaAlimentos`) REFERENCES `salida_alimentos` (`IdSalidaAlimentos`);
+  ADD CONSTRAINT `detalle_salida_ibfk_1` FOREIGN KEY (`IdAlimento`) REFERENCES `alimento` (`IdAlimento`),
+  ADD CONSTRAINT `detalle_salida_ibfk_2` FOREIGN KEY (`IdSalidaAlimentos`) REFERENCES `salida_alimentos` (`IdSalidaAlimentos`);
 
---
--- Filtros para la tabla `grupo`
---
+-- Filtros de restricciones para la tabla `entrada_alimentos`
+ALTER TABLE `entrada_alimentos`
+  ADD CONSTRAINT `entrada_alimentos_ibfk_1` FOREIGN KEY (`IdUsuario`) REFERENCES `usuario` (`IdUsuario`);
+
+-- Filtros de restricciones para la tabla `grupo`
 ALTER TABLE `grupo`
-  ADD CONSTRAINT `IdNivelAcademicoFK` FOREIGN KEY (`IdNivelAcademico`) REFERENCES `nivel_academico` (`IdNivelAcademico`);
-COMMIT;
+  ADD CONSTRAINT `grupo_ibfk_1` FOREIGN KEY (`IdNivelAcademico`) REFERENCES `nivel_academico` (`IdNivelAcademico`);
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Filtros de restricciones para la tabla `salida_alimentos`
+ALTER TABLE `salida_alimentos`
+  ADD CONSTRAINT `salida_alimentos_ibfk_1` FOREIGN KEY (`IdUsuario`) REFERENCES `usuario` (`IdUsuario`);

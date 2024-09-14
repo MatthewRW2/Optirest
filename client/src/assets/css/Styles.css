@@ -141,7 +141,7 @@
     background-color: #ffffff;
   }
   
-  /* Contenedor del contenido principal */
+
   .menu-content-unique {
     display: flex;
     justify-content: space-between;
@@ -150,26 +150,26 @@
     background-color: #ffffff;
     border-radius: 10px;
     margin: 20px;
-    height: 100%;
-  }
+    flex-grow: 1; 
+}
   
-  /* Secciones izquierda y derecha */
+
   .menu-left-unique,
   .menu-right-unique {
     width: 48%;
   }
   
-  /* Contenedor gris para el menú del día */
+
   .menu-left-container-unique {
-    background-color: #ffffff; /* Color gris */
+    background-color: #ffffff; 
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative; /* Para posicionar el header */
-    padding-top: 80px; /* Aumentamos el padding superior para compensar el header flotante */
+    position: relative; 
+    padding-top: 95px; 
   }
   
-  /* Título del menú del día */
+
   .menu-heading-unique {
     background-color: #007bff;
     color: #fff;
@@ -177,14 +177,14 @@
     padding: 10px 0;
     text-align: center;
     border-radius: 8px;
-    margin-bottom: 8px;
-    position: absolute; /* Sacamos el header del flujo normal */
-    top: 40px; /* Lo movemos hacia arriba para que quede fuera del padding del contenedor gris */
+    margin-bottom: 5px; /* Mantén el margen inferior */
+    position: absolute;
+    top: 40px;
     left: 50%;
-    transform: translateX(-50%); /* Centramos el header en relación al contenedor */
-    width: 100%; /* Ajustamos el ancho del header */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Añadimos sombra para mayor contraste */
-  }
+    transform: translateX(-50%);
+    width: 100%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
   
   
   /* Tabla del menú */
@@ -198,7 +198,7 @@
     padding: 12px;
     text-align: left;
     font-size: 1.2em;
-    background-color: #d6d6d6; /* Fondo de las celdas */
+    background-color: #d6d6d6; 
   }
   
   .menu-table-unique th {
@@ -209,7 +209,7 @@
   
   /* Contenedor blanco para la sección derecha */
   .right-box-unique {
-    background-color: #ffffff; /* Color blanco */
+    background-color: #ffffff; 
     padding: 20px;
     border-radius: 8px;
   }
@@ -286,7 +286,8 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-  }
+    flex-shrink: 0; 
+}
   
   /* Responsivo */
   @media (max-width: 768px) {

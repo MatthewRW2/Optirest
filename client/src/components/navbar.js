@@ -44,7 +44,7 @@ const Navbar = () => {
           <button className="navButton" onClick={() => handleNavigation('/menu-management')}>
             Gestión de Menús
           </button>
-          <button className="navButton" onClick={() => handleNavigation('/schedule')}>
+          <button className="navButton" onClick={() => handleNavigation('/UserRegister')}>
             Registro de asistencia
           </button>
           <button className="navButton" onClick={() => handleNavigation('/statistics')}>

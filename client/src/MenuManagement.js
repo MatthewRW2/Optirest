@@ -1,20 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import './assets/css/Styles.css';
+import Axios from 'axios';
 
 const MenuManagement = () => {
+  const [detallesMenu, setDetallesMenu] = useState([]);
+
+  // Función para obtener los detalles del menú de la base de datos
+  const getDetallesMenu = async () => {
+    try {
+      const response = await Axios.get("http://localhost:3001/detalle_menu");
+      setDetallesMenu(response.data);
+    } catch (error) {
+      console.error("Error al obtener los detalles del menú", error);
+    }
+  };
+
+  // Hook useEffect para ejecutar la función cuando el componente se monte
+  useEffect(() => {
+    getDetallesMenu();
+  }, []);
+
   return (
     <div className="menu-management-unique-container">
       <Navbar />
       <div className="menu-content-unique"> 
-        
         <div className="menu-left-unique">
           <div className="menu-left-container-unique">    
-             <h2 className="menu-heading-unique">Menú del día</h2>  
-           <div className='container-table'>
-            <div className="menu-table-wrapper-unique">
-           
+            <h2 className="menu-heading-unique">Menú del día</h2>  
+            <div className='container-table'>
+              <div className="menu-table-wrapper-unique">
               <table className="menu-table-unique">
                 <thead>
                   <tr>
@@ -23,30 +39,20 @@ const MenuManagement = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Arroz</td>
-                    <td>250g</td>
-                  </tr>
-                  <tr>
-                    <td>Pechuga de pollo</td>
-                    <td>125g</td>
-                  </tr>
-                  <tr>
-                    <td>Pasta</td>
-                    <td>180g</td>
-                  </tr>
-                  <tr>
-                    <td>Jugo de Guayaba</td>
-                    <td>250 ml</td>
-                  </tr>
+                  {detallesMenu.map((detalle, index) => (
+                    <tr key={index}>
+                      <td>{detalle.nombreAlimento}</td>
+                      <td>{detalle.cantidad}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
-            </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Contenedor blanco para la sección de la derecha */}
+        {/* Contenedor derecho */}
         <div className="menu-right-unique">
           <div className="right-box-unique">
             <div className="form-group-unique">

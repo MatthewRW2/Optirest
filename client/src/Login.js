@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import './assets/css/Forms.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from './components/footer';
-import {faLock} from '@fortawesome/free-solid-svg-icons';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {faUser , faLock} from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
 
@@ -15,8 +14,8 @@ function Login() {
   return (
     <div className="container-forms">
       <div className="form-container">
-        <img
-          className='img-forms' 
+      <img 
+          className="img-forms" 
           src={require('./assets/img/logo2.png')} 
           alt="Logo"
         />
@@ -64,3 +63,4 @@ function Login() {
 }
 
 export default Login;
+

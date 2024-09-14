@@ -5,7 +5,7 @@
 
 .navbar {
     display: flex;
-    justify-content: center; /* Centra los elementos dentro del header */
+    justify-content: center; 
     align-items: center;
     padding: 10px 20px;
     background-color: #006adb;
@@ -15,13 +15,13 @@
   
   .logo {
     height: 50px;
-    margin-right: auto; /* Empuja los botones de navegación hacia el centro */
+    margin-right: auto; 
   }
   
   .right-section {
     display: flex;
     align-items: center;
-    margin-left: auto; /* Empuja la sección de perfil hacia la derecha */
+    margin-left: auto; 
   }
   
   .hamburger {
@@ -38,7 +38,6 @@
   .nav {
     display: flex;
     gap: 20px;
-    /* No se necesita ajustar el margen aquí ya que el contenido está centrado por el auto-margin de logo y right-section */
   }
   
   .navButton {
@@ -87,8 +86,7 @@
     color: #ffffff;
     border-bottom: 1px solid #efecec;
   }
-  
-  /* Responsive Styles */
+
   @media (max-width: 768px) {
     .nav {
       display: none;

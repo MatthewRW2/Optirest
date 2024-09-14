@@ -27,7 +27,6 @@ function UserRegister() {
             <label htmlFor="course">Curso:</label>
             <select id="course" required>
               <option value="">Seleccione el curso</option>
-              {/* Agrega más opciones aquí */}
             </select>
           </div>
           <div className="form-group">

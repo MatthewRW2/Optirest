@@ -7,7 +7,6 @@ const Inventory = () => {
   const [alimentos, setAlimentos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Fetch alimentos from the API
   useEffect(() => {
     fetch('http://localhost:3001/alimentos')
       .then(response => response.json())
@@ -15,12 +14,10 @@ const Inventory = () => {
       .catch(error => console.error('Error al obtener alimentos:', error));
   }, []);
 
-  // Handle search input change
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  // Filter alimentos based on search term
   const filteredAlimentos = alimentos.filter(alimento =>
     alimento.nombreAlimento.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -83,13 +80,11 @@ const Inventory = () => {
               <h2 className="menu-heading-unique-custom">Resumen de inventario</h2>
               <div className="inventory-summary-custom">
                 <p>Total de alimentos: {filteredAlimentos.length}</p>
-                <p>Categorías únicas: {/* Lógica para contar las categorías únicas */}</p>
+                <p>Categorías únicas:</p>
                 <p>Alimentos por categorías:</p>
                 <ul>
-                  {/* Lógica para contar los alimentos por categoría */}
                 </ul>
                 <p>Nivel Crítico:</p>
-                {/* Lógica para mostrar alimentos en nivel crítico */}
               </div>
             </div>
           </div>

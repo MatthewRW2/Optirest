@@ -3,11 +3,12 @@ import Navbar from './components/navbar';
 import Footer from './components/footer';
 import './assets/css/Styles.css';
 import Axios from 'axios';
+import { useNavigate } from 'react-router-dom'; 
 
 const MenuManagement = () => {
   const [detallesMenu, setDetallesMenu] = useState([]);
+  const navigate = useNavigate(); 
 
-  // Función para obtener los detalles del menú de la base de datos
   const getDetallesMenu = async () => {
     try {
       const response = await Axios.get("http://localhost:3001/detalle_menu");
@@ -17,10 +18,13 @@ const MenuManagement = () => {
     }
   };
 
-  // Hook useEffect para ejecutar la función cuando el componente se monte
   useEffect(() => {
     getDetallesMenu();
   }, []);
+
+  const handleNavigation = (path) => {
+    navigate(path); 
+  };
 
   return (
     <div className="menu-management-unique-container">
@@ -52,7 +56,6 @@ const MenuManagement = () => {
           </div>
         </div>
 
-        {/* Contenedor derecho */}
         <div className="menu-right-unique">
           <div className="right-box-unique">
             <div className="form-group-unique">
@@ -81,8 +84,18 @@ const MenuManagement = () => {
               <label htmlFor="meals">Nº de Almuerzos:</label>
               <input type="number" id="meals" value="45" readOnly />
             </div>
-            <button className="btn-gray-unique">Ir al cronograma</button>
-            <button className="btn-blue-unique">Ir al inventario</button>
+            <button 
+              className="btn-gray-unique" 
+              onClick={() => handleNavigation('/schedule')} 
+            >
+              Ir al cronograma
+            </button>
+            <button 
+              className="btn-blue-unique" 
+              onClick={() => handleNavigation('/inventory')} 
+            >
+              Ir al inventario
+            </button>
             <button className="btn-submit-unique">Enviar</button>
           </div>
         </div>

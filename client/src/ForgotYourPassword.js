@@ -38,11 +38,11 @@ function OlvidasteTuContraseña() {
           </div>
           <button className='form-button' type="submit">Enviar</button>
         </form>
-        <div className="links"> {/* Links de registro y recuperación */}
+        <div className="links"> 
           <a href="/Register">¿Aún no tienes cuenta? Regístrate</a>
         </div>
       </div>
-      <Footer /> {/* Usar el componente Footer aquí */}
+      <Footer />
     </div>
   );
 }

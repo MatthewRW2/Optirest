@@ -178,7 +178,7 @@
     padding: 10px 0;
     text-align: center;
     border-radius: 8px;
-    margin-bottom: 5px; /* Mantén el margen inferior */
+    margin-bottom: 5px; 
     position: absolute;
     top: 40px;
     left: 50%;
@@ -367,17 +367,17 @@ body {
 }
 .footer-custom {
   width: 100%;
-  background-color: #1A374D; /* Ajustar al color deseado */
+  background-color: #1A374D; 
   color: white;
   padding: 10px;
-  margin-top: auto; /* Esto asegura que el footer se quede abajo */
+  margin-top: auto; 
   text-align: center;
 }
 /* Navbar y Footer */
 .navbar-custom,
 .footer-custom {
   width: 100%;
-  background-color: #1A374D; /* Ajustar al color deseado */
+  background-color: #1A374D; 
   color: white;
   padding: 10px;
 }
@@ -420,7 +420,7 @@ body {
   width: 100%;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   position: absolute;
-  top: -25px; /* Ajustar la posición */
+  top: -25px; 
   left: 50%;
   transform: translateX(-50%);
 }

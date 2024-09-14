@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-09-2024 a las 03:57:35
+-- Tiempo de generación: 14-09-2024 a las 22:24:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -43,7 +43,27 @@ INSERT INTO `alimento` (`IdAlimento`, `IdCategoria`, `nombreAlimento`, `cantidad
 (2, 1, 'Pollo', '60', '15'),
 (3, 2, 'Arroz', '100', '20'),
 (4, 2, 'Frijoles', '80', '20'),
-(5, 3, 'Manzana', '150', '30');
+(5, 3, 'Manzana', '150', '30'),
+(6, 1, 'Carne de Res', '50', '10'),
+(7, 1, 'Pescado', '40', '10'),
+(8, 1, 'Cerdo', '45', '12'),
+(9, 2, 'Papa', '70', '20'),
+(10, 2, 'Pasta', '120', '25'),
+(11, 2, 'Lentejas', '90', '15'),
+(12, 2, 'Pan', '200', '50'),
+(13, 3, 'Leche', '180', '40'),
+(14, 3, 'Queso', '80', '20'),
+(15, 4, 'Banana', '130', '30'),
+(16, 4, 'Naranja', '140', '35'),
+(17, 4, 'Fresas', '100', '25'),
+(18, 5, 'Zanahoria', '60', '15'),
+(19, 5, 'Espinaca', '50', '10'),
+(20, 5, 'Brócoli', '45', '12'),
+(21, 6, 'Garbanzos', '80', '20'),
+(22, 6, 'Habichuelas', '60', '15'),
+(23, 7, 'Jugo de Naranja', '90', '25'),
+(24, 7, 'Agua', '500', '100'),
+(25, 7, 'Té', '120', '30');
 
 -- --------------------------------------------------------
 

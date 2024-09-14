@@ -34,10 +34,21 @@ const Inventory = () => {
             value={searchTerm}
             onChange={handleSearchChange}
           />
-          <button className="search-button-custom">Buscar</button>
           <button className="action-button-custom action-button-danger-custom">Entrada de Alimentos</button>
           <button className="action-button-custom">Actualizar Alimento</button>
         </div>
+
+        {/* Botones de categorías */}
+        <div className="category-buttons-container">
+          <button className="category-button">Proteína</button>
+          <button className="category-button">Carbohidratos</button>
+          <button className="category-button">Legumbres</button>
+          <button className="category-button">Verduras</button>
+          <button className="category-button">Cereales</button>
+          <button className="category-button">Lácteos</button>
+          <button className="category-button">Bebidas</button>
+        </div>
+
         <div className="inventory-container-custom">
           <div className="menu-left-unique-custom">
             <div className="menu-left-container-unique-custom">

@@ -388,43 +388,87 @@ body {
   padding: 20px;
 }
 
-/* --- Inventario Styles (renombradas) --- */
+/* --- Inventory Page Styles --- */
+
+/* Contenedor Principal */
+.main-content {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Inventario - Barra de búsqueda y acciones */
+.inventory-search-custom {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input-custom {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #CED4DA;
+  border-radius: 4px;
+}
+
+.search-button-custom,
+.action-button-custom {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+.action-button-custom {
+  background-color: #007CFF;
+}
+
+.action-button-danger-custom {
+  background-color: #D9534F;
+}
+
+/* Categorías de alimentos */
+.category-buttons-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-button {
+  background-color: #007CFF;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: 1px solid #CED4DA;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.category-button:hover {
+  background-color: #007CFF;
+  color: white;
+}
+
+/* Inventario - Contenedores */
 .inventory-container-custom {
   display: flex;
-  justify-content: space-between;
   gap: 20px;
 }
 
 .menu-left-unique-custom,
 .menu-right-unique-custom {
-  width: 48%;
+  flex: 1;
 }
 
-.menu-left-container-unique-custom {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  padding-top: 50px;
-  position: relative;
-}
-
-.menu-heading-unique-custom {
-  background-color: #007bff;
-  color: #fff;
-  font-size: 1.6em;
-  padding: 10px 0;
-  text-align: center;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  width: 100%;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: -25px; 
-  left: 50%;
-  transform: translateX(-50%);
-}
-
+/* Tabla de Inventario */
 .menu-table-unique-custom {
   width: 100%;
   border-collapse: collapse;
@@ -434,84 +478,48 @@ body {
 .menu-table-unique-custom td {
   padding: 12px;
   text-align: left;
-  font-size: 1.2em;
-  background-color: #d6d6d6;
+  font-size: 16px;
+  border-bottom: 1px solid #CED4DA;
 }
 
 .menu-table-unique-custom th {
-  background-color: #007bff;
-  color: #fff;
-  font-size: 1.4em;
+  background-color: #007CFF;
+  color: white;
 }
 
+.menu-table-unique-custom td {
+  background-color: #F9F9F9;
+}
+
+/* Resumen de Inventario */
 .right-box-unique-custom {
-  background-color: #ffffff;
+  background-color: #0052A9;
+  color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
 }
 
-.inventory-summary-custom {
-  font-size: 1.2em;
-  color: #1A374D;
+.inventory-summary-custom p {
+  margin: 10px 0;
 }
 
-.edit-btn-custom,
-.delete-btn-custom {
-  padding: 5px 10px;
-  margin: 2px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .inventory-container-custom {
+    flex-direction: column;
+  }
+
+  .inventory-search-custom {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .category-buttons-container {
+    justify-content: flex-start;
+    gap: 5px;
+  }
 }
 
-.edit-btn-custom {
-  background-color: #ffc107;
-  color: white;
-}
-
-.delete-btn-custom {
-  background-color: #dc3545;
-  color: white;
-}
-
-/* Search and Action Buttons */
-.inventory-search-custom {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.search-input-custom {
-  padding: 10px;
-  font-size: 1.2em;
-  border: 1px solid #007bff;
-  border-radius: 5px;
-  flex: 1;
-}
-
-.search-button-custom {
-  padding: 10px 20px;
-  font-size: 1.2em;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.action-button-custom {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
-  margin: 5px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.action-button-danger-custom {
-  background-color: #dc3545;
-}

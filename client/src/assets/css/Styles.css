@@ -358,7 +358,6 @@
   
   
 
-/* --- General Layout Styles --- */
 body {
   display: flex;
   flex-direction: column;
@@ -373,7 +372,6 @@ body {
   margin-top: auto; 
   text-align: center;
 }
-/* Navbar y Footer */
 .navbar-custom,
 .footer-custom {
   width: 100%;
@@ -387,17 +385,13 @@ body {
   flex: 1;
   padding: 20px;
 }
-
 /* --- Inventory Page Styles --- */
-
-/* Contenedor Principal */
 .main-content {
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
-/* Inventario - Barra de búsqueda y acciones */
 .inventory-search-custom {
   display: flex;
   gap: 10px;
@@ -432,7 +426,29 @@ body {
   background-color: #D9534F;
 }
 
-/* Categorías de alimentos */
+.table-buttons-container {
+  display: flex; 
+  gap: 5px;  
+}
+
+.edit-btn-custom,
+.delete-btn-custom {
+  padding: 5px 10px; 
+  font-size: 14px;  
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn-custom {
+  background-color: #FF7700; 
+}
+
+.delete-btn-custom {
+  background-color: #DC3545; 
+}
+
 .category-buttons-container {
   display: flex;
   gap: 10px;
@@ -457,7 +473,6 @@ body {
   color: white;
 }
 
-/* Inventario - Contenedores */
 .inventory-container-custom {
   display: flex;
   gap: 20px;
@@ -468,7 +483,6 @@ body {
   flex: 1;
 }
 
-/* Tabla de Inventario */
 .menu-table-unique-custom {
   width: 100%;
   border-collapse: collapse;
@@ -491,7 +505,6 @@ body {
   background-color: #F9F9F9;
 }
 
-/* Resumen de Inventario */
 .right-box-unique-custom {
   background-color: #0052A9;
   color: white;
@@ -504,9 +517,26 @@ body {
   margin: 10px 0;
 }
 
+.menu-heading-unique-custom{
+  color: white;
+  background-color: #0052A9;
+  border-style: none;
+  padding: 10px;
+}
 
 
-/* Responsivo */
+@media (max-width: 768px) {
+  .menu-table-unique-custom {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .menu-table-unique-custom th,
+  .menu-table-unique-custom td {
+    text-align: left;
+  }
+}
+
 @media (max-width: 768px) {
   .inventory-container-custom {
     flex-direction: column;
@@ -521,5 +551,18 @@ body {
     justify-content: flex-start;
     gap: 5px;
   }
+}
+.search-button-custom {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  background-color: #007CFF;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-button-custom i {
+  margin-right: 5px; 
 }
 

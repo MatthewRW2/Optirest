@@ -7,6 +7,11 @@ const Inventory = () => {
   const [alimentos, setAlimentos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTrigger, setSearchTrigger] = useState(''); 
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
+  const [alimento, setAlimento] = useState('');
+  const [cantidad, setCantidad] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [fechaEntrada, setFechaEntrada] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:3001/alimentos')
@@ -23,6 +28,23 @@ const Inventory = () => {
   // Función para ejecutar la búsqueda cuando se haga clic en el botón
   const handleSearchSubmit = () => {
     setSearchTrigger(searchTerm); // Se actualiza el trigger de búsqueda
+  };
+
+  // Función para abrir el modal de "Entrada de Alimentos"
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Función para cerrar el modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // Función para manejar el envío del formulario del modal
+  const handleSubmit = () => {
+    // Aquí puedes manejar el envío de los datos, por ejemplo, hacer una petición POST
+    alert(`Alimento: ${alimento}, Cantidad: ${cantidad}, Categoría: ${categoria}, Fecha de entrada: ${fechaEntrada}`);
+    closeModal(); // Cierra el modal después de enviar el formulario
   };
 
   // Filtrar los alimentos basado en el término de búsqueda
@@ -48,7 +70,12 @@ const Inventory = () => {
               <button className="search-button-custom" onClick={handleSearchSubmit}>
                 <i className="fas fa-search"></i> 
               </button>
-              <button className="action-button-custom action-button-danger-custom">Entrada de Alimentos</button>
+              <button 
+                className="action-button-custom action-button-danger-custom" 
+                onClick={openModal}
+              >
+                Entrada de Alimentos
+              </button>
               <button className="action-button-custom">Actualizar Alimento</button>
             </div>
 
@@ -115,7 +142,62 @@ const Inventory = () => {
           </div>
         </div>
       </div>
+
       <Footer className="footer-custom" />
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Entrada de Alimentos</h2>
+            <div className="modal-form">
+              <div className="form-group">
+                <label>Alimento</label>
+                <input
+                  type="text"
+                  placeholder="Ingrese nombre de alimento"
+                  value={alimento}
+                  onChange={(e) => setAlimento(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label>Cantidad</label>
+                <input
+                  type="number"
+                  placeholder="Ingrese la cantidad del alimento"
+                  value={cantidad}
+                  onChange={(e) => setCantidad(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label>Categoría</label>
+                <select
+                  value={categoria}
+                  onChange={(e) => setCategoria(e.target.value)}
+                >
+                  <option value="">Escoja la categoría del alimento</option>
+                  <option value="Proteína">Proteína</option>
+                  <option value="Carbohidratos">Carbohidratos</option>
+                  <option value="Lácteos">Lácteos</option>
+                  <option value="Verduras">Verduras</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Fecha de entrada</label>
+                <input
+                  type="date"
+                  value={fechaEntrada}
+                  onChange={(e) => setFechaEntrada(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="modal-buttons">
+              <button onClick={closeModal} className="cancel-button">Cancelar</button>
+              <button onClick={handleSubmit} className="submit-button">Guardar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

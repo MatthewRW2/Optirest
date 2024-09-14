@@ -79,7 +79,33 @@ app.get("/detalle_menu", (req, res) => {
     });
 });
 
+// Endpoint para obtener categorías
+app.get("/categorias", (req, res) => {
+    const query = "SELECT nombreCategoria FROM categoria"; // Ajusta esto según la estructura de tu tabla
+    db.query(query, (err, result) => {
+      if (err) {
+        console.error("Error al obtener categorías: ", err);
+        res.status(500).send("Error al obtener categorías");
+      } else {
+        res.json(result);
+      }
+    });
+  });
 
+// Endpoint para insertar nuevos alimentos
+app.post("/insertar_alimento", (req, res) => {
+    const { nombreAlimento, cantidad, categoria, fechaEntrada } = req.body;
+    const query = 'INSERT INTO alimento (nombreAlimento, cantidad, categoria, fechaEntrada) VALUES (?, ?, ?, ?)';
+    const values = [nombreAlimento, cantidad, categoria, fechaEntrada];
+    db.query(query, values, (err, result) => {
+      if (err) {
+        console.error("Error al insertar alimento: ", err);
+        res.status(500).send("Error al insertar alimento");
+      } else {
+        res.send("Alimento insertado exitosamente");
+      }
+    });
+  });
 // Cierre de la conexión (opcional, no es necesario cerrarla inmediatamente después de cada consulta)
 process.on('SIGINT', () => {
     db.end(err => {

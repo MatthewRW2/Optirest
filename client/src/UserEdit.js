@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Footer from './components/footer';
+import Navbar from './components/navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faFileLines, faLock, faPeopleGroup, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import './assets/css/Forms.css';
@@ -30,10 +31,13 @@ const UserEdit = () => {
 
   return (
     <div className='container-forms'>
-      <div className="form-container">
-      <div className="img-forms">
-         src={require('./assets/img/logo2.png')} alt="Logo"
-         </div>
+       <Navbar />
+            <div className="form-container">
+      <img 
+          className="img-forms" 
+          src={require('./assets/img/logo2.png')} 
+          alt="Logo"
+        />
         <h2 className='title-form'>Editar Usuario</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -141,3 +145,4 @@ const UserEdit = () => {
 };
 
 export default UserEdit;
+

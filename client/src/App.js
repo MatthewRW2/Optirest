@@ -13,6 +13,7 @@ import Statistics from './Statistics'
 import Reports from './Reports'
 import Settings from './Settings'
 import Profile from './Profile'
+import Inventory from './Inventory';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/reports" element={<Reports />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/inventory" element={<Inventory />} />
         </Routes>
       </div>
     </Router>

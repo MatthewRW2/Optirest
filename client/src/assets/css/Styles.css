@@ -355,3 +355,162 @@
     margin-left: 100px;
   }
   
+  
+
+/* --- General Layout Styles --- */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+.footer-custom {
+  width: 100%;
+  background-color: #1A374D; /* Ajustar al color deseado */
+  color: white;
+  padding: 10px;
+  margin-top: auto; /* Esto asegura que el footer se quede abajo */
+  text-align: center;
+}
+/* Navbar y Footer */
+.navbar-custom,
+.footer-custom {
+  width: 100%;
+  background-color: #1A374D; /* Ajustar al color deseado */
+  color: white;
+  padding: 10px;
+}
+
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* --- Inventario Styles (renombradas) --- */
+.inventory-container-custom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.menu-left-unique-custom,
+.menu-right-unique-custom {
+  width: 48%;
+}
+
+.menu-left-container-unique-custom {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding-top: 50px;
+  position: relative;
+}
+
+.menu-heading-unique-custom {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.6em;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: -25px; /* Ajustar la posición */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.menu-table-unique-custom {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.menu-table-unique-custom th,
+.menu-table-unique-custom td {
+  padding: 12px;
+  text-align: left;
+  font-size: 1.2em;
+  background-color: #d6d6d6;
+}
+
+.menu-table-unique-custom th {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.4em;
+}
+
+.right-box-unique-custom {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.inventory-summary-custom {
+  font-size: 1.2em;
+  color: #1A374D;
+}
+
+.edit-btn-custom,
+.delete-btn-custom {
+  padding: 5px 10px;
+  margin: 2px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-btn-custom {
+  background-color: #ffc107;
+  color: white;
+}
+
+.delete-btn-custom {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Search and Action Buttons */
+.inventory-search-custom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input-custom {
+  padding: 10px;
+  font-size: 1.2em;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  flex: 1;
+}
+
+.search-button-custom {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.action-button-custom {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.action-button-danger-custom {
+  background-color: #dc3545;
+}

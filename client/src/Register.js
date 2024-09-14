@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
-import {faLock} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faFileLines, faLock } from '@fortawesome/free-solid-svg-icons';
 import './assets/css/Forms.css';
 import Axios from 'axios';
 
@@ -32,10 +31,11 @@ const Register = () => {
   return (
     <div className='container-forms'>
     <div className="form-container">
-    <div className="img-forms">
-         src={require('./assets/img/logo2.png')} alt="Logo"
-         </div>
-         <h2 className='title-form'>Registrar usuario</h2>
+    <img 
+          className="img-forms" 
+          src={require('./assets/img/logo2.png')} 
+          alt="Logo"
+        />
       <form>
         <div className="form-group">
         <FontAwesomeIcon icon={faUser} fontSize={20} className='icons'></FontAwesomeIcon>
@@ -48,6 +48,7 @@ const Register = () => {
           />
         </div>
         <div className="form-group">
+        <FontAwesomeIcon icon={faUser} fontSize={20} className='icons' />
           <label>Apellidos:</label>
           <input
             type="text"
@@ -57,6 +58,7 @@ const Register = () => {
           />
         </div>
         <div className="form-group">
+        <FontAwesomeIcon icon={faFileLines} fontSize={20} className='icons' />
           <label>Tipo de Documento:</label>
           <select
             onChange={(event) => setTipoDocumento(event.target.value)}
@@ -69,6 +71,7 @@ const Register = () => {
           </select>
         </div>
         <div className="form-group">
+        <FontAwesomeIcon icon={faFileLines} fontSize={20} className='icons' />
           <label>N° de Documento:</label>
           <input
             type="text"
@@ -109,3 +112,4 @@ const Register = () => {
 };
 
 export default Register;
+

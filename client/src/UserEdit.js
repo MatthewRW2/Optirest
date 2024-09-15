@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom'; // Para obtener el ID de usuario y navegar
 import Footer from './components/footer';
 import Navbar from './components/navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,29 +15,60 @@ const UserEdit = () => {
   const [contrasena, setContrasena] = useState('');
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
   const [rol, setRol] = useState('');
+  
+  const { id } = useParams(); // Obtener el ID del usuario de la URL
+  const navigate = useNavigate(); // Para redirigir después de la edición
 
+  // Cargar los datos del usuario al montar el componente
+  useEffect(() => {
+    Axios.get(`http://localhost:3001/usuarios/${id}`)
+      .then((response) => {
+        const user = response.data;
+        setNombres(user.Nombres);
+        setApellidos(user.Apellidos);
+        setTipoDocumento(user.tipoDocumento);
+        setNumeroDocumento(user.numeroDocumento);
+        setRol(user.Rol);
+      })
+      .catch((error) => {
+        console.error('Hubo un error al cargar los datos del usuario:', error);
+      });
+  }, [id]);
+
+  // Manejar la actualización del usuario
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (contrasena !== confirmarContrasena) {
       alert('Las contraseñas no coinciden');
       return;
     }
-    console.log({
+
+    // Llamada PUT para editar el usuario
+    Axios.put(`http://localhost:3001/editar_usuario/${id}`, {
       nombres,
       apellidos,
       tipoDocumento,
       numeroDocumento,
-      contrasena
-    });
+      contrasena,
+      rol
+    })
+      .then((response) => {
+        alert('Usuario actualizado exitosamente');
+        navigate('/userlist'); // Redirigir a la lista de usuarios después de la edición
+      })
+      .catch((error) => {
+        console.error('Hubo un error al actualizar el usuario:', error);
+      });
   };
 
   return (
     <div className='container-forms'>
-       <Navbar />
-            <div className="form-container">
-      <img 
-          className="img-forms" 
-          src={require('./assets/img/logo2.png')} 
+      <Navbar />
+      <div className="form-container">
+        <img
+          className="img-forms"
+          src={require('./assets/img/logo2.png')}
           alt="Logo"
         />
         <h2 className='title-form'>Editar Usuario</h2>
@@ -135,7 +168,6 @@ const UserEdit = () => {
 
           <div className="buttons-container">
             <button type="submit" className="save-button">Guardar Cambios</button>
-            <button type="submit" className="delete-button">Eliminar Usuario</button>
           </div>
         </form>
       </div>
@@ -145,4 +177,5 @@ const UserEdit = () => {
 };
 
 export default UserEdit;
+
 

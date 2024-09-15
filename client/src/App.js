@@ -14,6 +14,7 @@ import Reports from './Reports'
 import Settings from './Settings'
 import Profile from './Profile'
 import Inventory from './Inventory';
+import UserList from './UserList';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/inventory" element={<Inventory />} />
+          <Route path="/userList" element={<UserList />} />
         </Routes>
       </div>
     </Router>
@@ -40,3 +42,4 @@ function App() {
 }
 
 export default App;
+

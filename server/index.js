@@ -32,17 +32,19 @@ app.listen(3001, () => {
 
 // Endpoint para registrar usuarios
 app.post("/registro", (req, res) => {
-    const { nombres, apellidos, tipoDocumento, numeroDocumento, contrasena } = req.body;
+    const Nombres = req.body.nombres; 
+    const Apellidos = req.body.apellidos; 
+    const Email = req.body.email;
+    const TipoDocumento = req.body.tipoDocumento; 
+    const NumeroDocumento = req.body.numeroDocumento; 
+    const Contrasena = req.body.contrasena;
 
-    const query = 'INSERT INTO usuario (N_Documento, Nombres, Apellidos, tipoDocumento, Contraseña) VALUES (?, ?, ?, ?, ?)';
-    const values = [numeroDocumento, nombres, apellidos, tipoDocumento, contrasena];
-
-    db.query(query, values, (err, result) => {
-        if (err) {
-            console.error("Error al registrar el usuario: ", err);
-            res.status(500).send("Error al registrar el usuario");
-        } else {
-            res.send("Registro exitoso");
+    db.query('INSERT INTO usuario (NDocumento,Nombres, Apellidos, correoElectronico, tipoDocumento,Contraseña) VALUES (?,?,?,?,?,?)', [NumeroDocumento, Nombres, Apellidos, Email, TipoDocumento, Contrasena], 
+    (err, result) => {
+        if(err){
+            console.log(err);
+        }else{
+            res.send("registro exitoso");
         }
     });
 });

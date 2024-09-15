@@ -1,3 +1,4 @@
+
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
@@ -255,18 +256,22 @@ CREATE TABLE `salida_alimentos` (
 
 CREATE TABLE `usuario` (
   `IdUsuario` int(11) NOT NULL,
-  `nombreUsuario` varchar(100) NOT NULL,
-  `apellidoUsuario` varchar(100) NOT NULL,
-  `correoUsuario` varchar(100) NOT NULL,
-  `contraseñaUsuario` varchar(255) NOT NULL,
-  `fechaRegistroUsuario` datetime NOT NULL
+  `Nombres` VARCHAR(100) NOT NULL,
+  `Apellidos` VARCHAR(100) NOT NULL,
+  `Rol` ENUM('Administrador','Docente','PersonalDeCocina') NOT NULL,
+  `tipoDocumento` VARCHAR(3) NOT NULL,
+  `numeroDocumento` INT(11) NOT NULL,
+  `Contraseña` VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcado de datos para la tabla `usuario`
-INSERT INTO `usuario` (`IdUsuario`, `nombreUsuario`, `apellidoUsuario`, `correoUsuario`, `contraseñaUsuario`, `fechaRegistroUsuario`) VALUES
-(1, 'Juan', 'Pérez', 'juan.perez@example.com', '$2y$10$NQdZODhJfjH.w/m4B5kr5OSrzX0kAhnERXS7sTGjX9NiBL6hu9Vcu', '2024-09-01 08:00:00'),
-(2, 'Ana', 'García', 'ana.garcia@example.com', '$2y$10$6db2sf9e.ZDPjzIvzowdfmMBPzE8/UXPUjOfJ3GR.IK/Bz9nUHeWu', '2024-09-02 09:00:00'),
-(3, 'Carlos', 'Rodríguez', 'carlos.rodriguez@example.com', '$2y$10$dI/YzLjFY6eMECPSzQBdOeCpi.I8KxbsO9EhRZzkGZWPAyL3YI4/y', '2024-09-03 10:00:00');
+INSERT INTO `usuario` (`IdUsuario`, `Nombres`, `Apellidos`, `Rol`, `tipoDocumento`, `numeroDocumento`, `Contraseña`)
+VALUES 
+(1, 'Juan', 'Pérez', 'Administrador', 'CC', 12345678, 'hashed_password_123'),
+(2, 'Ana', 'Gómez', 'Docente', 'TI', 87654321, 'hashed_password_456'),
+(3, 'Luis', 'Martínez', 'PersonalDeCocina', 'CC', 11223344, 'hashed_password_789'),
+(4, 'María', 'Rodríguez', 'Docente', 'CE', 23456789, 'hashed_password_012'),
+(5, 'Carlos', 'Fernández', 'PersonalDeCocina', 'CC', 34567890, 'hashed_password_345');
 
 -- Índices para tablas volcadas
 

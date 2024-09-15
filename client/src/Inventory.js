@@ -76,7 +76,6 @@ const Inventory = () => {
               >
                 Entrada de Alimentos
               </button>
-              <button className="action-button-custom">Actualizar Alimento</button>
             </div>
 
             {/* Botones de categorías */}

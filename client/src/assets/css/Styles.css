@@ -629,3 +629,88 @@ body {
   background-color: #007bff;
   color: white;
 }
+.user-table {
+  width: 90%;
+  border-collapse: separate;
+  border-spacing: 0 15px; /* Espacio entre filas */
+  margin: 20px auto;
+}
+
+.user-table th, .user-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.user-table th {
+  background-color: #f2f2f2;
+  border-bottom: 2px solid #ccc;
+  font-weight: bold;
+}
+
+.user-table tr {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-table tr td {
+  border-top: 1px solid #e0e0e0;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 2px solid #ccc;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-evenly; /* Espaciado uniforme */
+  align-items: center;
+}
+
+.action-btn {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 30px;
+  padding: 8px;
+  justify-content: center;
+  width: 70px ;
+}
+
+.edit-btn {
+  background-color: #007bff;
+  color: #ffffff; /* Azul para editar */
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: #ffffff; /* Rojo para eliminar */
+}
+
+.user-list-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  width: 80%;
+  margin: 65px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  background-color: #D9D9D9;
+  font-style: bold;
+}
+

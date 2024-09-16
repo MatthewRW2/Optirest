@@ -61,7 +61,7 @@ const Navbar = () => {
               <button className="menuButton" onClick={() => handleNavigation('/settings')}>
                 Configuración
               </button>
-              <button className="menuButton" onClick={() => handleNavigation('/logout')}>
+              <button className="menuButton" onClick={() => handleNavigation('/')}>
                 Cerrar sesión
               </button>
             </div>

@@ -55,7 +55,7 @@ app.post("/registro", (req, res) => {
 });
 
 // Endpoint para obtener alimentos
-app.get("/alimentos", (req, res) => {
+app.get("/alimento", (req, res) => {
     const query = "SELECT IdAlimento, IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima FROM alimento";
 
     db.query(query, (err, result) => {
@@ -88,41 +88,70 @@ app.get("/detalle_menu", (req, res) => {
 
 // Endpoint para obtener categorías
 app.get("/categorias", (req, res) => {
-    const query = "SELECT nombreCategoria FROM categoria";
+    const query = "SELECT IdCategoria, nombreCategoria FROM categoria";
     db.query(query, (err, result) => {
-      if (err) {
-        console.error("Error al obtener categorías: ", err);
-        res.status(500).send("Error al obtener categorías");
-      } else {
-        res.json(result);
-      }
+        if (err) {
+            console.error("Error al obtener categorías: ", err);
+            res.status(500).send("Error al obtener categorías");
+        } else {
+            res.json(result);
+        }
     });
 });
 
-// Endpoint para insertar nuevos alimentos
-app.post("/insertar_alimento", (req, res) => {
-    const { nombreAlimento, cantidad, categoria, fechaEntrada } = req.body;
-    const query = 'INSERT INTO alimento (nombreAlimento, cantidad, categoria, fechaEntrada) VALUES (?, ?, ?, ?)';
-    const values = [nombreAlimento, cantidad, categoria, fechaEntrada];
-    db.query(query, values, (err, result) => {
-      if (err) {
-        console.error("Error al insertar alimento: ", err);
-        res.status(500).send("Error al insertar alimento");
-      } else {
-        res.send("Alimento insertado exitosamente");
-      }
-    });
+// Nuevo Endpoint para insertar alimentos
+app.post('/insertar_alimento', async (req, res) => {
+    const { nombreAlimento, cantidadDisponible, IdCategoria, fechaEntrada } = req.body;
+
+    // Crear una transacción para asegurar que ambas inserciones se completen correctamente
+    const connection = await db.getConnection();
+
+    try {
+        await connection.beginTransaction();
+
+        // Inserción en la tabla alimento
+        const insertAlimentoQuery = `
+            INSERT INTO alimento (nombreAlimento, cantidadDisponible, IdCategoria)
+            VALUES (?, ?, ?)
+        `;
+        const [alimentoResult] = await connection.execute(insertAlimentoQuery, [
+            nombreAlimento, cantidadDisponible, IdCategoria,
+        ]);
+
+        const IdAlimento = alimentoResult.insertId;
+
+        // Inserción en la tabla entrada_alimentos
+        const insertEntradaQuery = `
+            INSERT INTO entrada_alimentos (IdAlimento, fechaEntrada, observacion, IdUsuario)
+            VALUES (?, ?, ?, ?)
+        `;
+        await connection.execute(insertEntradaQuery, [IdAlimento, fechaEntrada, 'Observación de ejemplo', 1]);
+
+        // Confirmar la transacción
+        await connection.commit();
+
+        res.status(200).json({ message: 'Alimento insertado correctamente' });
+    } catch (error) {
+        // En caso de error, revertir la transacción
+        await connection.rollback();
+        console.error('Error al insertar alimento:', error);
+        res.status(500).json({ message: 'Error al insertar alimento' });
+    } finally {
+        // Liberar la conexión
+        connection.release();
+    }
 });
 
+// Endpoint para obtener usuarios
 app.get('/usuarios', (req, res) => {
     const sql = 'SELECT IdUsuario, Nombres, Apellidos, Rol, numeroDocumento FROM usuario';
     
     db.query(sql, (err, result) => {
-      if (err) {
-        console.error('Error ejecutando la consulta:', err);
-        return res.status(500).json({ error: 'Error en el servidor' });
-      }
-      res.json(result); 
+        if (err) {
+            console.error('Error ejecutando la consulta:', err);
+            return res.status(500).json({ error: 'Error en el servidor' });
+        }
+        res.json(result); 
     });
 });
 

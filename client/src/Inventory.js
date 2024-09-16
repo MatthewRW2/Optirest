@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import './assets/css/Styles.css';
@@ -12,13 +12,68 @@ const Inventory = () => {
   const [cantidad, setCantidad] = useState('');
   const [categoria, setCategoria] = useState('');
   const [fechaEntrada, setFechaEntrada] = useState('');
+  const [categorias, setCategorias] = useState([]); // Estado para almacenar categorías
 
+  // Obtener alimentos de la base de datos al cargar el componente
   useEffect(() => {
-    fetch('http://localhost:3001/alimentos')
+    fetch('http://localhost:3001/alimento')
       .then((response) => response.json())
       .then((data) => setAlimentos(data))
       .catch((error) => console.error('Error al obtener alimentos:', error));
   }, []);
+  
+  // Función para abrir el modal de "Entrada de Alimentos"
+  const openModal = () => {
+    setIsModalOpen(true);
+    fetchCategorias(); // Cargar las categorías cuando se abre el modal
+  };
+
+  // Función para cerrar el modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // Función para obtener categorías del backend
+  const fetchCategorias = () => {
+    fetch('http://localhost:3001/categorias') // Endpoint para obtener las categorías
+      .then((response) => response.json())
+      .then((data) => setCategorias(data))
+      .catch((error) => console.error('Error al obtener categorías:', error));
+  };
+
+  // Función para manejar el envío del formulario del modal
+  const handleSubmit = async () => {
+    const nuevoAlimento = {
+      nombreAlimento: alimento,
+      cantidadDisponible: cantidad,
+      IdCategoria: categoria,
+      // fechaEntrada solo es necesaria para entrada_alimentos
+    };
+  
+    try {
+      const response = await fetch('http://localhost:3001/insertar_alimento', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevoAlimento),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        // Actualiza la lista de alimentos con el nuevo elemento añadido
+        setAlimentos([...alimentos, data]);
+        alert('Alimento agregado correctamente.');
+        closeModal(); // Cierra el modal después de enviar el formulario
+      } else {
+        alert('Error al agregar el alimento.');
+      }
+    } catch (error) {
+      console.error('Error al agregar alimento:', error);
+      alert('Hubo un error al intentar agregar el alimento.');
+    }
+  };
+  
 
   // Función para manejar el cambio en el input de búsqueda
   const handleSearchChange = (event) => {
@@ -28,23 +83,6 @@ const Inventory = () => {
   // Función para ejecutar la búsqueda cuando se haga clic en el botón
   const handleSearchSubmit = () => {
     setSearchTrigger(searchTerm); // Se actualiza el trigger de búsqueda
-  };
-
-  // Función para abrir el modal de "Entrada de Alimentos"
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  // Función para cerrar el modal
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // Función para manejar el envío del formulario del modal
-  const handleSubmit = () => {
-    // Aquí puedes manejar el envío de los datos, por ejemplo, hacer una petición POST
-    alert(`Alimento: ${alimento}, Cantidad: ${cantidad}, Categoría: ${categoria}, Fecha de entrada: ${fechaEntrada}`);
-    closeModal(); // Cierra el modal después de enviar el formulario
   };
 
   // Filtrar los alimentos basado en el término de búsqueda
@@ -175,10 +213,11 @@ const Inventory = () => {
                   onChange={(e) => setCategoria(e.target.value)}
                 >
                   <option value="">Escoja la categoría del alimento</option>
-                  <option value="Proteína">Proteína</option>
-                  <option value="Carbohidratos">Carbohidratos</option>
-                  <option value="Lácteos">Lácteos</option>
-                  <option value="Verduras">Verduras</option>
+                  {categorias.map((cat) => (
+                    <option key={cat.IdCategoria} value={cat.IdCategoria}>
+                      {cat.nombreCategoria}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="form-group">

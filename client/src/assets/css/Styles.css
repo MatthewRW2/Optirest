@@ -903,3 +903,54 @@ body {
   font-style: bold;
 }
 
+
+/* --- Botones personalizados para la página de Inventario --- */
+
+/* Botón Insertar Alimentos */
+.action-button-insert {
+  background-color: #28a745; /* Verde brillante */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button-insert:hover {
+  background-color: #218838; /* Verde oscuro en hover */
+}
+
+/* Botón Crear Categoría */
+.action-button-category {
+  background-color: #fd7e14; /* Naranja vibrante */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button-category:hover {
+  background-color: #e36d09; /* Naranja más oscuro en hover */
+}
+
+/* Botón Agregar al Inventario */
+.action-button-inventory {
+  background-color: #0052A9; /* Azul oscuro */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button-inventory:hover {
+  background-color: #003f80; /* Azul más oscuro en hover */
+}
+

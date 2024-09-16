@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import './assets/css/Styles.css';
@@ -6,50 +6,69 @@ import './assets/css/Styles.css';
 const Inventory = () => {
   const [alimentos, setAlimentos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchTrigger, setSearchTrigger] = useState(''); 
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
+  const [searchTrigger, setSearchTrigger] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // Añadido el estado para abrir/cerrar el modal de categoría
+  const [alimentoId, setAlimentoId] = useState(''); 
   const [alimento, setAlimento] = useState('');
-  const [cantidad, setCantidad] = useState('');
+  const [cantidadDisponible, setCantidadDisponible] = useState('');
+  const [cantidadMinima, setCantidadMinima] = useState('');
   const [categoria, setCategoria] = useState('');
-  const [fechaEntrada, setFechaEntrada] = useState('');
-  const [categorias, setCategorias] = useState([]); // Estado para almacenar categorías
+  const [categorias, setCategorias] = useState([]);
+  const [nombreCategoria, setNombreCategoria] = useState('');
 
-  // Obtener alimentos de la base de datos al cargar el componente
   useEffect(() => {
+    // Fetch para obtener los alimentos
     fetch('http://localhost:3001/alimento')
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al obtener alimentos');
+        }
+        return response.json();
+      })
       .then((data) => setAlimentos(data))
       .catch((error) => console.error('Error al obtener alimentos:', error));
   }, []);
-  
-  // Función para abrir el modal de "Entrada de Alimentos"
+
   const openModal = () => {
     setIsModalOpen(true);
-    fetchCategorias(); // Cargar las categorías cuando se abre el modal
+    fetchCategorias();
   };
 
-  // Función para cerrar el modal
+  const openCategoryModal = () => {
+    setIsCategoryModalOpen(true); // Ahora abrirá el modal de categorías
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  // Función para obtener categorías del backend
+  const closeCategoryModal = () => {
+    setIsCategoryModalOpen(false); // Cerrará el modal de categorías
+  };
+
   const fetchCategorias = () => {
-    fetch('http://localhost:3001/categorias') // Endpoint para obtener las categorías
-      .then((response) => response.json())
+    // Fetch para obtener las categorías
+    fetch('http://localhost:3001/categorias')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al obtener categorías');
+        }
+        return response.json();
+      })
       .then((data) => setCategorias(data))
       .catch((error) => console.error('Error al obtener categorías:', error));
   };
 
-  // Función para manejar el envío del formulario del modal
   const handleSubmit = async () => {
     const nuevoAlimento = {
+      IdAlimento: alimentoId,
       nombreAlimento: alimento,
-      cantidadDisponible: cantidad,
+      cantidadDisponible,
+      cantidadMinima,
       IdCategoria: categoria,
-      // fechaEntrada solo es necesaria para entrada_alimentos
     };
-  
+
     try {
       const response = await fetch('http://localhost:3001/insertar_alimento', {
         method: 'POST',
@@ -58,13 +77,12 @@ const Inventory = () => {
         },
         body: JSON.stringify(nuevoAlimento),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
-        // Actualiza la lista de alimentos con el nuevo elemento añadido
         setAlimentos([...alimentos, data]);
         alert('Alimento agregado correctamente.');
-        closeModal(); // Cierra el modal después de enviar el formulario
+        closeModal();
       } else {
         alert('Error al agregar el alimento.');
       }
@@ -73,19 +91,44 @@ const Inventory = () => {
       alert('Hubo un error al intentar agregar el alimento.');
     }
   };
-  
 
-  // Función para manejar el cambio en el input de búsqueda
+  const handleCategorySubmit = async () => {
+    const nuevaCategoria = {
+      IdCategoria: categorias.length + 1, // Genera un nuevo ID
+      nombreCategoria,
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/insertar_categoria', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevaCategoria),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setCategorias([...categorias, data]);
+        alert('Categoría agregada correctamente.');
+        closeCategoryModal();
+      } else {
+        alert('Error al agregar la categoría.');
+      }
+    } catch (error) {
+      console.error('Error al agregar la categoría:', error);
+      alert('Hubo un error al intentar agregar la categoría.');
+    }
+  };
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  // Función para ejecutar la búsqueda cuando se haga clic en el botón
   const handleSearchSubmit = () => {
-    setSearchTrigger(searchTerm); // Se actualiza el trigger de búsqueda
+    setSearchTrigger(searchTerm);
   };
 
-  // Filtrar los alimentos basado en el término de búsqueda
   const filteredAlimentos = alimentos.filter((alimento) =>
     alimento.nombreAlimento.toLowerCase().includes(searchTrigger.toLowerCase())
   );
@@ -95,7 +138,6 @@ const Inventory = () => {
       <Navbar className="navbar-custom" />
       <div className="main-content">
         <div className="inventory-container-custom">
-          {/* Contenedor Izquierdo */}
           <div className="menu-left-unique-custom">
             <div className="inventory-search-custom">
               <input
@@ -109,23 +151,25 @@ const Inventory = () => {
                 <i className="fas fa-search"></i> 
               </button>
               <button 
-                className="action-button-custom action-button-danger-custom" 
+                className="action-button-custom action-button-insert" 
                 onClick={openModal}
               >
-                Entrada de Alimentos
+                Insertar Alimentos
+              </button>
+              <button
+                className="action-button-custom action-button-category"
+                onClick={openCategoryModal} // Abre el modal de categorías
+              >
+                Crear Categoría
+              </button>
+              <button 
+                className="action-button-custom action-button-inventory" 
+                onClick={() => alert('Agregar al inventario')}
+              >
+                Agregar al Inventario
               </button>
             </div>
-
-            {/* Botones de categorías */}
-            <div className="category-buttons-container">
-              <button className="category-button">Proteína</button>
-              <button className="category-button">Carbohidratos</button>
-              <button className="category-button">Legumbres</button>
-              <button className="category-button">Verduras</button>
-              <button className="category-button">Cereales</button>
-              <button className="category-button">Lácteos</button>
-              <button className="category-button">Bebidas</button>
-            </div>
+            
 
             <div className="menu-left-container-unique-custom">
               <h2 className="menu-heading-unique-custom">Inventario de alimentos</h2>
@@ -163,7 +207,6 @@ const Inventory = () => {
             </div>
           </div>
 
-          {/* Contenedor Derecho */}
           <div className="menu-right-unique-custom">
             <div className="right-box-unique-custom">
               <h2 className="menu-heading-unique-custom">Resumen de inventario</h2>
@@ -171,9 +214,6 @@ const Inventory = () => {
                 <p>Total de alimentos: {filteredAlimentos.length}</p>
                 <p>Categorías únicas:</p>
                 <p>Alimentos por categorías:</p>
-                <ul>
-                </ul>
-                <p>Nivel Crítico:</p>
               </div>
             </div>
           </div>
@@ -182,60 +222,92 @@ const Inventory = () => {
 
       <Footer className="footer-custom" />
 
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Entrada de Alimentos</h2>
-            <div className="modal-form">
-              <div className="form-group">
-                <label>Alimento</label>
-                <input
-                  type="text"
-                  placeholder="Ingrese nombre de alimento"
-                  value={alimento}
-                  onChange={(e) => setAlimento(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label>Cantidad</label>
-                <input
-                  type="number"
-                  placeholder="Ingrese la cantidad del alimento"
-                  value={cantidad}
-                  onChange={(e) => setCantidad(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label>Categoría</label>
-                <select
-                  value={categoria}
-                  onChange={(e) => setCategoria(e.target.value)}
-                >
-                  <option value="">Escoja la categoría del alimento</option>
-                  {categorias.map((cat) => (
-                    <option key={cat.IdCategoria} value={cat.IdCategoria}>
-                      {cat.nombreCategoria}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Fecha de entrada</label>
-                <input
-                  type="date"
-                  value={fechaEntrada}
-                  onChange={(e) => setFechaEntrada(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="modal-buttons">
-              <button onClick={closeModal} className="cancel-button">Cancelar</button>
-              <button onClick={handleSubmit} className="submit-button">Guardar</button>
-            </div>
-          </div>
+{/* Modal para Alimentos */}
+{isModalOpen && (
+  <div className="modal-overlay">
+    <div className="modal-content">
+      <h2>Insertar Alimentos</h2>
+      <div className="modal-form">
+        <div className="form-group">
+          <label>ID Alimento</label>
+          <input
+            type="number"
+            placeholder="Ingrese el ID del alimento"
+            value={alimentoId}
+            onChange={(e) => setAlimentoId(e.target.value)}
+          />
         </div>
-      )}
+        <div className="form-group">
+          <label>Alimento</label>
+          <input
+            type="text"
+            placeholder="Ingrese nombre de alimento"
+            value={alimento}
+            onChange={(e) => setAlimento(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>Cantidad Disponible</label>
+          <input
+            type="number"
+            placeholder="Ingrese cantidad disponible"
+            value={cantidadDisponible}
+            onChange={(e) => setCantidadDisponible(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>Cantidad Mínima</label>
+          <input
+            type="number"
+            placeholder="Ingrese cantidad mínima"
+            value={cantidadMinima}
+            onChange={(e) => setCantidadMinima(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>Categoría</label>
+          <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+            <option value="">Selecciona una categoría</option>
+            {categorias.map((cat) => (
+              <option key={cat.IdCategoria} value={cat.IdCategoria}>
+                {cat.nombreCategoria}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="modal-buttons">
+          <button className="submit-button" onClick={handleSubmit}>Agregar</button>
+          <button className="cancel-button" onClick={closeModal}>Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+{/* Modal para Categorías */}
+{isCategoryModalOpen && (
+  <div className="modal-overlay">
+    <div className="modal-content">
+      <h2>Crear Categoría</h2>
+      <div className="modal-form">
+        <div className="form-group">
+          <label>Nombre Categoría</label>
+          <input
+            type="text"
+            placeholder="Ingrese nombre de la categoría"
+            value={nombreCategoria}
+            onChange={(e) => setNombreCategoria(e.target.value)}
+          />
+        </div>
+        <div className="modal-buttons">
+          <button className="submit-button" onClick={handleCategorySubmit}>Agregar Categoría</button>
+          <button className="cancel-button" onClick={closeCategoryModal}>Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

@@ -21,7 +21,7 @@ function Login() {
       contrasena: Contrasena, 
     })
       .then((response) => {
-        if (response.data.message === "Usuario existente") {
+        if (response.data.message === "Inicio de sesión exitoso")  {
           setError('');
           navigate('/home'); 
         } else {

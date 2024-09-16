@@ -185,33 +185,38 @@ app.put("/editar_usuario/:id", (req, res) => {
 });
 
 // Endpoint para login
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+app.post("/login", (req, res) => {
+    const { nombre, contrasena } = req.body;
 
-    // Consulta a la base de datos
-    db.query('SELECT * FROM usuario WHERE Nombres = ?', [username], (err, result) => {
-        if (err) return res.status(500).send("Error en el servidor");
+    // Consultar la base de datos solo por el nombre de usuario
+    db.query('SELECT * FROM usuario WHERE Nombres = ?', [nombre], (err, results) => {
+        if (err) {
+            console.error("Error al autenticar usuario: ", err);
+            return res.status(500).send("Error al autenticar usuario");
+        }
 
-        if (result.length > 0) {
-            const passwordFromDatabase = result[0].Contraseña;
+        // Verificar si el usuario existe
+        if (results.length > 0) {
+            const usuario = results[0];
+            console.log("Contraseña en la base de datos:", usuario.Contraseña);
+            console.log("Contraseña ingresada:", contrasena);
 
-            // Comparar la contraseña ingresada con la hasheada
-            bcrypt.compare(password, passwordFromDatabase, (err, isMatch) => {
+            // Comparar la contraseña ingresada con la almacenada en la base de datos
+            bcrypt.compare(contrasena, usuario.Contraseña, (err, esIgual) => {
                 if (err) {
-                    return res.status(500).send("Error al comparar contraseñas");
+                    console.error("Error al comparar contraseñas: ", err);
+                    return res.status(500).send("Error al autenticar usuario");
                 }
 
-                if (isMatch) {
-                    // Contraseña correcta
-                    res.json({ success: true });
+                // Si las contraseñas coinciden
+                if (esIgual) {
+                    return res.json({ message: "Inicio de sesión exitoso" });
                 } else {
-                    // Contraseña incorrecta
-                    res.status(401).send("Contraseña incorrecta");
+                    return res.json({ message: "Nombre o contraseña incorrectos" });
                 }
             });
         } else {
-            // Usuario no encontrado
-            res.status(404).send("Usuario no encontrado");
+            return res.json({ message: "Nombre o contraseña incorrectos" });
         }
     });
 });

@@ -122,7 +122,7 @@ app.post('/insertar_alimento', async (req, res) => {
 
         // Inserción en la tabla entrada_alimentos
         const insertEntradaQuery = `
-            INSERT INTO entrada_alimentos (IdAlimento, fechaEntrada, observacion, IdUsuario)
+            INSERT INTO entrada_alimentos (IdAlimento, fechaEntrada, observacion, NDocumento)
             VALUES (?, ?, ?, ?)
         `;
         await connection.execute(insertEntradaQuery, [IdAlimento, fechaEntrada, 'Observación de ejemplo', 1]);
@@ -144,7 +144,7 @@ app.post('/insertar_alimento', async (req, res) => {
 
 // Endpoint para obtener usuarios
 app.get('/usuarios', (req, res) => {
-    const sql = 'SELECT IdUsuario, Nombres, Apellidos, Rol, numeroDocumento FROM usuario';
+    const sql = 'SELECT nDocumento, Nombres, Apellidos, Rol, correoElectronico FROM usuario';
     
     db.query(sql, (err, result) => {
         if (err) {
@@ -155,10 +155,13 @@ app.get('/usuarios', (req, res) => {
     });
 });
 
+
+
+
 // Endpoint para editar un usuario
-app.put("/editar_usuario/:id", (req, res) => {
-    const { id } = req.params;
-    const { nombres, apellidos, rol, tipoDocumento, numeroDocumento, contrasena } = req.body;
+app.put("/editar_usuario/:nDocumento", (req, res) => {
+    const { nDocumento } = req.params;
+    const { nombres, apellidos, rol, tipoDocumento, contrasena } = req.body;
 
     // Si la contraseña es nueva, hashearla
     bcrypt.hash(contrasena, 10, (err, hash) => {
@@ -168,10 +171,10 @@ app.put("/editar_usuario/:id", (req, res) => {
 
         const query = `
             UPDATE usuario 
-            SET Nombres = ?, Apellidos = ?, Rol = ?, tipoDocumento = ?, numeroDocumento = ?, Contraseña = ? 
-            WHERE IdUsuario = ?
+            SET Nombres = ?, Apellidos = ?, Rol = ?, tipoDocumento = ?, Contraseña = ? 
+            WHERE NDocumento = ?
         `;
-        const values = [nombres, apellidos, rol, tipoDocumento, numeroDocumento, hash, id];
+        const values = [nombres, apellidos, rol, tipoDocumento, hash, nDocumento];
 
         db.query(query, values, (err, result) => {
             if (err) {

@@ -4,8 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom'; // Para obtener el ID
 import Footer from './components/footer';
 import Navbar from './components/navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faFileLines, faLock, faPeopleGroup, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import './assets/css/Forms.css';
+import { faUser, faAddressCard,faAddressBook, faLock, faPeopleGroup, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import './assets/css/Styles.css';
 
 const UserEdit = () => {
   const [nombres, setNombres] = useState('');
@@ -100,7 +100,7 @@ const UserEdit = () => {
           </div>
 
           <div className="form-group">
-            <FontAwesomeIcon icon={faFileLines} fontSize={20} className='icons' />
+            <FontAwesomeIcon icon={faAddressBook} fontSize={20} className='icons' />
             <label>Tipo de Documento:</label>
             <select
               value={tipoDocumento}
@@ -115,7 +115,7 @@ const UserEdit = () => {
           </div>
 
           <div className="form-group">
-            <FontAwesomeIcon icon={faFileLines} fontSize={20} className='icons' />
+            <FontAwesomeIcon icon={faAddressCard} fontSize={20} className='icons' />
             <label>N° de Documento:</label>
             <input
               type="text"
@@ -168,6 +168,7 @@ const UserEdit = () => {
 
           <div className="buttons-container">
             <button type="submit" className="save-button">Guardar Cambios</button>
+            <button type="submit" className="delete-button">Eliminar Usuario</button>
           </div>
         </form>
       </div>

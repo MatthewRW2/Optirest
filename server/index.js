@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -32,20 +33,24 @@ app.listen(3001, () => {
 
 // Endpoint para registrar usuarios
 app.post("/registro", (req, res) => {
-    const Nombres = req.body.nombres; 
-    const Apellidos = req.body.apellidos; 
-    const Email = req.body.email;
-    const TipoDocumento = req.body.tipoDocumento; 
-    const NumeroDocumento = req.body.numeroDocumento; 
-    const Contrasena = req.body.contrasena;
+    const { nombres, apellidos, email, tipoDocumento, numeroDocumento, contrasena } = req.body;
 
-    db.query('INSERT INTO usuario (NDocumento,Nombres, Apellidos, correoElectronico, tipoDocumento,Contraseña) VALUES (?,?,?,?,?,?)', [NumeroDocumento, Nombres, Apellidos, Email, TipoDocumento, Contrasena], 
-    (err, result) => {
-        if(err){
-            console.log(err);
-        }else{
-            res.send("registro exitoso");
+    // Hashear la contraseña antes de guardarla
+    bcrypt.hash(contrasena, 10, (err, hash) => {
+        if (err) {
+            return res.status(500).send("Error al hashear la contraseña");
         }
+
+        // Guardar el usuario con la contraseña hasheada
+        const query = 'INSERT INTO usuario (NDocumento, Nombres, Apellidos, correoElectronico, tipoDocumento, Contraseña) VALUES (?, ?, ?, ?, ?, ?)';
+        db.query(query, [numeroDocumento, nombres, apellidos, email, tipoDocumento, hash], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send("Error al registrar usuario");
+            } else {
+                res.send("Registro exitoso");
+            }
+        });
     });
 });
 
@@ -83,7 +88,7 @@ app.get("/detalle_menu", (req, res) => {
 
 // Endpoint para obtener categorías
 app.get("/categorias", (req, res) => {
-    const query = "SELECT nombreCategoria FROM categoria"; // Ajusta esto según la estructura de tu tabla
+    const query = "SELECT nombreCategoria FROM categoria";
     db.query(query, (err, result) => {
       if (err) {
         console.error("Error al obtener categorías: ", err);
@@ -92,7 +97,7 @@ app.get("/categorias", (req, res) => {
         res.json(result);
       }
     });
-  });
+});
 
 // Endpoint para insertar nuevos alimentos
 app.post("/insertar_alimento", (req, res) => {
@@ -107,8 +112,82 @@ app.post("/insertar_alimento", (req, res) => {
         res.send("Alimento insertado exitosamente");
       }
     });
-  });
-// Cierre de la conexión (opcional, no es necesario cerrarla inmediatamente después de cada consulta)
+});
+
+app.get('/usuarios', (req, res) => {
+    const sql = 'SELECT IdUsuario, Nombres, Apellidos, Rol, numeroDocumento FROM usuario';
+    
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error('Error ejecutando la consulta:', err);
+        return res.status(500).json({ error: 'Error en el servidor' });
+      }
+      res.json(result); 
+    });
+});
+
+// Endpoint para editar un usuario
+app.put("/editar_usuario/:id", (req, res) => {
+    const { id } = req.params;
+    const { nombres, apellidos, rol, tipoDocumento, numeroDocumento, contrasena } = req.body;
+
+    // Si la contraseña es nueva, hashearla
+    bcrypt.hash(contrasena, 10, (err, hash) => {
+        if (err) {
+            return res.status(500).send("Error al hashear la contraseña");
+        }
+
+        const query = `
+            UPDATE usuario 
+            SET Nombres = ?, Apellidos = ?, Rol = ?, tipoDocumento = ?, numeroDocumento = ?, Contraseña = ? 
+            WHERE IdUsuario = ?
+        `;
+        const values = [nombres, apellidos, rol, tipoDocumento, numeroDocumento, hash, id];
+
+        db.query(query, values, (err, result) => {
+            if (err) {
+                console.error("Error al actualizar el usuario: ", err);
+                res.status(500).send("Error al actualizar el usuario");
+            } else {
+                res.send("Usuario actualizado exitosamente");
+            }
+        });
+    });
+});
+
+// Endpoint para login
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // Consulta a la base de datos
+    db.query('SELECT * FROM usuario WHERE Nombres = ?', [username], (err, result) => {
+        if (err) return res.status(500).send("Error en el servidor");
+
+        if (result.length > 0) {
+            const passwordFromDatabase = result[0].Contraseña;
+
+            // Comparar la contraseña ingresada con la hasheada
+            bcrypt.compare(password, passwordFromDatabase, (err, isMatch) => {
+                if (err) {
+                    return res.status(500).send("Error al comparar contraseñas");
+                }
+
+                if (isMatch) {
+                    // Contraseña correcta
+                    res.json({ success: true });
+                } else {
+                    // Contraseña incorrecta
+                    res.status(401).send("Contraseña incorrecta");
+                }
+            });
+        } else {
+            // Usuario no encontrado
+            res.status(404).send("Usuario no encontrado");
+        }
+    });
+});
+
+// Cierre de la conexión
 process.on('SIGINT', () => {
     db.end(err => {
         if (err) {

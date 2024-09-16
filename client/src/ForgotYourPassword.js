@@ -8,10 +8,12 @@ import './assets/css/Forms.css';
 function OlvidasteTuContraseña() {
   return (
     <div className="container-forms">
-      <div className="login-container">
-      <div className="img-forms">
-         src={require('./assets/img/logo2.png')} alt="Logo"
-         </div>
+      <div className="form-container">
+      <img 
+          className="img-forms" 
+          src={require('./assets/img/logo2.png')} 
+          alt="Logo"
+        />
          <h2 className='title-form'>Confirma tu correo</h2>
         <form>
           <div className="placeholder-container">

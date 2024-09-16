@@ -3,7 +3,7 @@ import Navbar from './components/navbar';
 import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faUserGroup , faUserGraduate, faClock} from '@fortawesome/free-solid-svg-icons';
-import './assets/css/Forms.css';
+import './assets/css/Styles.css';
 
 function UserRegister() {
   return (

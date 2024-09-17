@@ -27,13 +27,15 @@
   -- Estructura de tabla para la tabla `alimento`
   --
 
-  CREATE TABLE `alimento` (
-    `IdAlimento` int(11) NOT NULL,
-    `IdCategoria` int(11) NOT NULL,
-    `nombreAlimento` varchar(100) NOT NULL,
-    `cantidadDisponible` varchar(20) NOT NULL,
-    `cantidadMinima` varchar(20) NOT NULL
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `alimento` (
+  `IdAlimento` int(11) NOT NULL AUTO_INCREMENT,
+  `IdCategoria` int(11) NOT NULL,
+  `nombreAlimento` varchar(100) NOT NULL,
+  `cantidadDisponible` varchar(20) NOT NULL,
+  `cantidadMinima` varchar(20) NOT NULL,
+  PRIMARY KEY (`IdAlimento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
   --
   -- Volcado de datos para la tabla `alimento`

@@ -35,6 +35,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/userList" element={<UserList />} />
+          <Route path="/UserEdit/:nDocumento" element={<UserEdit />}/>
         </Routes>
       </div>
     </Router>

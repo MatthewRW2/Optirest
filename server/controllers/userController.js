@@ -11,6 +11,30 @@ exports.getAllUsers = (req, res) => {
     });
 };
 
+exports.getAllUsers = (req, res) => {
+    const sql = 'SELECT nDocumento, Nombres, Apellidos, Rol, correoElectronico FROM usuario';
+    db.query(sql, (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error en el servidor' });
+        }
+        res.json(result);
+    });
+};
+
+
+exports.getRol= (req, res) => {
+    const sql = `
+      SELECT DISTINCT Rol FROM usuario
+    `;
+    db.query(sql, (err, result) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      res.json(result);
+    });
+  };
+
+
 exports.editUser = (req, res) => {
     const { nDocumento } = req.params;
     const { nombres, apellidos, rol, tipoDocumento, contrasena } = req.body;

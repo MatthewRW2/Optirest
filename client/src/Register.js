@@ -3,6 +3,8 @@ import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock,faUserPen,faAddressCard,faAddressBook,faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 import './assets/css/Styles.css';
 
 const Register = () => {
@@ -14,6 +16,7 @@ const Register = () => {
   const [Contrasena, setContrasena] = useState('');
   const [ConfirmarContrasena, setConfirmarContrasena] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const add = (event) => {
     event.preventDefault();
@@ -33,6 +36,7 @@ const Register = () => {
     }).then(() => {
       alert("Usuario registrado");
       setError(''); 
+      navigate('/')
     }).catch(() => {
       setError('Hubo un error en el registro');
     });
@@ -87,7 +91,6 @@ const Register = () => {
             >
               <option value="">Seleccione su tipo de documento</option>
               <option value="CC">Cédula de Ciudadanía</option>
-              <option value="TI">Tarjeta de Identidad</option>
               <option value="CE">Cédula de Extranjería</option>
             </select>
           </div>

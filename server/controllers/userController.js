@@ -31,6 +31,27 @@ exports.getAllUsers = (req, res) => {
     });
 };
 
+exports.deleteUser = (req, res) => {
+    const { nDocumento } = req.params;
+
+    // Consulta para eliminar el usuario por el número de documento
+    const sql = 'DELETE FROM usuario WHERE nDocumento = ?';
+
+    db.query(sql, [nDocumento], (err, result) => {
+        if (err) {
+            console.error('Error al eliminar el usuario:', err);
+            return res.status(500).json({ error: 'Hubo un error al eliminar el usuario.' });
+        }
+
+        // Verificar si se eliminó algún registro
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Usuario eliminado exitosamente' });
+        } else {
+            res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+    });
+};
+
 exports.getAllUsers = (req, res) => {
     const sql = 'SELECT nDocumento, Nombres, Apellidos, Rol, correoElectronico FROM usuario';
     db.query(sql, (err, result) => {

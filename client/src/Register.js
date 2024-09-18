@@ -54,7 +54,7 @@ const Register = () => {
         <form onSubmit={add}>
           <div className="form-group">
             <FontAwesomeIcon icon={faUser} fontSize={20} className='icons'/>
-            <label className="l">Nombres:</label>
+            <label className="l">*Nombres:</label>
             <input
               type="text"
               onChange={(event) => setNombres(event.target.value)}
@@ -64,7 +64,7 @@ const Register = () => {
           </div>
           <div className="form-group">
           <FontAwesomeIcon icon={faUserPen} fontSize={20} className='icons'/>
-            <label className="l">Apellidos:</label>
+            <label className="l">*Apellidos:</label>
             <input
               type="text"
               onChange={(event) => setApellidos(event.target.value)}
@@ -74,7 +74,7 @@ const Register = () => {
           </div>
           <div className="form-group">
           <FontAwesomeIcon icon={faEnvelope} fontSize={20} className='icons'/>
-            <label className="l">Correo electrónico:</label>
+            <label className="l">*Correo electrónico:</label>
             <input
               type="email"
               onChange={(event) => setEmail(event.target.value)}
@@ -84,19 +84,19 @@ const Register = () => {
           </div>
           <div className="form-group">
           <FontAwesomeIcon icon={faAddressBook} fontSize={20} className='icons'/>
-            <label className="l">Tipo de Documento:</label>
+            <label className="l">*Tipo de Documento:</label>
             <select
               onChange={(event) => setTipoDocumento(event.target.value)}
               required
             >
-              <option value="">Seleccione su tipo de documento</option>
+              <option value="">*Seleccione su tipo de documento</option>
               <option value="CC">Cédula de Ciudadanía</option>
               <option value="CE">Cédula de Extranjería</option>
             </select>
           </div>
           <div className="form-group">
           <FontAwesomeIcon icon={faAddressCard} fontSize={20} className='icons'/>
-            <label className="l">N° de Documento:</label>
+            <label className="l">*N° de Documento:</label>
             <input
               type="text"
               onChange={(event) => setNumeroDocumento(event.target.value)}
@@ -106,7 +106,7 @@ const Register = () => {
           </div>
           <div className="form-group">
             <FontAwesomeIcon icon={faLock} fontSize={20} className='icons'></FontAwesomeIcon>
-            <label className="l">Contraseña:</label>
+            <label className="l">*Contraseña:</label>
             <input
               type="password"
               onChange={(event) => setContrasena(event.target.value)}
@@ -116,7 +116,7 @@ const Register = () => {
           </div>
           <div className="form-group">
             <FontAwesomeIcon icon={faLock} fontSize={20} className='icons'></FontAwesomeIcon>
-            <label className="l">Confirmar contraseña:</label>
+            <label className="l">*Confirmar contraseña:</label>
             <input
               type="password"
               onChange={(event) => setConfirmarContrasena(event.target.value)}

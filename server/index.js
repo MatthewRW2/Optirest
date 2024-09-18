@@ -12,11 +12,13 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const foodRoutes = require('./routes/foodRoutes');
 const menuRoutes = require('./routes/menuRoutes');
+const assistRoutes = require('./routes/assistRoutes');
 
 app.use('/', authRoutes);  // Incluye /login y /registro
 app.use('/', userRoutes);  // Incluye /usuarios y /editar_usuario/:nDocumento
 app.use('/', foodRoutes);  // Incluye /alimento, /categorias y /estadisticas
 app.use('/', menuRoutes);  // Incluye /detalle_menu
+app.use('/', assistRoutes);  // Incluye /Registro asistencia
 
 // Puerto en el que escucha el servidor
 app.listen(3001, () => {

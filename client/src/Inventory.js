@@ -9,6 +9,7 @@ const Inventory = () => {
   const [searchTrigger, setSearchTrigger] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); 
   const [IdAlimento, setIdAlimento] = useState(''); 
   const [alimento, setAlimento] = useState('');
   const [cantidadDisponible, setCantidadDisponible] = useState('');
@@ -44,6 +45,53 @@ const Inventory = () => {
 
   const closeCategoryModal = () => {
     setIsCategoryModalOpen(false); 
+  };
+
+  const openEditModal = (alimento) => {
+    setIdAlimento(alimento.IdAlimento);
+    setAlimento(alimento.nombreAlimento);
+    setCantidadDisponible(alimento.cantidadDisponible);
+    setCantidadMinima(alimento.cantidadMinima);
+    setCategoria(alimento.IdCategoria);
+    setIsEditModalOpen(true);
+    fetchCategorias();
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const handleEditSubmit = async () => {
+    const updatedAlimento = {
+      IdCategoria: categoria,
+      nombreAlimento: alimento,
+      cantidadDisponible,
+      cantidadMinima,
+    };
+  
+    try {
+      const response = await fetch(`http://localhost:3001/alimento/${IdAlimento}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedAlimento),
+      });
+  
+      if (response.ok) {
+        const updatedAlimentos = await fetch('http://localhost:3001/alimento')
+          .then((res) => res.json());
+        setAlimentos(updatedAlimentos);
+        alert('Alimento actualizado correctamente.');
+        closeEditModal();
+      } else {
+        const errorText = await response.text();
+        alert(`Error al actualizar el alimento: ${errorText}`);
+      }
+    } catch (error) {
+      console.error('Error al actualizar el alimento:', error);
+      alert('Hubo un error al intentar actualizar el alimento.');
+    }
   };
 
   const fetchCategorias = () => {
@@ -215,7 +263,7 @@ const Inventory = () => {
                           <td>{alimento.cantidadDisponible}</td>
                           <td>{alimento.cantidadMinima}</td>
                           <td>
-                            <button className="edit-btn-custom">Editar</button>
+                            <button className="edit-btn-custom" onClick={() => openEditModal(alimento)}>Editar</button>
                             <button
                               className="delete-btn-custom"
                               onClick={() => handleDelete(alimento.IdAlimento)}
@@ -326,7 +374,67 @@ const Inventory = () => {
       </div>
     </div>
   )}
-
+        {isEditModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Editar Alimento</h2>
+              <form className="modal-form">
+                <div className="form-group">
+                  <label>Nombre del Alimento:</label>
+                  <input 
+                    type="text" 
+                    value={alimento} 
+                    onChange={(e) => setAlimento(e.target.value)} 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Cantidad Disponible:</label>
+                  <input 
+                    type="number" 
+                    value={cantidadDisponible} 
+                    onChange={(e) => setCantidadDisponible(e.target.value)} 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Cantidad Mínima:</label>
+                  <input 
+                    type="number" 
+                    value={cantidadMinima} 
+                    onChange={(e) => setCantidadMinima(e.target.value)} 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Categoría:</label>
+                  <select 
+                    value={categoria} 
+                    onChange={(e) => setCategoria(e.target.value)}
+                  >
+                    <option value="">Seleccionar Categoría</option>
+                    {categorias.map((cat) => (
+                      <option key={cat.IdCategoria} value={cat.IdCategoria}>
+                        {cat.nombreCategoria}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </form>
+              <div className="modal-buttons">
+                <button 
+                  className="submit-button" 
+                  onClick={handleEditSubmit}
+                >
+                  Guardar Cambios
+                </button>
+                <button 
+                  className="cancel-button" 
+                  onClick={closeEditModal}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   };

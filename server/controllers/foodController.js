@@ -100,3 +100,33 @@ exports.deleteFood = (req, res) => {
         }
     });
 };
+
+
+// Editar un alimento en la tabla 'alimento'
+exports.updateFood = (req, res) => {
+    const { IdAlimento } = req.params; // ID del alimento que se va a editar
+    const { IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima } = req.body;
+
+    if (!IdAlimento) {
+        return res.status(400).send("El ID del alimento es obligatorio");
+    }
+
+    if (!IdCategoria || !nombreAlimento || !cantidadDisponible || !cantidadMinima) {
+        return res.status(400).send("Todos los campos son obligatorios");
+    }
+
+    const query = `
+        UPDATE alimento 
+        SET IdCategoria = ?, nombreAlimento = ?, cantidadDisponible = ?, cantidadMinima = ? 
+        WHERE IdAlimento = ?`;
+
+    db.query(query, [IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, IdAlimento], (err, result) => {
+        if (err) {
+            return res.status(500).send("Error al actualizar el alimento");
+        } else if (result.affectedRows === 0) {
+            return res.status(404).send("Alimento no encontrado");
+        } else {
+            res.status(200).send("Alimento actualizado correctamente");
+        }
+    });
+};

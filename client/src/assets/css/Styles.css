@@ -827,7 +827,7 @@ body {
 
 .user-table th, .user-table td {
   padding: 12px 15px;
-  text-align: left;
+  text-align: center;
 }
 
 .user-table th {
@@ -851,13 +851,6 @@ body {
   align-items: center;
 }
 
-.profile-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 15px;
-  border: 2px solid #ccc;
-}
 
 .action-buttons {
   display: flex;
@@ -901,6 +894,42 @@ body {
   height: 100vh;
   background-color: #D9D9D9;
   font-style: bold;
+}
+@media (max-width: 768px) {
+  .user-list-container {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .user-table th, .user-table td {
+    padding: 10px 5px;
+  }
+
+  .action-btn {
+    font-size: 18px;
+    padding: 5px;
+    width: 40px;
+  }
+
+  .profile-image {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .edit-btn, .delete-btn {
+    font-size: 20px;
+    padding: 6px;
+  }
+
+  .user-table th, .user-table td {
+    font-size: 14px;
+  }
+
+  .user-list-container {
+    padding: 5px;
+  }
 }
 
 

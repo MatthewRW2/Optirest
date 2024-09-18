@@ -55,9 +55,7 @@ const UserList = () => {
                     <tbody>
                         {users.map((user) => (
                             <tr key={user.nDocumento}>
-                                <td className="user-info">
-                                    <img src={`path-to-images/${user.nDocumento}.jpg`} alt="profile" className="profile-image" />
-                                    <span>{user.Nombres}</span>
+                                <td>{user.Nombres}
                                 </td>
                                 <td>{user.Apellidos}</td>
                                 <td>{user.Rol}</td>

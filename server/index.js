@@ -8,13 +8,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Importar rutas
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const foodRoutes = require('./routes/foodRoutes');
 const menuRoutes = require('./routes/menuRoutes');
 
-// Usar rutas con los mismos nombres de los endpoints
 app.use('/', authRoutes);  // Incluye /login y /registro
 app.use('/', userRoutes);  // Incluye /usuarios y /editar_usuario/:nDocumento
 app.use('/', foodRoutes);  // Incluye /alimento, /categorias y /estadisticas

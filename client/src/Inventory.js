@@ -1,15 +1,16 @@
-  import React, { useState, useEffect } from 'react';
-  import Navbar from './components/navbar';
-  import Footer from './components/footer';
-  import './assets/css/Styles.css';
+import React, { useState, useEffect } from 'react';
+import Navbar from './components/navbar';
+import Footer from './components/footer';
+import './assets/css/Styles.css';
 
-  const Inventory = () => {
+const Inventory = () => {
   const [alimentos, setAlimentos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTrigger, setSearchTrigger] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
-  const [IdAlimento, setIdAlimento] = useState(''); // Actualizado para usar IdAlimento
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); 
+  const [IdAlimento, setIdAlimento] = useState(''); 
   const [alimento, setAlimento] = useState('');
   const [cantidadDisponible, setCantidadDisponible] = useState('');
   const [cantidadMinima, setCantidadMinima] = useState('');
@@ -17,124 +18,191 @@
   const [categorias, setCategorias] = useState([]);
   const [nombreCategoria, setNombreCategoria] = useState('');
 
-    useEffect(() => {
-      // Fetch para obtener los alimentos
-      fetch('http://localhost:3001/alimento')
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Error al obtener alimentos');
-          }
-          return response.json();
-        })
-        .then((data) => setAlimentos(data))
-        .catch((error) => console.error('Error al obtener alimentos:', error));
-    }, []);
+  useEffect(() => {
+    fetch('http://localhost:3001/alimento')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al obtener alimentos');
+        }
+        return response.json();
+      })
+      .then((data) => setAlimentos(data))
+      .catch((error) => console.error('Error al obtener alimentos:', error));
+  }, []);
 
-    const openModal = () => {
-      setIsModalOpen(true);
-      fetchCategorias();
+  const openModal = () => {
+    setIsModalOpen(true);
+    fetchCategorias();
+  };
+
+  const openCategoryModal = () => {
+    setIsCategoryModalOpen(true); 
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const closeCategoryModal = () => {
+    setIsCategoryModalOpen(false); 
+  };
+
+  const openEditModal = (alimento) => {
+    setIdAlimento(alimento.IdAlimento);
+    setAlimento(alimento.nombreAlimento);
+    setCantidadDisponible(alimento.cantidadDisponible);
+    setCantidadMinima(alimento.cantidadMinima);
+    setCategoria(alimento.IdCategoria);
+    setIsEditModalOpen(true);
+    fetchCategorias();
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const handleEditSubmit = async () => {
+    const updatedAlimento = {
+      IdCategoria: categoria,
+      nombreAlimento: alimento,
+      cantidadDisponible,
+      cantidadMinima,
+    };
+  
+    try {
+      const response = await fetch(`http://localhost:3001/alimento/${IdAlimento}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedAlimento),
+      });
+  
+      if (response.ok) {
+        const updatedAlimentos = await fetch('http://localhost:3001/alimento')
+          .then((res) => res.json());
+        setAlimentos(updatedAlimentos);
+        alert('Alimento actualizado correctamente.');
+        closeEditModal();
+      } else {
+        const errorText = await response.text();
+        alert(`Error al actualizar el alimento: ${errorText}`);
+      }
+    } catch (error) {
+      console.error('Error al actualizar el alimento:', error);
+      alert('Hubo un error al intentar actualizar el alimento.');
+    }
+  };
+
+  const fetchCategorias = () => {
+    fetch('http://localhost:3001/categorias')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al obtener categorías');
+        }
+        return response.json();
+      })
+      .then((data) => setCategorias(data))
+      .catch((error) => console.error('Error al obtener categorías:', error));
+  };
+
+  const handleSubmit = async () => {  
+    const nuevoAlimento = {
+      IdCategoria: categoria,
+      nombreAlimento: alimento,
+      cantidadDisponible,
+      cantidadMinima,
+    };
+  
+    try {
+      const response = await fetch('http://localhost:3001/insertar_alimento', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevoAlimento),
+      });
+  
+      if (response.ok) {
+        const updatedAlimentos = await fetch('http://localhost:3001/alimento')
+          .then((res) => res.json());
+        setAlimentos(updatedAlimentos);
+        alert('Alimento agregado correctamente.');
+        closeModal();
+      } else {
+        const errorText = await response.text();
+        alert(`Error al agregar el alimento: ${errorText}`);
+      }
+    } catch (error) {
+      console.error('Error al agregar alimento:', error);
+      alert('Hubo un error al intentar agregar el alimento.');
+    }
+  };
+  
+  const handleCategorySubmit = async () => {
+    const nuevaCategoria = {
+      IdCategoria: categorias.length + 1, 
+      nombreCategoria,
     };
 
-    const openCategoryModal = () => {
-      setIsCategoryModalOpen(true); // Ahora abrirá el modal de categorías
-    };
+    try {
+      const response = await fetch('http://localhost:3001/insertar_categoria', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevaCategoria),
+      }); 
 
-    const closeModal = () => {
-      setIsModalOpen(false);
-    };
+      if (response.ok) {
+        const data = await response.json();
+        setCategorias([...categorias, data]);
+        alert('Categoría agregada correctamente.');
+        closeCategoryModal();
+      } else {
+        alert('Error al agregar la categoría.');
+      }
+    } catch (error) {
+      console.error('Error al agregar la categoría:', error);
+      alert('Hubo un error al intentar agregar la categoría.');
+    }
+  };
 
-    const closeCategoryModal = () => {
-      setIsCategoryModalOpen(false); // Cerrará el modal de categorías
-    };
-
-    const fetchCategorias = () => {
-      // Fetch para obtener las categorías
-      fetch('http://localhost:3001/categorias')
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Error al obtener categorías');
-          }
-          return response.json();
-        })
-        .then((data) => setCategorias(data))
-        .catch((error) => console.error('Error al obtener categorías:', error));
-    };
-
-    const handleSubmit = async () => {  
-      const nuevoAlimento = {
-        IdCategoria: categoria,
-        nombreAlimento: alimento,
-        cantidadDisponible,
-        cantidadMinima,
-      };
-    
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar este alimento?');
+    if (confirmDelete) {
       try {
-        const response = await fetch('http://localhost:3001/insertar_alimento', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(nuevoAlimento),
+        const response = await fetch(`http://localhost:3001/alimento/${id}`, {
+          method: 'DELETE',
         });
-    
+  
         if (response.ok) {
           const updatedAlimentos = await fetch('http://localhost:3001/alimento')
-            .then((res) => res.json());
-          setAlimentos(updatedAlimentos);
-          alert('Alimento agregado correctamente.');
-          closeModal();
+          .then((res) => res.json());
+        setAlimentos(updatedAlimentos);
+          alert('Alimento eliminado correctamente.');
         } else {
-          const errorText = await response.text();
-          alert(`Error al agregar el alimento: ${errorText}`);
+          alert('Error al eliminar el alimento.');
         }
       } catch (error) {
-        console.error('Error al agregar alimento:', error);
-        alert('Hubo un error al intentar agregar el alimento.');
+        console.error('Error al eliminar el alimento:', error);
+        alert('Hubo un error al intentar eliminar el alimento.');
       }
-    };
-    
+    }
+  };
+  
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
+  const handleSearchSubmit = () => {
+    setSearchTrigger(searchTerm);
+  };
 
-    const handleCategorySubmit = async () => {
-      const nuevaCategoria = {
-        IdCategoria: categorias.length + 1, // Genera un nuevo ID
-        nombreCategoria,
-      };
+  const filteredAlimentos = alimentos.filter((alimento) =>
+    alimento.nombreAlimento.toLowerCase().includes(searchTrigger.toLowerCase())
+  );
 
-      try {
-        const response = await fetch('http://localhost:3001/insertar_categoria', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(nuevaCategoria),
-        }); 
-
-        if (response.ok) {
-          const data = await response.json();
-          setCategorias([...categorias, data]);
-          alert('Categoría agregada correctamente.');
-          closeCategoryModal();
-        } else {
-          alert('Error al agregar la categoría.');
-        }
-      } catch (error) {
-        console.error('Error al agregar la categoría:', error);
-        alert('Hubo un error al intentar agregar la categoría.');
-      }
-    };
-
-    const handleSearchChange = (event) => {
-      setSearchTerm(event.target.value);
-    };
-
-    const handleSearchSubmit = () => {
-      setSearchTrigger(searchTerm);
-    };
-
-    const filteredAlimentos = alimentos.filter((alimento) =>
-      alimento.nombreAlimento.toLowerCase().includes(searchTrigger.toLowerCase())
-    );
 
     return (
       <div>
@@ -161,19 +229,11 @@
                 </button>
                 <button
                   className="action-button-custom action-button-category"
-                  onClick={openCategoryModal} // Abre el modal de categorías
+                  onClick={openCategoryModal} 
                 >
                   Crear Categoría
                 </button>
-                <button 
-                  className="action-button-custom action-button-inventory" 
-                  onClick={() => alert('Agregar al inventario')}
-                >
-                  Agregar al Inventario
-                </button>
               </div>
-              
-
               <div className="menu-left-container-unique-custom">
                 <h2 className="menu-heading-unique-custom">Inventario de alimentos</h2>
                 <table className="menu-table-unique-custom">
@@ -195,8 +255,13 @@
                           <td>{alimento.cantidadDisponible}</td>
                           <td>{alimento.cantidadMinima}</td>
                           <td>
-                            <button className="edit-btn-custom">Editar</button>
-                            <button className="delete-btn-custom">Eliminar</button>
+                            <button className="edit-btn-custom" onClick={() => openEditModal(alimento)}>Editar</button>
+                            <button
+                              className="delete-btn-custom"
+                              onClick={() => handleDelete(alimento.IdAlimento)}
+                            >
+                              Eliminar
+                            </button>
                           </td>
                         </tr>
                       ))
@@ -301,7 +366,67 @@
       </div>
     </div>
   )}
-
+        {isEditModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Editar Alimento</h2>
+              <form className="modal-form">
+                <div className="form-group">
+                  <label>Nombre del Alimento:</label>
+                  <input 
+                    type="text" 
+                    value={alimento} 
+                    onChange={(e) => setAlimento(e.target.value)} 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Cantidad Disponible:</label>
+                  <input 
+                    type="number" 
+                    value={cantidadDisponible} 
+                    onChange={(e) => setCantidadDisponible(e.target.value)} 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Cantidad Mínima:</label>
+                  <input 
+                    type="number" 
+                    value={cantidadMinima} 
+                    onChange={(e) => setCantidadMinima(e.target.value)} 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Categoría:</label>
+                  <select 
+                    value={categoria} 
+                    onChange={(e) => setCategoria(e.target.value)}
+                  >
+                    <option value="">Seleccionar Categoría</option>
+                    {categorias.map((cat) => (
+                      <option key={cat.IdCategoria} value={cat.IdCategoria}>
+                        {cat.nombreCategoria}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </form>
+              <div className="modal-buttons">
+                <button 
+                  className="submit-button" 
+                  onClick={handleEditSubmit}
+                >
+                  Guardar Cambios
+                </button>
+                <button 
+                  className="cancel-button" 
+                  onClick={closeEditModal}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   };

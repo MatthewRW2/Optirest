@@ -39,13 +39,18 @@ exports.login = (req, res) => {
                 }
 
                 if (esIgual) {
-                    return res.json({ message: "Inicio de sesión exitoso" });
+                    // Aquí podrías generar un token JWT y devolverlo
+                    return res.json({
+                        message: "Inicio de sesión exitoso",
+                        nombre: usuario.Nombres, // Asegúrate de que el campo sea correcto
+                        rol: usuario.Rol // Asegúrate de que el campo sea correcto
+                    });
                 } else {
-                    return res.json({ message: "Correo electronico o contraseña incorrectos" });
+                    return res.json({ message: "Correo electrónico o contraseña incorrectos" });
                 }
             });
         } else {
-            return res.json({ message: "Correo o contraseña incorrectos" });
+            return res.json({ message: "Correo electrónico o contraseña incorrectos" });
         }
     });
 };

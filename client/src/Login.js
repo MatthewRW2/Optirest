@@ -21,16 +21,19 @@ function Login() {
     })
       .then((response) => {
         if (response.data.message === "Inicio de sesión exitoso") {
-          // Supongamos que recibes un token de autenticación en la respuesta
-          const token = response.data.token;
-          // Guardar el token en localStorage
-          localStorage.setItem('authToken', token);
+          const token = response.data.token; // Asegúrate de que el token se envíe si lo usas
+          const nombre = response.data.nombre; // Obtener el nombre del usuario
+          const rol = response.data.rol; // Obtener el rol del usuario
+          
+          localStorage.setItem('authToken', token); // Guardar el token en localStorage
           setError('');
+          
+          // Mostrar el mensaje de alerta
+          alert(`Inicio de sesión exitoso. Bienvenido ${nombre}, su rol es: ${rol}`);
+          
           navigate('/home');
         } else {
-          setError('Nombre o contraseña incorrectos');
-          console.log(CorreoElectronico);
-          console.log(Contrasena);
+          setError('Correo electrónico o contraseña incorrectos');
         }
       })
       .catch(() => {

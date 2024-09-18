@@ -23,9 +23,9 @@ exports.register = (req, res) => {
 };
 
 exports.login = (req, res) => {
-    const { nombre, contrasena } = req.body;
+    const { correoElectronico, contrasena } = req.body;
 
-    db.query('SELECT * FROM usuario WHERE Nombres = ?', [nombre], (err, results) => {
+    db.query('SELECT * FROM usuario WHERE correoElectronico = ?', [correoElectronico], (err, results) => {
         if (err) {
             return res.status(500).send("Error al autenticar usuario");
         }
@@ -41,11 +41,11 @@ exports.login = (req, res) => {
                 if (esIgual) {
                     return res.json({ message: "Inicio de sesión exitoso" });
                 } else {
-                    return res.json({ message: "Nombre o contraseña incorrectos" });
+                    return res.json({ message: "Correo electronico o contraseña incorrectos" });
                 }
             });
         } else {
-            return res.json({ message: "Nombre o contraseña incorrectos" });
+            return res.json({ message: "Correo o contraseña incorrectos" });
         }
     });
 };

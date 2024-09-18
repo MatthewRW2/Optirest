@@ -5,6 +5,7 @@ import Register from './Register';
 import Home from './Home';
 import UserRegister from './UserRegister';
 import MenuManagement from './MenuManagement'; 
+import ProtectedRoute from './ProtectedRoute';
 import './assets/css/App.css';
 import Schedule from './Schedule';
 import UserEdit from './UserEdit';
@@ -23,19 +24,19 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/UserRegister" element={<UserRegister />} />
-          <Route path="/menu-management" element={<MenuManagement />} />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/userEdit" element={<UserEdit />} />
+          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/UserRegister" element={<ProtectedRoute><UserRegister /></ProtectedRoute>} />
+          <Route path="/menu-management" element={<ProtectedRoute><MenuManagement /></ProtectedRoute>} />
+          <Route path="/schedule" element={<ProtectedRoute><Schedule /></ProtectedRoute>} />
+          <Route path="/userEdit" element={<ProtectedRoute><UserEdit /></ProtectedRoute>} />
           <Route path="/ForgotYourPassword" element={<ForgotYourPassword />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/userList" element={<UserList />} />
-          <Route path="/UserEdit/:nDocumento" element={<UserEdit />}/>
+          <Route path="/statistics" element={<ProtectedRoute><Statistics /></ProtectedRoute>} />
+          <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+          <Route path="/profile/:nDocumento" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/inventory" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
+          <Route path="/userList" element={<ProtectedRoute><UserList /></ProtectedRoute>} />
+          <Route path="/UserEdit/:nDocumento" element={<ProtectedRoute><UserEdit /></ProtectedRoute>}/>
         </Routes>
       </div>
     </Router>

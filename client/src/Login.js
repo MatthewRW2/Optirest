@@ -7,25 +7,30 @@ import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [Nombre, setNombre] = useState('');
+  const [CorreoElectronico, setCorreoElectronico] = useState('');
   const [Contrasena, setContrasena] = useState('');
-  const [error, setError] = useState(''); 
-  const navigate = useNavigate(); 
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = (event) => {
     event.preventDefault();
 
-
     Axios.post('http://localhost:3001/login', {
-      nombre: Nombre,
-      contrasena: Contrasena, 
+      correoElectronico: CorreoElectronico,
+      contrasena: Contrasena,
     })
       .then((response) => {
-        if (response.data.message === "Inicio de sesión exitoso")  {
+        if (response.data.message === "Inicio de sesión exitoso") {
+          // Supongamos que recibes un token de autenticación en la respuesta
+          const token = response.data.token;
+          // Guardar el token en localStorage
+          localStorage.setItem('authToken', token);
           setError('');
-          navigate('/home'); 
+          navigate('/home');
         } else {
           setError('Nombre o contraseña incorrectos');
+          console.log(CorreoElectronico);
+          console.log(Contrasena);
         }
       })
       .catch(() => {
@@ -50,14 +55,14 @@ function Login() {
                 fontSize={20}
                 className="icons"
               />
-              <label htmlFor="username">Nombre:</label>
+              <label htmlFor="username">Correo Electrónico:</label>
               <input
                 onChange={(event) => {
-                  setNombre(event.target.value);
+                  setCorreoElectronico(event.target.value);
                 }}
-                type="text"
+                type="email"
                 id="username"
-                placeholder="Ingrese su nombre"
+                placeholder="Ingrese su correo electrónico"
                 required
               />
             </div>

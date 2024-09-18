@@ -20,6 +20,11 @@ const Navbar = () => {
   const handleNavigation = (path) => {
     navigate(path);
   };
+  
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    navigate('/');
+  };
 
   return (
     <header className="navbar">
@@ -43,6 +48,9 @@ const Navbar = () => {
           <button className="navButton" onClick={() => handleNavigation('/UserRegister')}>
             Registro de asistencia
           </button>
+          <button className="navButton" onClick={() => handleNavigation('/userList')}>
+            Editar usuarios
+          </button>
           <button className="navButton" onClick={() => handleNavigation('/statistics')}>
             Estadísticas
           </button>
@@ -61,7 +69,7 @@ const Navbar = () => {
               <button className="menuButton" onClick={() => handleNavigation('/settings')}>
                 Configuración
               </button>
-              <button className="menuButton" onClick={() => handleNavigation('/')}>
+              <button className="menuButton" onClick={handleLogout}>
                 Cerrar sesión
               </button>
             </div>

@@ -79,3 +79,24 @@ exports.insertCategory = (req, res) => {
         }
     });
 };
+
+// Eliminar un alimento de la tabla 'alimento'
+exports.deleteFood = (req, res) => {
+    const { IdAlimento } = req.params;
+
+    if (!IdAlimento) {
+        return res.status(400).send("El ID del alimento es obligatorio");
+    }
+
+    const query = "DELETE FROM alimento WHERE IdAlimento = ?";
+
+    db.query(query, [IdAlimento], (err, result) => {
+        if (err) {
+            return res.status(500).send("Error al eliminar alimento");
+        } else if (result.affectedRows === 0) {
+            return res.status(404).send("Alimento no encontrado");
+        } else {
+            res.status(200).send("Alimento eliminado correctamente");
+        }
+    });
+};

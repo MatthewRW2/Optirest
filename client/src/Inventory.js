@@ -233,15 +233,7 @@ const Inventory = () => {
                 >
                   Crear Categoría
                 </button>
-                <button 
-                  className="action-button-custom action-button-inventory" 
-                  onClick={() => alert('Agregar al inventario')}
-                >
-                  Agregar al Inventario
-                </button>
               </div>
-              
-
               <div className="menu-left-container-unique-custom">
                 <h2 className="menu-heading-unique-custom">Inventario de alimentos</h2>
                 <table className="menu-table-unique-custom">

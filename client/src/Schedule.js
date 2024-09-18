@@ -1,84 +1,53 @@
-import React from 'react';
-import Footer from './components/footer';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/navbar';
-import './assets/css/Styles.css';
+import Footer from './components/footer';
+import '../src/assets/css/Styles.css';
 
-function Cronograma() {
+const Cronograma = () => {
+  const [cronograma, setCronograma] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/cronograma')
+      .then((response) => response.json())
+      .then((data) => setCronograma(data))
+      .catch((error) => console.error("Error al obtener el cronograma:", error));
+  }, []);
+
   return (
-    <div className='app-container'>
+    <div className="cronograma-page-container">
       <Navbar />
-      <div className='contenedorc'>
-      <h1 className='titleCronograma'>Cronograma de comidas(Semanas del 17 al 21 de Enero del 2022)</h1>
-        <table className="cronograma-table">
-          <thead>
-            <tr>
-              <th>Componentes</th>
-              <th>Lunes</th>
-              <th>Martes</th>
-              <th>Miércoles</th>
-              <th>Jueves</th>
-              <th>Viernes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Lácteo</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Fruta</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Verdura</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Carbohidratos</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Cereal</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Alimento Proteico</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="button-container">
-          <button className='button-' type="button">Agregar Alimento</button>
-          <button className='button' type="button">Eliminar Alimento</button>
+      <div className="cronograma-content-wrap">
+        <div className="cronograma-cronograma-container">
+          <h1>Cronograma de la Semana</h1>
+          {cronograma.length > 0 ? (
+            <table className="cronograma-cronograma-table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Fecha de Inicio</th>
+                  <th>Fecha de Fin</th>
+                  <th>Observación</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cronograma.map((item) => (
+                  <tr key={item.IdCronograma}>
+                    <td>{item.IdCronograma}</td>
+                    <td>{item.fechaInicio}</td>
+                    <td>{item.fechaFin}</td>
+                    <td>{item.Observación}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No hay cronogramas disponibles</p>
+          )}
         </div>
       </div>
       <Footer />
     </div>
   );
-}
+};
 
 export default Cronograma;

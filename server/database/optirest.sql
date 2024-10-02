@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-09-2024 a las 03:50:36
+-- Tiempo de generación: 02-10-2024 a las 23:25:08
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,33 +32,35 @@ CREATE TABLE `alimento` (
   `IdCategoria` int(11) NOT NULL,
   `nombreAlimento` varchar(100) NOT NULL,
   `cantidadDisponible` varchar(20) NOT NULL,
-  `cantidadMinima` varchar(20) NOT NULL
+  `cantidadMinima` varchar(20) NOT NULL,
+  `Fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `alimento`
 --
 
-INSERT INTO `alimento` (`IdAlimento`, `IdCategoria`, `nombreAlimento`, `cantidadDisponible`, `cantidadMinima`) VALUES
-(31, 2, 'Leche', '200', '50'),
-(32, 3, 'Pan Integral', '150', '30'),
-(33, 4, 'Pollo', '80', '20'),
-(34, 5, 'Arroz', '500', '100'),
-(35, 1, 'Plátanos', '120', '25'),
-(36, 2, 'Queso', '60', '15'),
-(37, 3, 'Pasta', '300', '50'),
-(38, 4, 'Carne de Res', '90', '30'),
-(39, 5, 'Frijoles', '400', '80'),
-(40, 1, 'Peras', '70', '15'),
-(41, 2, 'Yogurt', '150', '40'),
-(42, 3, 'Tortillas', '500', '100'),
-(43, 4, 'Pescado', '50', '10'),
-(44, 5, 'Lentejas', '250', '50'),
-(45, 1, 'Uvas', '60', '10'),
-(46, 2, 'Huevos', '300', '50'),
-(47, 3, 'Galletas', '200', '40'),
-(48, 4, 'Camarones', '30', '5'),
-(49, 5, 'Avena', '200', '30');
+INSERT INTO `alimento` (`IdAlimento`, `IdCategoria`, `nombreAlimento`, `cantidadDisponible`, `cantidadMinima`, `Fecha`) VALUES
+(31, 2, 'Leche', '200', '50', '2024-10-02 21:03:36'),
+(32, 3, 'Pan Integral', '150', '30', '2024-10-02 21:03:36'),
+(33, 4, 'Pollo', '80', '20', '2024-10-02 21:03:36'),
+(34, 5, 'Arroz', '500', '100', '2024-10-02 21:03:36'),
+(35, 1, 'Plátanos', '120', '25', '2024-10-02 21:03:36'),
+(36, 2, 'Queso', '60', '15', '2024-10-02 21:03:36'),
+(37, 3, 'Pasta', '300', '50', '2024-10-02 21:03:36'),
+(38, 4, 'Carne de Res', '90', '30', '2024-10-02 21:03:36'),
+(39, 5, 'Frijoles', '400', '80', '2024-10-02 21:03:36'),
+(40, 1, 'Peras', '70', '15', '2024-10-02 21:03:36'),
+(41, 2, 'Yogurt', '150', '40', '2024-10-02 21:03:36'),
+(42, 3, 'Tortillas', '500', '100', '2024-10-02 21:03:36'),
+(43, 4, 'Pescado', '50', '10', '2024-10-02 21:03:36'),
+(44, 5, 'Lentejas', '250', '50', '2024-10-02 21:03:36'),
+(45, 1, 'Uvas', '60', '10', '2024-10-02 21:03:36'),
+(46, 2, 'Huevos', '300', '50', '2024-10-02 21:03:36'),
+(47, 3, 'Galletas', '200', '40', '2024-10-02 21:03:36'),
+(48, 4, 'Camarones', '30', '5', '2024-10-02 21:03:36'),
+(49, 5, 'Avena', '200', '30', '2024-10-02 21:03:36'),
+(50, 1, 'ingrid', '3333', '4', '2024-10-28 05:00:00');
 
 -- --------------------------------------------------------
 
@@ -254,6 +256,13 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`nDocumento`, `Nombres`, `Apellidos`, `correoElectronico`, `Rol`, `tipoDocumento`, `Contraseña`) VALUES
+(1011, 'mateo', 'lopez', 'mateo@gmail.com', 'Inactivo', 'CC', '$2b$10$E03uNvd1zQHuRYijhKG2Juupf2yRvXfaAnB/TgBZTmFqiK/smh9kS');
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -368,7 +377,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `alimento`
 --
 ALTER TABLE `alimento`
-  MODIFY `IdAlimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `IdAlimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Restricciones para tablas volcadas

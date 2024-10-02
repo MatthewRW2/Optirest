@@ -1,7 +1,8 @@
 const db = require('../config/db');
 
+// Obtener todos los alimentos, incluyendo el campo fecha
 exports.getAllFoods = (req, res) => {
-    const query = "SELECT IdAlimento, IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima FROM alimento";
+    const query = "SELECT IdAlimento, IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, fecha FROM alimento";
     db.query(query, (err, result) => {
         if (err) {
             return res.status(500).send("Error al obtener alimentos");
@@ -11,6 +12,7 @@ exports.getAllFoods = (req, res) => {
     });
 };
 
+// Obtener todas las categorías
 exports.getCategories = (req, res) => {
     const query = "SELECT IdCategoria, nombreCategoria FROM categoria";
     db.query(query, (err, result) => {
@@ -22,6 +24,7 @@ exports.getCategories = (req, res) => {
     });
 };
 
+// Obtener estadísticas de alimentos por categoría
 exports.getStatistics = (req, res) => {
     const query = `
         SELECT categoria.nombreCategoria, COUNT(alimento.IdAlimento) AS cantidadAlimentos
@@ -39,43 +42,40 @@ exports.getStatistics = (req, res) => {
     });
 };
 
-// Insertar un alimento en la tabla 'alimento'
+// Insertar un alimento en la tabla 'alimento', incluyendo la fecha
 exports.insertFood = (req, res) => {
-    const { IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima } = req.body;
+    const { IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, fecha } = req.body;
   
-    if (!IdCategoria || !nombreAlimento || !cantidadDisponible || !cantidadMinima) {
-      return res.status(400).send("Todos los campos son obligatorios");
+    if (!IdCategoria || !nombreAlimento || !cantidadDisponible || !cantidadMinima || !fecha) {
+        return res.status(400).send("Todos los campos son obligatorios");
     }
   
-    const query = "INSERT INTO alimento (IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima) VALUES (?, ?, ?, ?)";
+    const query = "INSERT INTO alimento (IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, fecha) VALUES (?, ?, ?, ?, ?)";
   
-    db.query(query, [IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima], (err, result) => {
-      if (err) {
-        return res.status(500).send("Error al insertar alimento");
-      } else {
-        res.status(201).send("Alimento insertado correctamente");
-      }
+    db.query(query, [IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, fecha], (err, result) => {
+        if (err) {
+            return res.status(500).send("Error al insertar alimento");
+        } else {
+            res.status(201).send("Alimento insertado correctamente");
+        }
     });
 };
 
-  
-
-
 // Insertar una categoría en la tabla 'categoria'
 exports.insertCategory = (req, res) => {
-    const { IdCategoria, nombreCategoria } = req.body; // Agregar IdCategoria
+    const { IdCategoria, nombreCategoria } = req.body;
 
     if (!IdCategoria || !nombreCategoria) {
         return res.status(400).send("El ID y el nombre de la categoría son obligatorios");
     }
 
-    const query = "INSERT INTO categoria (IdCategoria, nombreCategoria) VALUES (?, ?)"; // Incluir IdCategoria
+    const query = "INSERT INTO categoria (IdCategoria, nombreCategoria) VALUES (?, ?)";
 
     db.query(query, [IdCategoria, nombreCategoria], (err, result) => {
         if (err) {
             return res.status(500).send("Error al insertar categoría");
         } else {
-            res.status(201).json({ id: IdCategoria, nombreCategoria }); // Usar el IdCategoria proporcionado
+            res.status(201).json({ id: IdCategoria, nombreCategoria });
         }
     });
 };
@@ -101,26 +101,25 @@ exports.deleteFood = (req, res) => {
     });
 };
 
-
-// Editar un alimento en la tabla 'alimento'
+// Editar un alimento en la tabla 'alimento', incluyendo la fecha
 exports.updateFood = (req, res) => {
     const { IdAlimento } = req.params; // ID del alimento que se va a editar
-    const { IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima } = req.body;
+    const { IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, fecha } = req.body;
 
     if (!IdAlimento) {
         return res.status(400).send("El ID del alimento es obligatorio");
     }
 
-    if (!IdCategoria || !nombreAlimento || !cantidadDisponible || !cantidadMinima) {
+    if (!IdCategoria || !nombreAlimento || !cantidadDisponible || !cantidadMinima || !fecha) {
         return res.status(400).send("Todos los campos son obligatorios");
     }
 
     const query = `
         UPDATE alimento 
-        SET IdCategoria = ?, nombreAlimento = ?, cantidadDisponible = ?, cantidadMinima = ? 
+        SET IdCategoria = ?, nombreAlimento = ?, cantidadDisponible = ?, cantidadMinima = ?, fecha = ? 
         WHERE IdAlimento = ?`;
 
-    db.query(query, [IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, IdAlimento], (err, result) => {
+    db.query(query, [IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, fecha, IdAlimento], (err, result) => {
         if (err) {
             return res.status(500).send("Error al actualizar el alimento");
         } else if (result.affectedRows === 0) {

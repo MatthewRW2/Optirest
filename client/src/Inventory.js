@@ -14,6 +14,7 @@ const Inventory = () => {
   const [alimento, setAlimento] = useState('');
   const [cantidadDisponible, setCantidadDisponible] = useState('');
   const [cantidadMinima, setCantidadMinima] = useState('');
+  const [fecha, setFecha] = useState(''); // Estado para la fecha
   const [categoria, setCategoria] = useState('');
   const [categorias, setCategorias] = useState([]);
   const [nombreCategoria, setNombreCategoria] = useState('');
@@ -53,6 +54,7 @@ const Inventory = () => {
     setCantidadDisponible(alimento.cantidadDisponible);
     setCantidadMinima(alimento.cantidadMinima);
     setCategoria(alimento.IdCategoria);
+    setFecha(alimento.fecha);
     setIsEditModalOpen(true);
     fetchCategorias();
   };
@@ -67,6 +69,7 @@ const Inventory = () => {
       nombreAlimento: alimento,
       cantidadDisponible,
       cantidadMinima,
+      fecha,
     };
   
     try {
@@ -112,6 +115,7 @@ const Inventory = () => {
       nombreAlimento: alimento,
       cantidadDisponible,
       cantidadMinima,
+      fecha,
     };
   
     try {
@@ -243,6 +247,7 @@ const Inventory = () => {
                       <th>CATEGORÍA</th>
                       <th>CANTIDAD EXISTENTE</th>
                       <th>CANTIDAD MÍNIMA</th>
+                      <th>FECHA</th>
                       <th>ACCIONES</th>
                     </tr>
                   </thead>
@@ -254,6 +259,7 @@ const Inventory = () => {
                           <td>{alimento.IdCategoria}</td>
                           <td>{alimento.cantidadDisponible}</td>
                           <td>{alimento.cantidadMinima}</td>
+                          <td>{alimento.fecha}</td>
                           <td>
                             <button className="edit-btn-custom" onClick={() => openEditModal(alimento)}>Editar</button>
                             <button
@@ -323,6 +329,14 @@ const Inventory = () => {
               onChange={(e) => setCantidadMinima(e.target.value)}
             />
           </div>
+          <div className="form-group">
+                <label>Fecha</label>
+                <input
+                  type="date"
+                  value={fecha}
+                  onChange={(e) => setFecha(e.target.value)} // Input para la fecha
+                />
+              </div>
           <div className="form-group">
             <label>Categoría</label>
             <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>

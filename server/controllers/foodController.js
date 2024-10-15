@@ -92,16 +92,30 @@ exports.insertCategory = (req, res) => {
         return res.status(400).send("El ID y el nombre de la categoría son obligatorios");
     }
 
-    const query = "INSERT INTO categoria (IdCategoria, nombreCategoria) VALUES (?, ?)";
-
-    db.query(query, [IdCategoria, nombreCategoria], (err, result) => {
+    // Verificar si la categoría ya existe
+    const checkQuery = "SELECT * FROM categoria WHERE nombreCategoria = ?";
+    db.query(checkQuery, [nombreCategoria], (err, result) => {
         if (err) {
-            return res.status(500).send("Error al insertar categoría");
+            return res.status(500).send("Error al verificar si la categoría ya existe");
+        }
+
+        if (result.length > 0) {
+            // Si la categoría ya existe, retornar un error
+            return res.status(400).send("La categoría ya existe");
         } else {
-            res.status(201).json({ id: IdCategoria, nombreCategoria });
+            // Si no existe, insertar la nueva categoría
+            const insertQuery = "INSERT INTO categoria (IdCategoria, nombreCategoria) VALUES (?, ?)";
+            db.query(insertQuery, [IdCategoria, nombreCategoria], (err, result) => {
+                if (err) {
+                    return res.status(500).send("Error al insertar categoría");
+                } else {
+                    res.status(201).json({ id: IdCategoria, nombreCategoria });
+                }
+            });
         }
     });
 };
+
 
 // Eliminar un alimento de la tabla 'alimento'
 exports.deleteFood = (req, res) => {

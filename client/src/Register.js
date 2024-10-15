@@ -25,6 +25,11 @@ const Register = () => {
   const add = (event) => {
     event.preventDefault();
 
+    if (NumeroDocumento.length !== 10) {
+      setError('Ingrese un número de documento válido (10 dígitos)');
+      return;
+    }
+
     if (Contrasena !== ConfirmarContrasena) {
       setError('Las contraseñas no coinciden');
       return;

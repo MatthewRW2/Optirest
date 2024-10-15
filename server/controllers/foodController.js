@@ -24,23 +24,23 @@ exports.getCategories = (req, res) => {
     });
 };
 
-// Obtener estadísticas de alimentos por categoría
+// Obtener estadísticas de alimentos con categorías
 exports.getStatistics = (req, res) => {
     const query = `
-        SELECT categoria.nombreCategoria, COUNT(alimento.IdAlimento) AS cantidadAlimentos
-        FROM alimento
-        JOIN categoria ON alimento.IdCategoria = categoria.IdCategoria
-        GROUP BY categoria.nombreCategoria
+      SELECT categoria.nombreCategoria, alimento.nombreAlimento, 
+             alimento.cantidadDisponible, alimento.cantidadMinima, alimento.fecha
+      FROM alimento
+      JOIN categoria ON alimento.IdCategoria = categoria.IdCategoria
     `;
-
+  
     db.query(query, (err, result) => {
-        if (err) {
-            return res.status(500).send("Error al obtener estadísticas");
-        } else {
-            res.json(result);
-        }
+      if (err) {
+        return res.status(500).send("Error al obtener estadísticas");
+      } else {
+        res.json(result);
+      }
     });
-};
+  };
 
 // Insertar o actualizar alimento en la tabla 'alimento'
 exports.insertFood = (req, res) => {

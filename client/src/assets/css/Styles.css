@@ -965,3 +965,14 @@ input::placeholder {
 .action-button-inventory:hover {
   background-color: #003f80; /* Azul más oscuro en hover */
 }
+
+.statistics-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.statistics-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}

@@ -2,7 +2,7 @@ const express = require('express');
 const { 
     getAllFoods, 
     getCategories, 
-    getStatistics, 
+    getStatistics,   // Importamos el controlador de estadísticas
     insertFood, 
     insertCategory, 
     deleteFood, 
@@ -13,6 +13,10 @@ const router = express.Router();
 
 router.get('/alimento', getAllFoods);
 router.get('/categorias', getCategories);
+
+// Nueva ruta para obtener las estadísticas de alimentos por categoría
+router.get('/statistics', getStatistics); 
+
 router.post('/insertar_alimento', insertFood);
 router.post('/insertar_categoria', insertCategory);
 

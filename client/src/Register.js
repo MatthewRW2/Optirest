@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock,faUserPen,faAddressCard,faAddressBook,faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faUserPen, faAddressCard, faAddressBook, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
 import './assets/css/Styles.css';
 
 const Register = () => {
@@ -18,6 +17,12 @@ const Register = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Función para validar la contraseña
+  const validarContrasena = (contrasena) => {
+    const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return regex.test(contrasena);
+  };
+
   const add = (event) => {
     event.preventDefault();
 
@@ -26,26 +31,31 @@ const Register = () => {
       return;
     }
 
+    if (!validarContrasena(Contrasena)) {
+      setError('La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial');
+      return;
+    }
+
     Axios.post("http://localhost:3001/registro", {
       nombres: Nombres,
       apellidos: Apellidos,
-      email : Email,
+      email: Email,
       tipoDocumento: TipoDocumento,
       numeroDocumento: NumeroDocumento,
       contrasena: Contrasena
     }).then(() => {
       alert("Usuario registrado");
-      setError(''); 
-      navigate('/')
+      setError('');
+      navigate('/');
     }).catch(() => {
       setError('Hubo un error en el registro');
     });
   };
 
   return (
-      <div className='container-form'>
+    <div className='container-form'>
       <div className="form-container">
-      <img 
+        <img 
           className="img-forms" 
           src={require('./assets/img/logo2.png')} 
           alt="Logo"
@@ -53,7 +63,7 @@ const Register = () => {
         <h2 className='title-form'>Registrar Usuario</h2>
         <form onSubmit={add}>
           <div className="form-group">
-            <FontAwesomeIcon icon={faUser} fontSize={20} className='icons'/>
+            <FontAwesomeIcon icon={faUser} fontSize={20} className='icons' />
             <label className="l">*Nombres:</label>
             <input
               type="text"
@@ -63,7 +73,7 @@ const Register = () => {
             />
           </div>
           <div className="form-group">
-          <FontAwesomeIcon icon={faUserPen} fontSize={20} className='icons'/>
+            <FontAwesomeIcon icon={faUserPen} fontSize={20} className='icons' />
             <label className="l">*Apellidos:</label>
             <input
               type="text"
@@ -73,7 +83,7 @@ const Register = () => {
             />
           </div>
           <div className="form-group">
-          <FontAwesomeIcon icon={faEnvelope} fontSize={20} className='icons'/>
+            <FontAwesomeIcon icon={faEnvelope} fontSize={20} className='icons' />
             <label className="l">*Correo electrónico:</label>
             <input
               type="email"
@@ -83,7 +93,7 @@ const Register = () => {
             />
           </div>
           <div className="form-group">
-          <FontAwesomeIcon icon={faAddressBook} fontSize={20} className='icons'/>
+            <FontAwesomeIcon icon={faAddressBook} fontSize={20} className='icons' />
             <label className="l">*Tipo de Documento:</label>
             <select
               onChange={(event) => setTipoDocumento(event.target.value)}
@@ -95,7 +105,7 @@ const Register = () => {
             </select>
           </div>
           <div className="form-group">
-          <FontAwesomeIcon icon={faAddressCard} fontSize={20} className='icons'/>
+            <FontAwesomeIcon icon={faAddressCard} fontSize={20} className='icons' />
             <label className="l">*N° de Documento:</label>
             <input
               type="text"
@@ -124,10 +134,10 @@ const Register = () => {
               required
             />
           </div>
-          
+
           {error && <p style={{ color: 'red', marginBottom: '15px'}}>{error}</p>}
-          
-            <button className='form-button' type="submit">Registrarse</button>
+
+          <button className='form-button' type="submit">Registrarse</button>
           <div className="links">
             <a href="/">¿Ya tienes cuenta? Inicia sesión</a>
           </div>
@@ -139,5 +149,3 @@ const Register = () => {
 };
 
 export default Register;
-
-

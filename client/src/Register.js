@@ -17,7 +17,6 @@ const Register = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Función para validar la contraseña
   const validarContrasena = (contrasena) => {
     const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
     return regex.test(contrasena);

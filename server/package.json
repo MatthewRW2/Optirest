@@ -16,6 +16,8 @@
     "chart.js": "^4.4.5",
     "cors": "^2.8.5",
     "express": "^4.21.0",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "mysql": "^2.18.1",
     "react-chartjs-2": "^5.2.0",
     "util-deprecate": "^1.0.2"

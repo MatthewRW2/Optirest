@@ -22,6 +22,7 @@ router.post('/insertar_categoria', insertCategory);
 
 router.delete('/alimento/:IdAlimento', deleteFood);
 
+
 router.put('/alimento/:IdAlimento', updateFood);
 
 module.exports = router;

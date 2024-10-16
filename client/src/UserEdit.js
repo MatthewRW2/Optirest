@@ -22,6 +22,7 @@ const UserEdit = () => {
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
   const [rol, setRol] = useState('');
   const [rolesDisponibles, setRolesDisponibles] = useState([]);
+  const [tipoDocumentoDisponibles, setDocumentosDisponibles] = useState([]);
   const { nDocumento } = useParams();
   const navigate = useNavigate();
 
@@ -33,12 +34,22 @@ const UserEdit = () => {
         const user = response.data;
         setNombres(user.Nombres || '');
         setApellidos(user.Apellidos || '');
-        setTipoDocumento(user.TipoDocumento || '');
+        setTipoDocumento(user.tipoDocumento || '');
         setRol(user.Rol || '');
-        setCorreo(user.correo || '');
+        setCorreo(user.correoElectronico || '');
+        setContrasena(user.Contraseña || '');
       })
       .catch((error) => {
         console.error('Hubo un error al cargar los datos del usuario:', error);
+      });
+
+      Axios.get('http://localhost:3001/tipos_documentos')
+      .then((response) => {
+        const tDocumento = response.data.map((tipoDocumento) => tipoDocumento.TipoDocumento);
+        setDocumentosDisponibles(tDocumento);
+      })
+      .catch((error) => {
+        console.error('Hubo un error al cargar el tipo de documento:', error);
       });
 
     // Obtener roles disponibles desde el backend
@@ -51,6 +62,7 @@ const UserEdit = () => {
         console.error('Hubo un error al cargar los roles:', error);
       });
   }, [nDocumento]);
+
 
   // Manejar la actualización del usuario
   const handleSubmit = (e) => {
@@ -75,7 +87,8 @@ const UserEdit = () => {
       apellidos,
       tipoDocumento,
       contrasena,
-      rol
+      rol,
+      correo
     })
       .then((response) => {
         alert('Usuario actualizado exitosamente');
@@ -130,6 +143,8 @@ const UserEdit = () => {
               type="text"
               value={apellidos}
               onChange={(e) => setApellidos(e.target.value)}
+              placeholder="Ingrese sus apellidos"
+              required
             />
             <FontAwesomeIcon icon={faPenToSquare} fontSize={20} className="edit-icon" />
           </div>
@@ -143,6 +158,11 @@ const UserEdit = () => {
               required
             >
               <option value="">Seleccione su tipo de documento</option>
+              {tipoDocumentoDisponibles.map((tipoDocumento, index) => (
+            <option key={index} value={tipoDocumento}>
+                {tipoDocumento}
+            </option>
+            ))}
               <option value="CC">Cédula de Ciudadanía</option>
               <option value="CE">Cédula de Extranjería</option>
             </select>
@@ -152,7 +172,7 @@ const UserEdit = () => {
             <FontAwesomeIcon icon={faAddressCard} fontSize={20} className='icons' />
             <label>N° de Documento:</label>
             <input
-              type="text"
+              type="number"
               value={nDocumento}
               disabled
             />
@@ -172,6 +192,9 @@ const UserEdit = () => {
                   {rol}
                 </option>
               ))}
+                <option value= "Administrador">Administrador</option>
+                <option value= "PersonalDeCocina">Personal de cocina</option>
+                <option value= "Docente">Docente</option>
             </select>
           </div>
 
@@ -179,35 +202,13 @@ const UserEdit = () => {
             <FontAwesomeIcon icon={faEnvelope} fontSize={20} className='icons' />
             <label>Correo:</label>
             <input
-              type="text"
+              type="email"
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
+              placeholder="Ingrese su correo"
+              required
             />
             <FontAwesomeIcon icon={faPenToSquare} fontSize={20} className="edit-icon" />
-          </div>
-
-          <div className="form-group">
-            <FontAwesomeIcon icon={faLock} fontSize={20} className='icons' />
-            <label>Contraseña:</label>
-            <input
-              type="password"
-              value={contrasena}
-              onChange={(e) => setContrasena(e.target.value)}
-              placeholder="Ingrese su contraseña"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <FontAwesomeIcon icon={faLock} fontSize={20} className='icons' />
-            <label>Confirmar contraseña:</label>
-            <input
-              type="password"
-              value={confirmarContrasena}
-              onChange={(e) => setConfirmarContrasena(e.target.value)}
-              placeholder="Confirme su contraseña"
-              required
-            />
           </div>
 
           <div className="buttons-container">

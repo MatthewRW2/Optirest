@@ -31,7 +31,7 @@ const UserList = () => {
 
     // Función para manejar la eliminación
     const handleDelete = (nDocumento) => {
-        Axios.delete(`http://localhost:3001/usuarios/${nDocumento}`)
+        Axios.delete(`http://localhost:3001/usuario/${nDocumento}`)
             .then(() => {
                 setUsers(users.filter(user => user.nDocumento !== nDocumento)); // Elimina el usuario de la lista
             })

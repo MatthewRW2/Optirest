@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 exports.getUserProfile = (req, res) => {
     const nDocumento = req.params.nDocumento; // Obtener el nDocumento de los parámetros de la URL
 
-    const sql = 'SELECT nDocumento, Nombres, Apellidos, Rol, correoElectronico, tipoDocumento, Contraseña FROM Usuario WHERE nDocumento = ?';
+    const sql = 'SELECT * FROM Usuario WHERE nDocumento = ?';
     
     db.query(sql, [nDocumento], (err, result) => {
         if (err) {
@@ -59,7 +59,7 @@ exports.getAllUsers = (req, res) => {
             return res.status(500).json({ error: 'Error en el servidor' });
         }
         res.json(result);
-    });
+    }); 
 };
 
 
@@ -75,10 +75,21 @@ exports.getRol= (req, res) => {
     });
   };
 
+exports.getDocumentType= (req, res) => {
+    const sql = `
+      SELECT DISTINCT tipoDocumento FROM usuario
+    `;
+    db.query(sql, (err, result) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      res.json(result);
+    });
+};
 
 exports.editUser = (req, res) => {
     const { nDocumento } = req.params;
-    const { nombres, apellidos, rol, tipoDocumento, contrasena } = req.body;
+    const { nombres, apellidos, rol, correo, tipoDocumento, contrasena } = req.body;
 
     bcrypt.hash(contrasena, 10, (err, hash) => {
         if (err) {
@@ -87,10 +98,10 @@ exports.editUser = (req, res) => {
 
         const query = `
             UPDATE usuario 
-            SET Nombres = ?, Apellidos = ?, Rol = ?, tipoDocumento = ?, Contraseña = ? 
+            SET Nombres = ?, Apellidos = ?, correoElectronico = ?, Rol = ?,  tipoDocumento = ?
             WHERE NDocumento = ?
         `;
-        const values = [nombres, apellidos, rol, tipoDocumento, hash, nDocumento];
+        const values = [nombres, apellidos, rol, correo, tipoDocumento, hash, nDocumento];
 
         db.query(query, values, (err, result) => {
             if (err) {

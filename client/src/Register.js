@@ -25,8 +25,8 @@ const Register = () => {
   const add = (event) => {
     event.preventDefault();
 
-    if (NumeroDocumento.length !== 10) {
-      setError('Ingrese un número de documento válido (10 dígitos)');
+    if (NumeroDocumento.length !== 8 && NumeroDocumento.length !== 10){
+      setError('Ingrese un número de documento válido');
       return;
     }
 

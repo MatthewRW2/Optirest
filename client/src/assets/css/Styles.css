@@ -965,3 +965,37 @@ input::placeholder {
 .action-button-inventory:hover {
   background-color: #003f80; /* Azul más oscuro en hover */
 }
+
+.statistics-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.statistics-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.report-buttons-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 20px; /* Espacio entre los botones */
+}
+
+.report-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.report-button:hover {
+  background-color: #0056b3;
+}

@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/profile/:nDocumento', getUserProfile);
 router.get('/usuarios', getAllUsers);
-router.get('/usuarios/:nDocumento', getAllUsers);
+router.get('/usuario/:nDocumento', getAllUsers);
 router.put('/editar_usuario/:nDocumento', editUser);
 router.get('/roles', getRol);
-router.delete('/usuarios/:nDocumento', deleteUser);
+router.delete('/usuario/:nDocumento', deleteUser);
 module.exports = router;

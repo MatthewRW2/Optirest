@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 exports.getUserProfile = (req, res) => {
     const nDocumento = req.params.nDocumento; // Obtener el nDocumento de los parámetros de la URL
 
-    const sql = 'SELECT nDocumento, Nombres, Apellidos, Rol, correoElectronico, tipoDocumento FROM Usuario WHERE nDocumento = ?';
+    const sql = 'SELECT nDocumento, Nombres, Apellidos, Rol, correoElectronico, tipoDocumento, Contraseña FROM Usuario WHERE nDocumento = ?';
     
     db.query(sql, [nDocumento], (err, result) => {
         if (err) {

@@ -320,150 +320,119 @@ input::placeholder {
     }
   }
   
-  /* --- Menu Management Styles --- */
-  .menu-management-unique-container {
+  .menu-management-container {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
     justify-content: space-between;
-    height: 100vh;
-    background-color: #ffffff;
+    background-color: #e0e0e0;
   }
   
-
-  .menu-content-unique {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    gap: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    margin: 20px;
-    flex-grow: 1; 
-}
-  
-
-  .menu-left-unique,
-  .menu-right-unique {
-    width: 48%;
-  }
-  
-
-  .menu-left-container-unique {
-    background-color: #ffffff; 
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative; 
-    padding-top: 95px; 
-  }
-  
-
-  .menu-heading-unique {
-    background-color: #007bff;
-    color: #fff;
-    font-size: 1.6em;
-    padding: 10px 0;
+  .menu-management-form-container {
+    background-color: white;
+    border-radius: 12px;
+    padding: 30px;
+    width: 400px;
+    margin: 60px auto;
     text-align: center;
-    border-radius: 8px;
-    margin-bottom: 5px; 
-    position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-  
-  
-  /* Tabla del menú */
-  .menu-table-unique {
-    width: 100%;
-    border-collapse: collapse;
-   
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
   
-  .menu-table-unique th, .menu-table-unique td {
-    padding: 12px;
-    text-align: left;
-    font-size: 1.2em;
-    background-color: #d6d6d6; 
-  }
-  
-  .menu-table-unique th {
-    background-color: #007bff;
-    color: #fff;
-    font-size: 1.4em;
-  }
-  
-  /* Contenedor blanco para la sección derecha */
-  .right-box-unique {
-    background-color: #ffffff; 
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  /* Formato de los formularios */
-  .form-group-unique {
-    background-color: #e3e3e3;
+  .menu-management-title {
+    font-size: 24px;
+    font-weight: bold;
     margin-bottom: 20px;
-    padding: 0px 7px 15px 0px;
-    border-radius: 8px;
   }
   
-  .form-group-unique label {
+  .menu-management-group {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    background-color: #007bff;
-    height: 35px;
-    color: #fff;
-    font-size: 1.2em;
-    width: 100%;
+    margin-bottom: 15px;
   }
   
-  .form-group-unique input,
-  .form-group-unique select {
-    width: 80%;
+  .menu-management-input {
+    width: 100%;
     padding: 10px;
-    font-size: 1.2em;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    margin-right: 5px;
+    font-size: 16px;
   }
   
-  /* Botones */
-  .btn-gray-unique,
-  .btn-blue-unique,
-  .btn-submit-unique {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 1.2em;
-    font-weight: bold;
+  .menu-management-button,
+  .menu-management-button-date {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 18px;
     cursor: pointer;
-    text-align: center;
+    border-radius: 5px;
+    width: 40px;
   }
   
-  .btn-gray-unique {
-    background-color: #6c757d;
-    color: white;
-    margin-bottom: 10px;
-  }
-  
-  .btn-blue-unique {
+  .menu-management-submit {
     background-color: #007bff;
     color: white;
-    margin-bottom: 10px;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
   }
   
-  .btn-submit-unique {
+  .menu-management-submit:hover {
+    background-color: #0056b3;
+  }
+  
+  .menu-management-navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .menu-management-red-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    width: 48%;
+    cursor: pointer;
+  }
+  
+  .menu-management-green-button {
     background-color: #28a745;
     color: white;
-    margin-top: 15px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    width: 48%;
+    cursor: pointer;
   }
   
+  .menu-management-red-button:hover {
+    background-color: #c82333;
+  }
+  
+  .menu-management-green-button:hover {
+    background-color: #218838;
+  }
+  
+  @media (max-width: 768px) {
+    .menu-management-form-container {
+      width: 90%;
+      padding: 20px;
+    }
+  }
+  
+  
+
+
+
   /* Footer */
   footer {
     background-color: #0056b3;

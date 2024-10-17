@@ -97,7 +97,7 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faUser} className="profileIcon" onClick={toggleMenu} />
           {menuOpen && (
             <div className="profileMenu">
-              <button className="menuButton" onClick={() => handleNavigation('/profile')}>
+              <button className="menuButton" onClick={() => handleNavigation('/Profile')}>
                 Perfil
               </button>
               <button className="menuButton" onClick={() => handleNavigation('/settings')}>

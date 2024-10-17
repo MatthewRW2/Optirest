@@ -89,19 +89,14 @@ exports.getDocumentType= (req, res) => {
 
 exports.editUser = (req, res) => {
     const { nDocumento } = req.params;
-    const { nombres, apellidos, rol, correo, tipoDocumento, contrasena } = req.body;
-
-    bcrypt.hash(contrasena, 10, (err, hash) => {
-        if (err) {
-            return res.status(500).send("Error al hashear la contraseña");
-        }
+    const { nombres, apellidos, rol, correo, tipoDocumento} = req.body;
 
         const query = `
             UPDATE usuario 
-            SET Nombres = ?, Apellidos = ?, correoElectronico = ?, Rol = ?,  tipoDocumento = ?
+            SET Nombres = ?, Apellidos = ?, Rol = ?, correoElectronico = ?,  tipoDocumento = ?
             WHERE NDocumento = ?
         `;
-        const values = [nombres, apellidos, rol, correo, tipoDocumento, hash, nDocumento];
+        const values = [nombres, apellidos, rol, correo, tipoDocumento, nDocumento];
 
         db.query(query, values, (err, result) => {
             if (err) {
@@ -110,5 +105,4 @@ exports.editUser = (req, res) => {
                 res.send("Usuario actualizado exitosamente");
             }
         });
-    });
 };

@@ -10,7 +10,7 @@ const UserList = () => {
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1); // Estado para la página actual
     const [searchTerm, setSearchTerm] = useState(''); // Estado para la búsqueda
-    const usersPerPage = 5; // Número de usuarios por página
+    const usersPerPage = 4; // Número de usuarios por página
     const navigate = useNavigate(); // Hook para la navegación
 
     // Obtener los usuarios desde la base de datos cuando el componente se monta
@@ -78,15 +78,14 @@ const UserList = () => {
             <div className="user-list-container">
                 <h2 className="title-form">Lista de Usuarios</h2>
                 <input
+                
                     type="text"
                     placeholder="Buscar usuarios por nombre, apellido o N° de Documento..."
                     className="search-input-custom"
                     value={searchTerm}
                     onChange={handleSearchChange}
                 />
-                <button className="search-button-custom" onClick={() => { /* puedes agregar funcionalidad aquí si es necesario */ }}>
-                    <i className="fas fa-search"></i> 
-                </button>
+            
                 <table className="user-table">
                     <thead>
                         <tr>
@@ -124,7 +123,7 @@ const UserList = () => {
                     <button className="save-button" onClick={prevPage} disabled={currentPage === 1}>
                         Anterior
                     </button>
-                    <button className="save-button" onClick={nextPage} disabled={currentPage === Math.ceil(filteredUsers.length / usersPerPage)}>
+                    <button className="delete-button" onClick={nextPage} disabled={currentPage === Math.ceil(filteredUsers.length / usersPerPage)}>
                         Siguiente
                     </button>
                 </div>

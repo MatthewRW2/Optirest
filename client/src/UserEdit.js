@@ -4,22 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Footer from './components/footer';
 import Navbar from './components/navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faAddressCard, faAddressBook, faLock, faPeopleGroup, faEnvelope, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faAddressCard, faAddressBook, faPeopleGroup, faEnvelope, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import './assets/css/Styles.css';
-
-
-const validarContrasena = (contrasena) => {
-  const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-  return regex.test(contrasena);
-}; 
 
 const UserEdit = () => {
   const [nombres, setNombres] = useState('');
   const [apellidos, setApellidos] = useState('');
   const [tipoDocumento, setTipoDocumento] = useState('');
-  const [contrasena, setContrasena] = useState('');
   const [correo, setCorreo] = useState('');
-  const [confirmarContrasena, setConfirmarContrasena] = useState('');
   const [rol, setRol] = useState('');
   const [rolesDisponibles, setRolesDisponibles] = useState([]);
   const [tipoDocumentoDisponibles, setDocumentosDisponibles] = useState([]);
@@ -37,7 +29,6 @@ const UserEdit = () => {
         setTipoDocumento(user.tipoDocumento || '');
         setRol(user.Rol || '');
         setCorreo(user.correoElectronico || '');
-        setContrasena(user.Contraseña || '');
       })
       .catch((error) => {
         console.error('Hubo un error al cargar los datos del usuario:', error);
@@ -68,25 +59,11 @@ const UserEdit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-     // Validar que las contraseñas coincidan
-     if (contrasena !== confirmarContrasena) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-
-    // Validar la fortaleza de la contraseña
-    if (!validarContrasena(contrasena)) {
-      alert('La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial');
-      return;
-    }
-
-
     // Llamada PUT para editar el usuario
     Axios.put(`http://localhost:3001/editar_usuario/${nDocumento}`, {
       nombres,
       apellidos,
       tipoDocumento,
-      contrasena,
       rol,
       correo
     })

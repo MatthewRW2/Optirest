@@ -1,104 +1,100 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom'; // Importar para la navegación
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import './assets/css/Styles.css';
-import Axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
 
 const MenuManagement = () => {
-  const [detallesMenu, setDetallesMenu] = useState([]);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate(); // Hook para manejar la navegación
 
-  const getDetallesMenu = async () => {
-    try {
-      const response = await Axios.get("http://localhost:3001/detalle_menu");
-      setDetallesMenu(response.data);
-    } catch (error) {
-      console.error("Error al obtener los detalles del menú", error);
-    }
+  const goToSchedule = () => {
+    navigate('/schedule'); // Navega a la página del cronograma
   };
 
-  useEffect(() => {
-    getDetallesMenu();
-  }, []);
-
-  const handleNavigation = (path) => {
-    navigate(path); 
+  const goToInventory = () => {
+    navigate('/inventory'); // Navega a la página del inventario
   };
 
   return (
-    <div className="menu-management-unique-container">
+    <div className="menu-management-container">
       <Navbar />
-      <div className="menu-content-unique"> 
-        <div className="menu-left-unique">
-          <div className="menu-left-container-unique">    
-            <h2 className="menu-heading-unique">Menú del día</h2>  
-            <div className='container-table'>
-              <div className="menu-table-wrapper-unique">
-              <table className="menu-table-unique">
-                <thead>
-                  <tr>
-                    <th>Alimento</th>
-                    <th>Cantidad</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {detallesMenu.map((detalle, index) => (
-                    <tr key={index}>
-                      <td>{detalle.nombreAlimento}</td>
-                      <td>{detalle.cantidad}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="menu-right-unique">
-          <div className="right-box-unique">
-            <div className="form-group-unique">
-              <label htmlFor="date">Fecha:</label>
-              <div className="input-with-icon-unique">
-                <input type="date" id="date" />
-              </div>
-            </div>
-            <div className="form-group-unique">
-              <label htmlFor="course">Curso:</label>
-              <select id="course">
-                <option>Seleccione Curso</option>
-                <option>Curso 1</option>
-                <option>Curso 2</option>
-              </select>
-            </div>
-            <div className="form-group-unique">
-              <label htmlFor="level">Nivel Académico:</label>
-              <select id="level">
-                <option>Seleccione Nivel</option>
-                <option>Nivel 1</option>
-                <option>Nivel 2</option>
-              </select>
-            </div>
-            <div className="form-group-unique">
-              <label htmlFor="meals">Nº de Almuerzos:</label>
-              <input type="number" id="meals" value="45" readOnly />
-            </div>
-            <button 
-              className="btn-gray-unique" 
-              onClick={() => handleNavigation('/schedule')} 
-            >
-              Ir al cronograma
+      <div className="menu-management-form-container">
+        <h1 className="menu-management-title">Ingresar Menú</h1>
+        <form className="menu-management-form">
+          <div className="menu-management-group">
+            <input type="text" placeholder="Ingrese una Proteína" className="menu-management-input" />
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faPlus} />
             </button>
-            <button 
-              className="btn-blue-unique" 
-              onClick={() => handleNavigation('/inventory')} 
-            >
-              Ir al inventario
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faChevronDown} />
             </button>
-            <button className="btn-submit-unique">Enviar</button>
           </div>
-        </div>
+          <div className="menu-management-group">
+            <input type="text" placeholder="Ingrese un Carbohidrato" className="menu-management-input" />
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faChevronDown} />
+            </button>
+          </div>
+          <div className="menu-management-group">
+            <input type="text" placeholder="Ingrese un Lácteo" className="menu-management-input" />
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faChevronDown} />
+            </button>
+          </div>
+          <div className="menu-management-group">
+            <input type="text" placeholder="Ingrese una Fruta" className="menu-management-input" />
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faChevronDown} />
+            </button>
+          </div>
+          <div className="menu-management-group">
+            <input type="text" placeholder="Ingrese una Verdura" className="menu-management-input" />
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faChevronDown} />
+            </button>
+          </div>
+          <div className="menu-management-group">
+            <input type="text" placeholder="Ingrese una Legumbre" className="menu-management-input" />
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faChevronDown} />
+            </button>
+          </div>
+          <div className="menu-management-group">
+            <input type="text" placeholder="Ingrese una bebida" className="menu-management-input" />
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            <button type="button" className="menu-management-button">
+              <FontAwesomeIcon icon={faChevronDown} />
+            </button>
+          </div>
+          <div className="menu-management-group">
+            <input type="date" placeholder="Ingrese una fecha" className="menu-management-input" />
+          </div>
+          <button type="submit" className="menu-management-submit">Enviar</button>
+          <div className="menu-management-navigation-buttons">
+            <button type="button" className="menu-management-red-button" onClick={goToSchedule}>Ir al cronograma</button>
+            <button type="button" className="menu-management-green-button" onClick={goToInventory}>Ir al inventario</button>
+          </div>
+        </form>
       </div>
       <Footer />
     </div>

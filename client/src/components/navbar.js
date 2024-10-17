@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,13 @@ import '../assets/css/Navbar.css';
 const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userRole, setUserRole] = useState(null); // Nuevo estado para el rol del usuario
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const role = localStorage.getItem('userRole'); // Obtener el rol del usuario almacenado en localStorage
+    setUserRole(role); // Establecer el rol del usuario en el estado
+  }, []); // Se ejecuta solo cuando el componente se monta
 
   const toggleNav = () => {
     setNavOpen(!navOpen);
@@ -20,9 +26,10 @@ const Navbar = () => {
   const handleNavigation = (path) => {
     navigate(path);
   };
-  
+
   const handleLogout = () => {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userRole'); // Limpiar el rol del usuario
     navigate('/');
   };
 
@@ -42,21 +49,48 @@ const Navbar = () => {
         </div>
 
         <nav className={`nav ${navOpen ? 'nav-open' : ''}`}>
-          <button className="navButton" onClick={() => handleNavigation('/menu-management')}>
-            Gestión de Menús
-          </button>
-          <button className="navButton" onClick={() => handleNavigation('/UserRegister')}>
-            Registro de asistencia
-          </button>
-          <button className="navButton" onClick={() => handleNavigation('/userList')}>
-            Editar usuarios
-          </button>
-          <button className="navButton" onClick={() => handleNavigation('/statistics')}>
-            Estadísticas
-          </button>
-          <button className="navButton" onClick={() => handleNavigation('/reports')}>
-            Reportes
-          </button>
+          {/* Mostrar botones según el rol */}
+          {userRole === 'Administrador' && (
+            <>
+              <button className="navButton" onClick={() => handleNavigation('/menu-management')}>
+                Gestión de Menús
+              </button>
+              <button className="navButton" onClick={() => handleNavigation('/UserRegister')}>
+                Registro de asistencia
+              </button>
+              <button className="navButton" onClick={() => handleNavigation('/userList')}>
+                Editar usuarios
+              </button>
+              <button className="navButton" onClick={() => handleNavigation('/statistics')}>
+                Estadísticas
+              </button>
+              <button className="navButton" onClick={() => handleNavigation('/reports')}>
+                Reportes
+              </button>
+            </>
+          )}
+
+          {userRole === 'Docente' && (
+            <>
+              <button className="navButton" onClick={() => handleNavigation('/UserRegister')}>
+                Registro de asistencia
+              </button>
+              <button className="navButton" onClick={() => handleNavigation('/statistics')}>
+                Estadísticas
+              </button>
+              <button className="navButton" onClick={() => handleNavigation('/reports')}>
+                Reportes
+              </button>
+            </>
+          )}
+
+          {userRole === 'PersonalDeCocina' && (
+            <>
+              <button className="navButton" onClick={() => handleNavigation('/menu-management')}>
+                Gestión de Menús
+              </button>
+            </>
+          )}
         </nav>
 
         <div className="profile">

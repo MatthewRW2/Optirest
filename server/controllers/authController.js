@@ -30,27 +30,33 @@ exports.login = (req, res) => {
             return res.status(500).send("Error al autenticar usuario");
         }
 
-        if (results.length > 0) {
-            const usuario = results[0];
-
-            bcrypt.compare(contrasena, usuario.Contraseña, (err, esIgual) => {
-                if (err) {
-                    return res.status(500).send("Error al autenticar usuario");
-                }
-
-                if (esIgual) {
-                    // Aquí podrías generar un token JWT y devolverlo
-                    return res.json({
-                        message: "Inicio de sesión exitoso",
-                        nombre: usuario.Nombres, // Asegúrate de que el campo sea correcto
-                        rol: usuario.Rol // Asegúrate de que el campo sea correcto
-                    });
-                } else {
-                    return res.json({ message: "Correo electrónico o contraseña incorrectos" });
-                }
-            });
-        } else {
-            return res.json({ message: "Correo electrónico o contraseña incorrectos" });
+        // Verificar si hay resultados (usuario existe)
+        if (results.length === 0) {
+            return res.status(404).json({ message: "El usuario no existe" }); // Usuario no encontrado
         }
+
+        const usuario = results[0];
+
+        // Verificar si el usuario está activo
+        if (usuario.activo === 0) {
+            return res.status(403).json({ message: "El usuario no existe" });
+        }
+
+        bcrypt.compare(contrasena, usuario.Contraseña, (err, esIgual) => {
+            if (err) {
+                return res.status(500).send("Error al autenticar usuario");
+            }
+
+            if (esIgual) {
+
+                return res.json({
+                    message: "Inicio de sesión exitoso",
+                    nombre: usuario.Nombres, // Asegúrate de que el campo sea correcto
+                    rol: usuario.Rol // Asegúrate de que el campo sea correcto
+                });
+            } else {
+                return res.status(401).json({ message: "Correo electrónico o contraseña incorrectos" });
+            }
+        });
     });
 };

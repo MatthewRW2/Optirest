@@ -1,60 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import './assets/css/Styles.css';
-import { FaEdit, FaTrashAlt } from 'react-icons/fa'; // Iconos de FontAwesome
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // Estado para la página actual
-    const [searchTerm, setSearchTerm] = useState(''); // Estado para la búsqueda
-    const usersPerPage = 4; // Número de usuarios por página
-    const navigate = useNavigate(); // Hook para la navegación
+    const [currentPage, setCurrentPage] = useState(1); 
+    const [searchTerm, setSearchTerm] = useState(''); 
+    const usersPerPage = 4; 
+    const navigate = useNavigate(); 
 
-    // Obtener los usuarios desde la base de datos cuando el componente se monta
     useEffect(() => {
         Axios.get('http://localhost:3001/usuarios')
             .then((response) => {
-                setUsers(response.data); // Guardar los usuarios en el estado
+                setUsers(response.data); 
             })
             .catch((error) => {
                 console.error('Hubo un error obteniendo los usuarios: ', error);
             });
     }, []);
 
-    // Función para manejar la navegación
     const handleNavigation = (nDocumento) => {
-        navigate(`/UserEdit/${nDocumento}`); // Navega a la página UserEdit con el nDocumento como parámetro
+        navigate(`/UserEdit/${nDocumento}`); 
     };
 
-    // Función para manejar la eliminación
     const handleDelete = (nDocumento) => {
-        Axios.delete(`http://localhost:3001/usuario/${nDocumento}`)
-            .then(() => {
-                setUsers(users.filter(user => user.nDocumento !== nDocumento)); // Elimina el usuario de la lista
-            })
-            .catch((error) => {
-                console.error('Hubo un error eliminando el usuario: ', error);
-            });
+        const confirmed = window.confirm('¿Estás seguro de que deseas eliminar este usuario?');
+    
+        if (confirmed) {
+            Axios.delete(`http://localhost:3001/usuario/${nDocumento}`)
+                .then(() => {
+                    alert('Usuario eliminado exitosamente');
+                    // Filtrar la lista de usuarios para eliminar el que fue borrado
+                    setUsers((prevUsers) => prevUsers.filter(user => user.nDocumento !== nDocumento));
+                })
+                .catch((error) => {
+                    console.error('Hubo un error al eliminar el usuario:', error);
+                });
+        }
     };
+    
 
-    // Cálculo de los usuarios que se mostrarán en la página actual
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     
-    // Filtrar usuarios según el término de búsqueda
     const filteredUsers = users.filter(user => 
-        user.Nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (user.Nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.Apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.correoElectronico.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.nDocumento.toString().includes(searchTerm) // Filtrado por nDocumento
+        user.nDocumento.toString().includes(searchTerm)) &&
+        user.activo === 1
     );
 
     const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
-    // Funciones para cambiar de página
     const nextPage = () => {
         if (currentPage < Math.ceil(filteredUsers.length / usersPerPage)) {
             setCurrentPage(currentPage + 1);
@@ -69,7 +71,7 @@ const UserList = () => {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
-        setCurrentPage(1); // Resetea la página a 1 al buscar
+        setCurrentPage(1); 
     };
 
     return (
@@ -78,7 +80,6 @@ const UserList = () => {
             <div className="user-list-container">
                 <h2 className="title-form">Lista de Usuarios</h2>
                 <input
-                
                     type="text"
                     placeholder="Buscar usuarios por nombre, apellido o N° de Documento..."
                     className="search-input-custom"
@@ -118,7 +119,6 @@ const UserList = () => {
                     </tbody>
                 </table>
 
-                {/* Botones de paginación */}
                 <div className="buttons-container">
                     <button className="save-button" onClick={prevPage} disabled={currentPage === 1}>
                         Anterior

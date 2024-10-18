@@ -982,6 +982,12 @@ ALTER TABLE `grupo`
   ADD CONSTRAINT `IdNivelAcademicoFK` FOREIGN KEY (`IdNivelAcademico`) REFERENCES `nivel_academico` (`IdNivelAcademico`);
 COMMIT;
 
+--
+-- Añade una columna 'activo' a la tabla 'usuario' para indicar si el usuario está activo (1) o inactivo (0). El valor por defecto es 1 (activo).
+--
+ALTER TABLE usuario ADD COLUMN activo TINYINT(1) DEFAULT 1;
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

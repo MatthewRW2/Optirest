@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-10-2024 a las 23:54:51
+-- Tiempo de generación: 20-10-2024 a las 01:35:55
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -160,10 +160,51 @@ INSERT INTO `desperdicios` (`IdDesperdicio`, `Fecha`, `cantidad`, `descripcion`,
 CREATE TABLE `grupo` (
   `IdGrupo` int(11) NOT NULL,
   `Grado` char(10) NOT NULL,
-  `IdNivelAcademico` int(11) NOT NULL,
+  `NivelAcademico` enum('primaria','secundaria','media','superior') NOT NULL,
   `cantidadEstudiantes` int(3) NOT NULL,
   `vigenciaAño` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `grupo`
+--
+
+INSERT INTO `grupo` (`IdGrupo`, `Grado`, `NivelAcademico`, `cantidadEstudiantes`, `vigenciaAño`) VALUES
+(1, 'Primero', 'primaria', 30, 2023),
+(2, 'Segundo', 'primaria', 28, 2023),
+(3, 'Tercero', 'primaria', 25, 2023),
+(4, 'Cuarto', 'primaria', 27, 2023),
+(5, 'Quinto', 'primaria', 29, 2023),
+(6, 'Sexto', 'secundaria', 32, 2023),
+(7, 'Séptimo', 'secundaria', 31, 2023),
+(8, 'Octavo', 'secundaria', 30, 2023),
+(9, 'Noveno', 'secundaria', 28, 2023),
+(10, 'Décimo', 'media', 26, 2023),
+(11, 'Once', 'media', 24, 2023),
+(12, 'SENA', 'superior', 22, 2024),
+(101, 'Primero', 'primaria', 30, 2024),
+(102, 'Primero', 'primaria', 28, 2024),
+(201, 'Segundo', 'primaria', 25, 2024),
+(202, 'Segundo', 'primaria', 27, 2024),
+(301, 'Tercero', 'primaria', 29, 2024),
+(302, 'Tercero', 'primaria', 32, 2024),
+(401, 'Cuarto', 'secundaria', 31, 2024),
+(402, 'Cuarto', 'secundaria', 30, 2024),
+(501, 'Quinto', 'secundaria', 28, 2024),
+(502, 'Quinto', 'secundaria', 26, 2024),
+(601, 'Sexto', 'media', 24, 2024),
+(602, 'Sexto', 'media', 23, 2024),
+(701, 'Séptimo', 'media', 30, 2024),
+(702, 'Séptimo', 'media', 28, 2024),
+(801, 'Octavo', 'media', 25, 2024),
+(802, 'Octavo', 'media', 27, 2024),
+(901, 'Noveno', 'media', 29, 2024),
+(902, 'Noveno', 'media', 32, 2024),
+(1001, 'Décimo', 'media', 31, 2024),
+(1002, 'Décimo', 'media', 30, 2024),
+(1101, 'Once', 'media', 28, 2024),
+(1102, 'Once', 'media', 22, 2024),
+(290720, 'SENA', 'superior', 22, 2024);
 
 -- --------------------------------------------------------
 
@@ -332,7 +373,7 @@ ALTER TABLE `desperdicios`
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `IdGrupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `IdGrupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=290721;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`

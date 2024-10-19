@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2024 a las 23:51:10
+-- Tiempo de generación: 19-10-2024 a las 04:18:56
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -134,20 +134,20 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `alimento`
 --
 
-CREATE TABLE alimento (
-  IdAlimento int(11) NOT NULL,
-  IdCategoria int(11) NOT NULL,
-  nombreAlimento varchar(100) NOT NULL,
-  cantidadDisponible varchar(20) NOT NULL,
-  cantidadMinima varchar(20) NOT NULL,
-  Fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE `alimento` (
+  `IdAlimento` int(11) NOT NULL,
+  `IdCategoria` int(11) NOT NULL,
+  `nombreAlimento` varchar(100) NOT NULL,
+  `cantidadDisponible` varchar(20) NOT NULL,
+  `cantidadMinima` varchar(20) NOT NULL,
+  `Fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla alimento
+-- Volcado de datos para la tabla `alimento`
 --
 
-INSERT INTO alimento (IdAlimento, IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, Fecha) VALUES
+INSERT INTO `alimento` (`IdAlimento`, `IdCategoria`, `nombreAlimento`, `cantidadDisponible`, `cantidadMinima`, `Fecha`) VALUES
 (31, 2, 'Leche', '700', '50', '2024-10-16 05:00:00'),
 (32, 3, 'Pan Integral', '150', '30', '2024-10-02 21:03:36'),
 (33, 4, 'Pollo', '80', '20', '2024-10-02 21:03:36'),
@@ -554,20 +554,22 @@ CREATE TABLE `usuario` (
   `correoElectronico` varchar(100) NOT NULL,
   `Rol` enum('Administrador','Docente','PersonalDeCocina','Inactivo') NOT NULL DEFAULT 'Inactivo',
   `tipoDocumento` varchar(3) NOT NULL,
-  `Contraseña` varchar(255) NOT NULL
+  `Contraseña` varchar(255) NOT NULL,
+  `activo` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`nDocumento`, `Nombres`, `Apellidos`, `correoElectronico`, `Rol`, `tipoDocumento`, `Contraseña`) VALUES
-(11223344, 'Luis', 'Martínez', 'LM11@gmail.com', 'Inactivo', 'CC', 'hashed_password_789'),
-(12345678, 'Juan', 'Pérez', 'JuanPerez@gmail.com', 'Inactivo', 'CC', 'hashed_password_123'),
-(23456789, 'María', 'Rodríguez', 'RodriguezM@gmail.com', 'Inactivo', 'CE', 'hashed_password_012'),
-(34567890, 'Carlos', 'Fernández', 'FernandezC41@gmail.com', 'Inactivo', 'CC', 'hashed_password_345'),
-(87654321, 'Ana', 'Gómez', 'AnaGomez87@gmail.com', 'Inactivo', 'TI', 'hashed_password_456'),
-(1024483867, 'Brayan', 'Bernal', 'brayan@gmail.com', 'Inactivo', 'CC', '$2b$10$Ld9AfV.26Z2CY4DVYuYFN.qH9htGpqn1ZmTwqtn9EiEhZh1MIsUVW');
+INSERT INTO `usuario` (`nDocumento`, `Nombres`, `Apellidos`, `correoElectronico`, `Rol`, `tipoDocumento`, `Contraseña`, `activo`) VALUES
+(11223344, 'Luis', 'Martínez', 'LM11@gmail.com', 'Inactivo', 'CC', 'hashed_password_789', 1),
+(12345678, 'Juan', 'Pérez', 'JuanPerez@gmail.com', 'Inactivo', 'CC', 'hashed_password_123', 1),
+(23456789, 'María', 'Rodríguez', 'RodriguezM@gmail.com', 'Inactivo', 'CE', 'hashed_password_012', 1),
+(34567890, 'Carlos', 'Fernández', 'FernandezC41@gmail.com', 'Inactivo', 'CC', 'hashed_password_345', 1),
+(87654321, 'Ana', 'Gómez', 'AnaGomez87@gmail.com', 'Inactivo', 'TI', 'hashed_password_456', 1),
+(1024483867, 'Brayan', 'Bernal', 'brayan@gmail.com', 'Inactivo', 'CC', '$2b$10$Ld9AfV.26Z2CY4DVYuYFN.qH9htGpqn1ZmTwqtn9EiEhZh1MIsUVW', 1),
+(1121547988, 'mateo', 'lopez', 'mateo@gmail.com', 'Administrador', 'CC', '$2b$10$ih47PsvBfKKNSL1z.vwOf.E5hwFxg5Bjs3p25ss/rQoNtikACPEDG', 1);
 
 --
 -- Disparadores `usuario`
@@ -845,7 +847,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `alimento`
 --
 ALTER TABLE `alimento`
-  MODIFY `IdAlimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `IdAlimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT de la tabla `asignacion_alimenticia`
@@ -968,40 +970,7 @@ ALTER TABLE `desperdicios`
 ALTER TABLE `detalle_cronograma`
   ADD CONSTRAINT `IdCronogramaFK` FOREIGN KEY (`IdCronograma`) REFERENCES `cronograma` (`IdCronograma`),
   ADD CONSTRAINT `IdMenuFK` FOREIGN KEY (`IdMenu`) REFERENCES `menu` (`IdMenu`);
-
---
--- Filtros para la tabla `detalle_entrada`
---
-ALTER TABLE `detalle_entrada`
-  ADD CONSTRAINT `IdAlimento_FK` FOREIGN KEY (`IdAlimento`) REFERENCES `alimento` (`IdAlimento`),
-  ADD CONSTRAINT `IdEntradaAlimentosFK` FOREIGN KEY (`IdEntradaAlimentos`) REFERENCES `entrada_alimentos` (`IdEntradaAlimentos`);
-
---
--- Filtros para la tabla `detalle_menu`
---
-ALTER TABLE `detalle_menu`
-  ADD CONSTRAINT `IdAlimentoF` FOREIGN KEY (`IdAlimento`) REFERENCES `alimento` (`IdAlimento`),
-  ADD CONSTRAINT `IdMenuF` FOREIGN KEY (`IdMenu`) REFERENCES `menu` (`IdMenu`);
-
---
--- Filtros para la tabla `detalle_salida`
---
-ALTER TABLE `detalle_salida`
-  ADD CONSTRAINT `IdAlimentoFK` FOREIGN KEY (`IdAlimento`) REFERENCES `alimento` (`IdAlimento`),
-  ADD CONSTRAINT `IdSalidaAlimentosFK` FOREIGN KEY (`IdSalidaAlimentos`) REFERENCES `salida_alimentos` (`IdSalidaAlimentos`);
-
---
--- Filtros para la tabla `grupo`
---
-ALTER TABLE `grupo`
-  ADD CONSTRAINT `IdNivelAcademicoFK` FOREIGN KEY (`IdNivelAcademico`) REFERENCES `nivel_academico` (`IdNivelAcademico`);
 COMMIT;
-
---
--- Añade una columna 'activo' a la tabla 'usuario' para indicar si el usuario está activo (1) o inactivo (0). El valor por defecto es 1 (activo).
---
-ALTER TABLE usuario ADD COLUMN activo TINYINT(1) DEFAULT 1;
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -5,7 +5,6 @@ exports.getAllFoods = (req, res) => {
     const query = "SELECT IdAlimento, IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, fecha FROM alimento";
     db.query(query, (err, result) => {
         if (err) {
-            console.log(err)
             return res.status(500).send("Error al obtener alimentos");
         } else {
             res.json(result);

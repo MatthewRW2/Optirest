@@ -20,7 +20,6 @@ const UserEdit = () => {
 
   // Obtener datos del usuario y roles disponibles
   useEffect(() => {
-    // Obtener datos del usuario
     Axios.get(`http://localhost:3001/profile/${nDocumento}`)
       .then((response) => {
         const user = response.data;
@@ -34,7 +33,7 @@ const UserEdit = () => {
         console.error('Hubo un error al cargar los datos del usuario:', error);
       });
 
-      Axios.get('http://localhost:3001/tipos_documentos')
+    Axios.get('http://localhost:3001/tipos_documentos')
       .then((response) => {
         const tDocumento = response.data.map((tipoDocumento) => tipoDocumento.TipoDocumento);
         setDocumentosDisponibles(tDocumento);
@@ -43,7 +42,6 @@ const UserEdit = () => {
         console.error('Hubo un error al cargar el tipo de documento:', error);
       });
 
-    // Obtener roles disponibles desde el backend
     Axios.get('http://localhost:3001/roles')
       .then((response) => {
         const roles = response.data.map((rol) => rol.Rol);
@@ -54,12 +52,10 @@ const UserEdit = () => {
       });
   }, [nDocumento]);
 
-
   // Manejar la actualización del usuario
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Llamada PUT para editar el usuario
     Axios.put(`http://localhost:3001/editar_usuario/${nDocumento}`, {
       nombres,
       apellidos,
@@ -76,16 +72,20 @@ const UserEdit = () => {
       });
   };
 
-  // Manejar la eliminación del usuario
+  // Manejar la eliminación del usuario con confirmación
   const handleDelete = () => {
-    Axios.delete(`http://localhost:3001/usuario/${nDocumento}`)
-      .then(() => {
-        alert('Usuario eliminado exitosamente');
-        navigate('/userlist');
-      })
-      .catch((error) => {
-        console.error('Hubo un error al eliminar el usuario:', error);
-      });
+    const confirmed = window.confirm('¿Estás seguro de que deseas eliminar este usuario?');
+
+    if (confirmed) {
+      Axios.delete(`http://localhost:3001/usuario/${nDocumento}`)
+        .then(() => {
+          alert('Usuario eliminado exitosamente');
+          navigate('/userlist');
+        })
+        .catch((error) => {
+          console.error('Hubo un error al eliminar el usuario:', error);
+        });
+    }
   };
 
   return (
@@ -136,12 +136,10 @@ const UserEdit = () => {
             >
               <option value="">Seleccione su tipo de documento</option>
               {tipoDocumentoDisponibles.map((tipoDocumento, index) => (
-            <option key={index} value={tipoDocumento}>
-                {tipoDocumento}
-            </option>
-            ))}
-              <option value="CC">Cédula de Ciudadanía</option>
-              <option value="CE">Cédula de Extranjería</option>
+                <option key={index} value={tipoDocumento}>
+                  {tipoDocumento}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -169,9 +167,6 @@ const UserEdit = () => {
                   {rol}
                 </option>
               ))}
-                <option value= "Administrador">Administrador</option>
-                <option value= "PersonalDeCocina">Personal de cocina</option>
-                <option value= "Docente">Docente</option>
             </select>
           </div>
 

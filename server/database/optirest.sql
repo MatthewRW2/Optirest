@@ -134,24 +134,39 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `alimento`
 --
 
-CREATE TABLE `alimento` (
-  `IdAlimento` int(11) NOT NULL,
-  `IdCategoria` int(11) NOT NULL,
-  `nombreAlimento` varchar(100) NOT NULL,
-  `cantidadDisponible` varchar(20) NOT NULL,
-  `cantidadMinima` varchar(20) NOT NULL
+CREATE TABLE alimento (
+  IdAlimento int(11) NOT NULL,
+  IdCategoria int(11) NOT NULL,
+  nombreAlimento varchar(100) NOT NULL,
+  cantidadDisponible varchar(20) NOT NULL,
+  cantidadMinima varchar(20) NOT NULL,
+  Fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `alimento`
+-- Volcado de datos para la tabla alimento
 --
 
-INSERT INTO `alimento` (`IdAlimento`, `IdCategoria`, `nombreAlimento`, `cantidadDisponible`, `cantidadMinima`) VALUES
-(1, 1, 'Carne', '50', '10'),
-(2, 1, 'Pollo', '60', '15'),
-(3, 2, 'Arroz', '100', '20'),
-(4, 2, 'Frijoles', '80', '20'),
-(5, 3, 'Manzana', '150', '30');
+INSERT INTO alimento (IdAlimento, IdCategoria, nombreAlimento, cantidadDisponible, cantidadMinima, Fecha) VALUES
+(31, 2, 'Leche', '700', '50', '2024-10-16 05:00:00'),
+(32, 3, 'Pan Integral', '150', '30', '2024-10-02 21:03:36'),
+(33, 4, 'Pollo', '80', '20', '2024-10-02 21:03:36'),
+(34, 5, 'Arroz', '500', '100', '2024-10-02 21:03:36'),
+(35, 1, 'Plátanos', '120', '25', '2024-10-02 21:03:36'),
+(36, 2, 'Queso', '60', '15', '2024-10-02 21:03:36'),
+(37, 3, 'Pasta', '300', '50', '2024-10-02 21:03:36'),
+(38, 4, 'Carne de Res', '90', '30', '2024-10-02 21:03:36'),
+(39, 5, 'Frijoles', '400', '80', '2024-10-02 21:03:36'),
+(40, 1, 'Peras', '70', '15', '2024-10-02 21:03:36'),
+(41, 2, 'Yogurt', '150', '40', '2024-10-02 21:03:36'),
+(42, 3, 'Tortillas', '500', '100', '2024-10-02 21:03:36'),
+(43, 4, 'Pescado', '50', '10', '2024-10-02 21:03:36'),
+(44, 5, 'Lentejas', '250', '50', '2024-10-02 21:03:36'),
+(45, 1, 'Uvas', '60', '10', '2024-10-02 21:03:36'),
+(46, 2, 'Huevos', '300', '50', '2024-10-02 21:03:36'),
+(47, 3, 'Galletas', '200', '40', '2024-10-02 21:03:36'),
+(48, 4, 'Camarones', '30', '5', '2024-10-02 21:03:36'),
+(49, 5, 'Avena', '700', '30', '2024-10-16 05:00:00');
 
 -- --------------------------------------------------------
 
@@ -981,6 +996,12 @@ ALTER TABLE `detalle_salida`
 ALTER TABLE `grupo`
   ADD CONSTRAINT `IdNivelAcademicoFK` FOREIGN KEY (`IdNivelAcademico`) REFERENCES `nivel_academico` (`IdNivelAcademico`);
 COMMIT;
+
+--
+-- Añade una columna 'activo' a la tabla 'usuario' para indicar si el usuario está activo (1) o inactivo (0). El valor por defecto es 1 (activo).
+--
+ALTER TABLE usuario ADD COLUMN activo TINYINT(1) DEFAULT 1;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

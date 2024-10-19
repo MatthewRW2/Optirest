@@ -89,6 +89,12 @@ const Navbar = () => {
               <button className="navButton" onClick={() => handleNavigation('/menu-management')}>
                 Gestión de Menús
               </button>
+              <button className="navButton" onClick={() => handleNavigation('/inventory')}>
+                Inventario
+              </button>
+              <button className="navButton" onClick={() => handleNavigation('/schedule')}>
+                Cronograma
+              </button>
             </>
           )}
         </nav>

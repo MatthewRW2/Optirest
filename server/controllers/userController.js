@@ -22,7 +22,7 @@ exports.getUserProfile = (req, res) => {
 };
 
 exports.getAllUsers = (req, res) => {
-    const sql = 'SELECT nDocumento, Nombres, Apellidos, Rol, correoElectronico FROM usuario';
+    const sql = 'SELECT nDocumento, Nombres, Apellidos, Rol, correoElectronico, activo FROM usuario';
     db.query(sql, (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Error en el servidor' });
@@ -34,32 +34,23 @@ exports.getAllUsers = (req, res) => {
 exports.deleteUser = (req, res) => {
     const { nDocumento } = req.params;
 
-    // Consulta para eliminar el usuario por el número de documento
-    const sql = 'DELETE FROM usuario WHERE nDocumento = ?';
+    // Consulta para eliminar  - inactivar   el usuario por el número de documento
+     const sql = 'UPDATE usuario SET activo = 0 WHERE nDocumento = ?';
 
     db.query(sql, [nDocumento], (err, result) => {
-        if (err) {
-            console.error('Error al eliminar el usuario:', err);
-            return res.status(500).json({ error: 'Hubo un error al eliminar el usuario.' });
-        }
+    if (err) {
+        console.error('Error al desactivar el usuario:', err);
+        return res.status(500).json({ error: 'Hubo un error al desactivar el usuario.' });
+    }
 
-        // Verificar si se eliminó algún registro
-        if (result.affectedRows > 0) {
-            res.status(200).json({ message: 'Usuario eliminado exitosamente' });
-        } else {
-            res.status(404).json({ message: 'Usuario no encontrado' });
-        }
-    });
-};
+    // Verificar si se actualizó algún registro
+    if (result.affectedRows > 0) {
+        res.status(200).json({ message: 'Usuario desactivado exitosamente' });
+    } else {
+        res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+});
 
-exports.getAllUsers = (req, res) => {
-    const sql = 'SELECT nDocumento, Nombres, Apellidos, Rol, correoElectronico FROM usuario';
-    db.query(sql, (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: 'Error en el servidor' });
-        }
-        res.json(result);
-    }); 
 };
 
 

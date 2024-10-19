@@ -16,6 +16,7 @@ import Settings from './Settings'
 import Profile from './Profile'
 import Inventory from './Inventory';
 import UserList from './UserList';
+import Waste from './Waste';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/inventory" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
           <Route path="/userList" element={<ProtectedRoute><UserList /></ProtectedRoute>} />
           <Route path="/UserEdit/:nDocumento" element={<ProtectedRoute><UserEdit /></ProtectedRoute>}/>
+          <Route path="/waste" element={<ProtectedRoute><Waste/></ProtectedRoute>}/>
         </Routes>
       </div>
     </Router>

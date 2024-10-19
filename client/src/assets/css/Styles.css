@@ -849,6 +849,59 @@ input::placeholder {
   background-color: #D9D9D9;
   font-style: bold;
 }
+
+.buttons-container-list{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  margin-top: 20px;
+}
+.save-button-list {
+  background-color: #007bff;
+  font-size: 15px;
+  width: 30%;
+  height: 50px; ;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  color: white;
+}
+
+.save-button-list:hover {
+  background-color: #0056b3;
+}
+
+.delete-button-list {
+  background-color: #dc3545;
+  font-size: 15px;
+  width: 30%;
+  height: 50px; ;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  color: white;
+}
+
+.delete-button-list:hover {
+  background-color: #c82333;
+}
+.page-counter {
+  font-size: 16px; 
+  color: #333; 
+  margin: 10px; 
+  display: flex;
+  align-items: center; 
+  font-weight: bold;
+}
+
+
+
 @media (max-width: 768px) {
   .user-list-container {
     width: 100%;

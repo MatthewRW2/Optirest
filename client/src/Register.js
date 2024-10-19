@@ -48,7 +48,7 @@ const Register = () => {
       numeroDocumento: NumeroDocumento,
       contrasena: Contrasena
     }).then(() => {
-      alert("Usuario registrado");
+      alert("¡Registro exitoso! Bienvenido, tu cuenta ha sido creada, ya puedes iniciar sesión");
       setError('');
       navigate('/');
     }).catch(() => {

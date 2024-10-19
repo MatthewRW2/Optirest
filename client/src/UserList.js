@@ -34,7 +34,6 @@ const UserList = () => {
             Axios.delete(`http://localhost:3001/usuario/${nDocumento}`)
                 .then(() => {
                     alert('Usuario eliminado exitosamente');
-                    // Filtrar la lista de usuarios para eliminar el que fue borrado
                     setUsers((prevUsers) => prevUsers.filter(user => user.nDocumento !== nDocumento));
                 })
                 .catch((error) => {
@@ -43,10 +42,9 @@ const UserList = () => {
         }
     };
     
-
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
-    
+
     const filteredUsers = users.filter(user => 
         (user.Nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.Apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -57,8 +55,10 @@ const UserList = () => {
 
     const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
+    const totalPages = Math.ceil(filteredUsers.length / usersPerPage); // Cálculo total de páginas
+
     const nextPage = () => {
-        if (currentPage < Math.ceil(filteredUsers.length / usersPerPage)) {
+        if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
         }
     };
@@ -71,7 +71,7 @@ const UserList = () => {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
-        setCurrentPage(1); 
+        setCurrentPage(1); // Reiniciar a la primera página al buscar
     };
 
     return (
@@ -119,11 +119,14 @@ const UserList = () => {
                     </tbody>
                 </table>
 
-                <div className="buttons-container">
-                    <button className="save-button" onClick={prevPage} disabled={currentPage === 1}>
+                <div className="buttons-container-list">
+                    <button className="save-button-list" onClick={prevPage} disabled={currentPage === 1}>
                         Anterior
                     </button>
-                    <button className="delete-button" onClick={nextPage} disabled={currentPage === Math.ceil(filteredUsers.length / usersPerPage)}>
+                    <span className="page-counter">
+                        Página {currentPage} de {totalPages}
+                    </span>
+                    <button className="delete-button-list" onClick={nextPage} disabled={currentPage === totalPages}>
                         Siguiente
                     </button>
                 </div>

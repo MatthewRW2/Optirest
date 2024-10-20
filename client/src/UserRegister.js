@@ -1,63 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
+import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGroup, faUserGraduate, faClock } from '@fortawesome/free-solid-svg-icons';
 import './assets/css/Styles.css';
 
-function UserRegister() {
-  const [cantidadEstudiantes, setCantidadEstudiantes] = useState('');
-  const [curso, setCurso] = useState('');
+const UserRegister = ()  => {
+  const [cantidadAsistencia, setCantidadAsistencia] = useState('');
+  const [cursos, setCursos] = useState([]);  // Cambié 'curso' por 'cursos' para manejar el listado de cursos
+  const [cursoSeleccionado, setCursoSeleccionado] = useState('');  // Estado separado para el curso seleccionado
   const [fecha, setFecha] = useState('');
-  const [cursosDisponibles, setCursosDisponibles] = useState([]);
-  const [nDocumento, setNDocumento] = useState(''); // Asigna aquí el valor correspondiente
-  const [IdGrupo, setIdGrupo] = useState(''); // Asigna aquí el valor correspondiente
+  const [error, setError] = useState('');
 
-  // Obtener cursos disponibles
   useEffect(() => {
-    const fetchCursos = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/api/cursos'); // Ajusta el endpoint según tu API
-        if (response.ok) {
-          const cursos = await response.json();
-          setCursosDisponibles(cursos);
-        } else {
-          console.error('Error al obtener los cursos');
-        }
-      } catch (error) {
-        console.error('Error al obtener los cursos:', error);
-      }
-    };
-
-    fetchCursos();
+    Axios.get('http://localhost:3001/curso') // Cambia aquí para que coincida con tu ruta
+      .then(response => {
+        setCursos(response.data);  // Actualiza 'cursos' con la respuesta
+      })
+      .catch(err => {
+        console.error('Error al obtener los cursos:', err);
+      });
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(`http://localhost:3001/api/asistencia/${nDocumento}/${IdGrupo}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ cantidadEstudiantes, curso, fecha }),
-      });
-
-      if (response.ok) {
-        alert('Asistencia registrada exitosamente');
-        // Redirigir o limpiar el formulario aquí
-        setCantidadEstudiantes('');
-        setCurso('');
-        setFecha('');
-      } else {
-        const errorText = await response.text();
-        alert(`Error al registrar la asistencia: ${errorText}`);
-      }
-    } catch (error) {
-      console.error('Error al registrar la asistencia:', error);
-      alert('Hubo un error al intentar registrar la asistencia.');
+    // Validar que todos los campos estén llenos
+    if (!fecha || !cantidadAsistencia|| !cursoSeleccionado) {
+      setError('Por favor completa todos los campos');
+      return;
     }
+
+    // Enviar los datos a la API
+    Axios.post('http://localhost:3001/asistencia', {
+      cantidadAsistencia,
+      curso: cursoSeleccionado,  // Usamos el curso seleccionado
+      fecha,
+    })
+      .then(() => {
+        alert('Asistencia registrada exitosamente');
+        setError(''); // Limpiar el mensaje de error
+        // Reiniciar los campos
+        setFecha('');
+        setCantidadAsistencia('');
+        setCursoSeleccionado('');  // Limpiar el curso seleccionado
+      })
+      .catch(() => {
+        setError('Hubo un error al registrar la asistencia');
+      });
   };
 
   return (
@@ -70,6 +61,7 @@ function UserRegister() {
           alt="Logo"
         />
         <h2 className='title-form'>Registrar asistencia de estudiantes</h2>
+        {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <FontAwesomeIcon icon={faUserGroup} fontSize={20} className='icons' />
@@ -77,8 +69,8 @@ function UserRegister() {
             <input
               type="text"
               id="cant"
-              value={cantidadEstudiantes}
-              onChange={(e) => setCantidadEstudiantes(e.target.value)}
+              value={cantidadAsistencia}
+              onChange={(e) => setCantidadAsistencia(e.target.value)}
               placeholder="Ingrese la cantidad de estudiantes"
               required
             />
@@ -88,14 +80,14 @@ function UserRegister() {
             <label htmlFor="course">Curso:</label>
             <select
               id="course"
-              value={curso}
-              onChange={(e) => setCurso(e.target.value)}
+              value={cursoSeleccionado}  // Aquí usamos 'cursoSeleccionado'
+              onChange={(e) => setCursoSeleccionado(e.target.value)}  // Actualizamos 'cursoSeleccionado'
               required
             >
               <option value="">Seleccione el curso</option>
-              {cursosDisponibles.map((curso) => (
-                <option key={curso.id} value={curso.id}>
-                  {curso.nombre}
+              {cursos.map((curso) => (
+                <option key={curso.IdGrupo} value={curso.IdGrupo}>
+                  {curso.IdGrupo}
                 </option>
               ))}
             </select>

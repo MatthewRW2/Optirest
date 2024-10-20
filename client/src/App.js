@@ -17,6 +17,7 @@ import Profile from './Profile'
 import Inventory from './Inventory';
 import UserList from './UserList';
 import Waste from './Waste';
+import ChangePassword from './ChangePassword';
 
 function App() {
   return (
@@ -24,13 +25,14 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/Register" element={<Register />} />
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/UserRegister" element={<ProtectedRoute><UserRegister /></ProtectedRoute>} />
           <Route path="/menu-management" element={<ProtectedRoute><MenuManagement /></ProtectedRoute>} />
           <Route path="/schedule" element={<ProtectedRoute><Schedule /></ProtectedRoute>} />
           <Route path="/userEdit" element={<ProtectedRoute><UserEdit /></ProtectedRoute>} />
           <Route path="/ForgotYourPassword" element={<ForgotYourPassword />} />
+          <Route path="/ChangePassword" element={<ChangePassword />} />
           <Route path="/statistics" element={<ProtectedRoute><Statistics /></ProtectedRoute>} />
           <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />

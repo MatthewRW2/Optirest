@@ -1,20 +1,36 @@
 const db = require('../config/db');
 
+// Registrar asistencia
 exports.registerAttendance = (req, res) => {
-    const { cantidadEstudiantes, curso, fecha } = req.body;
-    const { nDocumento, IdGrupo } = req.params; // Suponiendo que nDocumento y IdGrupo se pasan en los parámetros de la URL
+    const { cantidadAsistencia, curso, fecha } = req.body;
 
     const query = `
-        INSERT INTO asistencia (cantidadEstudiantes, IdDetalleCronograma, nDocumento, IdGrupo, fechaAsistencia)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO asistencia (cantidadAsistencia, IdGrupo, fechaAsistencia)
+        VALUES (?, ?, ?)
     `;
-    const values = [cantidadEstudiantes, curso, nDocumento, IdGrupo, fecha];
 
+    const values = [cantidadAsistencia, curso, fecha]; // El curso representa el IdGrupo
     db.query(query, values, (err, result) => {
         if (err) {
             console.error('Error al registrar la asistencia:', err);
             return res.status(500).json({ error: 'Error al registrar la asistencia' });
         }
         res.status(201).json({ message: 'Asistencia registrada exitosamente' });
+    });
+};
+
+// Obtener cursos
+exports.getCursos = (req, res) => {
+    const query = `
+        SELECT IdGrupo 
+        FROM Grupo
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error al obtener los grupos:', err);
+            return res.status(500).json({ error: 'Error al obtener los grupos' });
+        }
+        res.status(200).json(results);
     });
 };

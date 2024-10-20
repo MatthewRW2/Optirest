@@ -1,17 +1,25 @@
 const db = require('../config/db');
 
-exports.getMenuDetails = (req, res) => {
-    const query = `
-        SELECT detalle_menu.IdDetalleMenu, detalle_menu.cantidad, alimento.nombreAlimento
-        FROM detalle_menu
-        JOIN alimento ON detalle_menu.IdAlimento = alimento.IdAlimento
-    `;
+// Controlador para obtener el menú completo
+const getMenuStatistics = async (req, res) => {
+    try {
+        // Cambia la consulta para obtener todos los campos de la tabla menu
+        const query = 'SELECT * FROM menu';  
+        db.query(query, (error, results) => {
+            if (error) {
+                console.error('Error al obtener el menú:', error);
+                return res.status(500).json({ message: 'Error al obtener el menú' });
+            }
+            
+            // Enviar los resultados en formato JSON
+            res.status(200).json(results);
+        });
+    } catch (error) {
+        console.error('Error al obtener el menú:', error);
+        res.status(500).json({ message: 'Error al obtener el menú' });
+    }
+};
 
-    db.query(query, (err, result) => {
-        if (err) {
-            return res.status(500).send("Error al obtener detalles del menú");
-        } else {
-            res.json(result);
-        }
-    });
+module.exports = {
+    getMenuStatistics,
 };

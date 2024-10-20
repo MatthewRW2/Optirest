@@ -1,8 +1,9 @@
 const express = require('express');
-const { getMenuDetails } = require('../controllers/menuController');
+const { getMenuStatistics } = require('../controllers/menuController');  // Importamos el controlador
 
 const router = express.Router();
 
-router.get('/detalle_menu', getMenuDetails);
+// Nueva ruta para obtener estadísticas de menús
+router.get('/estadisticas_menu', getMenuStatistics);
 
 module.exports = router;

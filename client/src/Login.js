@@ -25,8 +25,7 @@ function Login() {
           const nombre = response.data.nombre; // Obtener el nombre del usuario
           const rol = response.data.rol; // Obtener el rol del usuario
           localStorage.setItem('userRole', rol); // Guardar el rol en localStorage
-
-          
+          localStorage.setItem('userEmail', CorreoElectronico);
           localStorage.setItem('authToken', token); // Guardar el token en localStorage
           setError('');
           

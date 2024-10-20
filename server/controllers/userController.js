@@ -31,6 +31,28 @@ exports.getAllUsers = (req, res) => {
     });
 };
 
+exports.getPerfil = (req, res) => {
+    const { correoElectronico } = req.query; // Asegúrate de que esto sea correcto
+
+    console.log('Correo electrónico recibido:', correoElectronico); // Para depuración
+
+    // Consulta SQL para obtener solo el usuario específico
+    db.query('SELECT nDocumento, Nombres, Apellidos, tipoDocumento, Rol, correoElectronico FROM usuario WHERE correoElectronico = ?', [correoElectronico], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error en el servidor' });
+        }
+
+        console.log('Resultados de la consulta:', results); // Agrega esto para depurar resultados
+
+        // Verifica si se encontraron resultados
+        if (results.length > 0) {
+            res.json(results); // Devuelve todos los resultados coincidentes
+        } else {
+            res.status(404).json({ error: 'Usuario no encontrado' }); // Manejo si no se encuentra el usuario
+        }
+    });
+};
+
 exports.deleteUser = (req, res) => {
     const { nDocumento } = req.params;
 

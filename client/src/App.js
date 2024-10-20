@@ -18,6 +18,7 @@ import Inventory from './Inventory';
 import UserList from './UserList';
 import Waste from './Waste';
 import ChangePassword from './ChangePassword';
+import TotalLunches from './totallunches';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/userList" element={<ProtectedRoute><UserList /></ProtectedRoute>} />
           <Route path="/UserEdit/:nDocumento" element={<ProtectedRoute><UserEdit /></ProtectedRoute>}/>
           <Route path="/waste" element={<ProtectedRoute><Waste/></ProtectedRoute>}/>
+          <Route path="/totallunches" element={<TotalLunches/>}/>
         </Routes>
       </div>
     </Router>

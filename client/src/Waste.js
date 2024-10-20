@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import Footer from './components/footer';
 import Navbar from './components/navbar';
-import '../src/assets/css/Styles.css';
-import '../src/assets/css/Footer.css';
+import './assets/css/Styles.css'; // Asegúrate de que el archivo CSS tenga este nombre
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faDumpster, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 
 const WasteRegisterForm = () => {
   const [Fecha, setFecha] = useState('');
@@ -11,11 +12,10 @@ const WasteRegisterForm = () => {
   const [IdMenu, setIdMenu] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [error, setError] = useState('');
-  const [menus, setMenus] = useState([]); // Nuevo estado para los menús
+  const [menus, setMenus] = useState([]);
 
   useEffect(() => {
-    // Obtener los IdMenu disponibles al cargar el componente
-    Axios.get('http://localhost:3001/menus') // Cambia aquí para que coincida con tu ruta
+    Axios.get('http://localhost:3001/menus')
       .then(response => {
         setMenus(response.data);
       })
@@ -40,7 +40,6 @@ const WasteRegisterForm = () => {
     }).then(() => {
       alert('Desperdicio registrado');
       setError('');
-      // Reiniciar los campos
       setFecha('');
       setCantidad('');
       setIdMenu('');
@@ -51,59 +50,65 @@ const WasteRegisterForm = () => {
   };
 
   return (
-    <div className="container-form">
-      <Navbar /> 
-      <div className="form-container">
-        <h2 className="title-form">Registrar Desperdicio</h2>
-        <form onSubmit={addWaste}>
-          <div className="form-group">
-            <label className="l">*Fecha:</label>
-            <input
-              type="date"
-              value={Fecha}
-              onChange={(event) => setFecha(event.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label className="l">*Cantidad:</label>
-            <input
-              type="number"
-              value={cantidad}
-              onChange={(event) => setCantidad(event.target.value)}
-              placeholder="Ingrese la cantidad"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label className="l">*ID del Menú:</label>
-            <select
-              value={IdMenu}
-              onChange={(event) => setIdMenu(event.target.value)}
-              required
-            >
-              <option value="">Seleccione un menú</option>
-              {menus.map(menu => (
-                <option key={menu.IdMenu} value={menu.IdMenu}>
-                  {menu.IdMenu}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="form-group">
-            <label className="l">*Descripción:</label>
-            <textarea
-              value={descripcion}
-              onChange={(event) => setDescripcion(event.target.value)}
-              placeholder="Ingrese una descripción"
-              required
-            />
-          </div>
+    <div className="waste-container-form-wasted"> 
+      <Navbar />
+      <div className="waste-form-container">
+        <div className="waste-form-wrapper"> 
+          <h2 className="waste-title-form">Registrar Desperdicio</h2>
+          <form onSubmit={addWaste}>
+            <div className="waste-form-group">
+              <FontAwesomeIcon className="fa-icon" icon={faClock} />
+              <label className="l">Fecha:</label>
+              <input
+                type="date"
+                value={Fecha}
+                onChange={(event) => setFecha(event.target.value)}
+                required
+              />
+            </div>
+            <div className="waste-form-group">
+              <FontAwesomeIcon className="fa-icon" icon={faDumpster} />
+              <label className="l">Cantidad:</label>
+              <input
+                type="number"
+                value={cantidad}
+                onChange={(event) => setCantidad(event.target.value)}
+                placeholder="Ingrese la cantidad"
+                required
+              />
+            </div>
+            <div className="waste-form-group">
+              <FontAwesomeIcon className="fa-icon" icon={faEllipsisVertical} />
+              <label className="l">Menú:</label>
+              <select
+                value={IdMenu}
+                onChange={(event) => setIdMenu(event.target.value)}
+                required
+              >
+                <option value="">Seleccione un menú</option>
+                {menus.map(menu => (
+                  <option key={menu.IdMenu} value={menu.IdMenu}>
+                    {menu.IdMenu}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="waste-form-group">
+              <label className="l">Descripción:</label>
+              <textarea
+                className="waste-textarea" // Agrega la clase aquí
+                value={descripcion}
+                onChange={(event) => setDescripcion(event.target.value)}
+                placeholder="Ingrese una descripción"
+                required
+              />
+            </div>
 
-          {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
+            {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
 
-          <button className="form-button" type="submit">Registrar Desperdicio</button>
-        </form>
+            <button className="waste-form-button" type="submit">Registrar Desperdicio</button>
+          </form>
+        </div>
       </div>
       <Footer />
     </div>

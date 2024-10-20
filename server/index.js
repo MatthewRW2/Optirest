@@ -15,6 +15,7 @@ const menuRoutes = require('./routes/menuRoutes');
 const assistRoutes = require('./routes/assistRoutes');
 const scheduleRoutes = require('./routes/scheduleRoutes');
 const wasteRoutes = require('./routes/wasteRoutes');
+const totallunchesRoutes = require('./routes/totallunchesRoutes')
 
 app.use('/', authRoutes);  // Incluye /login y /registro
 app.use('/', userRoutes);  // Incluye /usuarios y /editar_usuario/:nDocumento
@@ -23,6 +24,7 @@ app.use('/', menuRoutes);  // Incluye /detalle_menu
 app.use('/', assistRoutes);  // Incluye /Registro asistencia
 app.use('/', scheduleRoutes); //Incluye /Cronograma
 app.use('/', wasteRoutes); //Incluye /Cronograma
+app.use('/', totallunchesRoutes); 
 
 // Puerto en el que escucha el servidor
 app.listen(3001, () => {

@@ -1,9 +1,14 @@
 const express = require('express');
-const { desperdicio, obtenerMenus } = require('../controllers/wasteController');
-
 const router = express.Router();
+const { desperdicio, obtenerMenus, getDesperdicios } = require('../controllers/wasteController');
 
-router.post('/desperdicio', desperdicio); // Ruta para insertar desperdicio
-router.get('/menus', obtenerMenus); // Ruta para obtener los IdMenu disponibles
+// Ruta para insertar desperdicio
+router.post('/desperdicio', desperdicio);
+
+// Ruta para obtener los menús
+router.get('/menus', obtenerMenus);
+
+// Ruta para obtener los desperdicios
+router.get('/desperdicios', getDesperdicios);
 
 module.exports = router;

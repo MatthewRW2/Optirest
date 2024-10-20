@@ -8,70 +8,42 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';  
 
 const Statistics = () => {
+  // Estados para alimentos
   const [foodChartData, setFoodChartData] = useState(null);
-  const [menuChartData, setMenuChartData] = useState(null); 
-  const [allFoods, setAllFoods] = useState([]); 
-  const [loading, setLoading] = useState(true);
+  const [allFoods, setAllFoods] = useState([]);
+  const [loadingFood, setLoadingFood] = useState(true);
 
-  // Función para obtener los datos de alimentos
+  // Estados para desperdicios
+  const [wasteChartData, setWasteChartData] = useState(null);
+  const [allWastes, setAllWastes] = useState([]);
+  const [loadingWaste, setLoadingWaste] = useState(true);
+
+  // Función para obtener estadísticas de alimentos
   const fetchFoodStatistics = async () => {
     try {
-      const response = await fetch('http://localhost:3001/alimento'); // Cambiar a la ruta correcta para obtener alimentos
+      const response = await fetch('http://localhost:3001/alimento');
       const data = await response.json();
-
       const foodNames = data.map(food => food.nombreAlimento);
       const foodQuantities = data.map(food => food.cantidadDisponible);
-
-      const colors = [
-        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#C9CBCF'
-      ];
+      const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#C9CBCF'];
 
       setFoodChartData({
         labels: foodNames,
-        datasets: [
-          {
-            label: 'Cantidad Disponible por Alimento',
-            data: foodQuantities,
-            backgroundColor: colors,
-            borderColor: colors.map(color => color.replace('0.2', '1')),
-            borderWidth: 1,
-          },
-        ],
+        datasets: [{
+          label: 'Cantidad Disponible por Alimento',
+          data: foodQuantities,
+          backgroundColor: colors,
+          borderColor: colors.map(color => color.replace('0.2', '1')),
+          borderWidth: 1,
+        }],
       });
-      setLoading(false);
+      setLoadingFood(false);
     } catch (error) {
       console.error('Error al obtener los alimentos:', error);
     }
   };
 
-  // Función para obtener los datos de menús
-  const fetchMenuStatistics = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/estadisticas_menu'); 
-      const data = await response.json();
-
-      // Verifica los nombres de las propiedades que estás obteniendo
-      const menuFoodNames = data.map(menu => menu.nombreAlimento); // Ajusta según tu API
-      const menuQuantities = data.map(menu => menu.cantidad); // Ajusta según tu API
-
-      setMenuChartData({
-        labels: menuFoodNames,
-        datasets: [
-          {
-            label: 'Cantidad por Alimento en el Menú',
-            data: menuQuantities,
-            backgroundColor: '#FF9F40',
-            borderColor: '#FF9F40',
-            borderWidth: 1,
-          },
-        ],
-      });
-    } catch (error) {
-      console.error('Error al obtener las estadísticas del menú:', error);
-    }
-  };
-
-  // Función para obtener los datos completos de la tabla de alimentos
+  // Función para obtener todos los alimentos
   const fetchAllFoods = async () => {
     try {
       const response = await fetch('http://localhost:3001/alimento'); 
@@ -82,71 +54,101 @@ const Statistics = () => {
     }
   };
 
-  // Ejecutar las funciones fetch cuando el componente se monte
+  // Función para obtener estadísticas de desperdicios
+  const fetchWasteStatistics = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/desperdicios');
+      const data = await response.json();
+      const wasteDates = data.map(waste => waste.Fecha);
+      const wasteQuantities = data.map(waste => waste.cantidad);
+      const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#C9CBCF'];
+
+      setWasteChartData({
+        labels: wasteDates,
+        datasets: [{
+          label: 'Cantidad de Desperdicios por Fecha',
+          data: wasteQuantities,
+          backgroundColor: colors,
+          borderColor: colors.map(color => color.replace('0.2', '1')),
+          borderWidth: 1,
+        }],
+      });
+      setLoadingWaste(false);
+    } catch (error) {
+      console.error('Error al obtener los desperdicios:', error);
+    }
+  };
+
+  // Función para obtener todos los desperdicios
+  const fetchAllWastes = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/desperdicios'); 
+      const data = await response.json();
+      setAllWastes(data); 
+    } catch (error) {
+      console.error('Error al obtener los desperdicios completos:', error);
+    }
+  };
+
   useEffect(() => {
     fetchFoodStatistics();
-    fetchMenuStatistics(); 
-    fetchAllFoods(); 
+    fetchAllFoods();
+    fetchWasteStatistics();
+    fetchAllWastes();
   }, []);
 
-  // Función para generar PDF
+  // Generar PDF con estadísticas de alimentos y desperdicios
   const generatePDF = () => {
     const doc = new jsPDF();
-    doc.text('Reporte de Estadísticas de Alimentos y Menús', 20, 20);
+    doc.text('Reporte de Estadísticas de Alimentos y Desperdicios', 20, 20);
 
-    // Agregar una tabla con los datos completos de alimentos
     const foodTableColumn = ['ID', 'Nombre del Alimento', 'Cantidad Disponible', 'Cantidad Mínima', 'Fecha de Ingreso', 'Categoría'];
-    const foodTableRows = [];
-
-    allFoods.forEach(food => {
-      foodTableRows.push([
-        food.IdAlimento, 
-        food.nombreAlimento, 
-        food.cantidadDisponible, 
-        food.cantidadMinima, 
-        food.fecha, 
-        food.IdCategoria  
-      ]);
-    });
+    const foodTableRows = allFoods.map(food => [
+      food.IdAlimento, 
+      food.nombreAlimento, 
+      food.cantidadDisponible, 
+      food.cantidadMinima, 
+      food.fecha, 
+      food.IdCategoria  
+    ]);
 
     doc.autoTable(foodTableColumn, foodTableRows, { startY: 30 });
 
-    // Agregar una tabla con los datos de menús
-    const menuTableColumn = ['Nombre del Alimento en el Menú', 'Cantidad'];
-    const menuTableRows = [];
+    const wasteTableColumn = ['ID', 'Fecha', 'Cantidad', 'Descripción', 'ID Menú'];
+    const wasteTableRows = allWastes.map(waste => [
+      waste.IdDesperdicio, 
+      waste.Fecha, 
+      waste.cantidad, 
+      waste.descripcion, 
+      waste.IdMenu  
+    ]);
 
-    menuChartData.datasets[0].data.forEach((quantity, index) => {
-      menuTableRows.push([menuChartData.labels[index], quantity]);
-    });
-
-    doc.autoTable(menuTableColumn, menuTableRows, { startY: doc.lastAutoTable.finalY + 10 });
-
-    // Descargar el PDF
-    doc.save('reporte_estadisticas_alimentos_y_menus.pdf');
+    doc.autoTable(wasteTableColumn, wasteTableRows, { startY: doc.autoTable.previous.finalY + 10 });
+    doc.save('reporte_estadisticas_alimentos_desperdicios.pdf');
   };
 
   return (
     <div>
       <Navbar />
       <div className="statistics-container">
-        <h2>Estadísticas de Alimentos y Menús</h2>
-
+        <h2>Estadísticas de Alimentos</h2>
         {/* Renderizar el gráfico de alimentos */}
         {foodChartData ? (
           <div>
             <Bar data={foodChartData} />
           </div>
         ) : (
-          <p>{loading ? 'Cargando estadísticas de alimentos...' : 'No hay datos disponibles.'}</p>
+          <p>{loadingFood ? 'Cargando estadísticas de alimentos...' : 'No hay datos disponibles.'}</p>
         )}
 
-        {/* Renderizar el gráfico de menús */}
-        {menuChartData ? (
+        <h2>Estadísticas de Desperdicios</h2>
+        {/* Renderizar el gráfico de desperdicios */}
+        {wasteChartData ? (
           <div>
-            <Bar data={menuChartData} />
+            <Bar data={wasteChartData} />
           </div>
         ) : (
-          <p>{loading ? 'Cargando estadísticas del menú...' : 'No hay datos disponibles.'}</p>
+          <p>{loadingWaste ? 'Cargando estadísticas de desperdicios...' : 'No hay datos disponibles.'}</p>
         )}
       </div>
 

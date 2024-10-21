@@ -8,6 +8,7 @@ const Profile = () => {
     const [nombres, setNombres] = useState('');
     const [apellidos, setApellidos] = useState('');
     const [tipoDocumento, setTipoDocumento] = useState('');
+    const [numeroDocumento, setNumeroDocumento] = useState('');
     const [rol, setRol] = useState('');
     const [correo, setCorreo] = useState('');
     const [error, setError] = useState('');
@@ -27,8 +28,10 @@ const Profile = () => {
                     setNombres(user.Nombres || '');
                     setApellidos(user.Apellidos || '');
                     setTipoDocumento(user.tipoDocumento || '');
+                    setNumeroDocumento(user.nDocumento || '');
                     setRol(user.Rol || '');
                     setCorreo(user.correoElectronico || '');
+
                 } else {
                     setError('No se encontraron datos para este usuario.');
                 }
@@ -42,16 +45,17 @@ const Profile = () => {
     return (
         <div>
             <Navbar />
-            <div className="profile-container">
+            <div className="form-container">
                 <h2>Perfil del Usuario</h2>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 {nombres && apellidos ? (
                     <div>
-                        <p><strong>Nombre:</strong> {nombres}</p>
-                        <p><strong>Apellidos:</strong> {apellidos}</p>
-                        <p><strong>Tipo de Documento:</strong> {tipoDocumento}</p>
-                        <p><strong>Correo Electrónico:</strong> {correo}</p>
-                        <p><strong>Rol:</strong> {rol}</p>
+                            <p><strong>Nombre:</strong> {nombres}</p>
+                            <p><strong>Apellidos:</strong> {apellidos}</p>
+                            <p><strong>Tipo de Documento:</strong> {tipoDocumento}</p>
+                            <p><strong>Número de Documento:</strong> {numeroDocumento}</p>
+                            <p><strong>Correo Electrónico:</strong> {correo}</p>
+                            <p><strong>Rol:</strong> {rol}</p>
                         {/* Agrega otros campos que desees mostrar */}
                     </div>
                 ) : (

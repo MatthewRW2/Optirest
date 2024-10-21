@@ -6,7 +6,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import './assets/css/Forms.css';
 
 function ChangePassword() {
-  const [email, setEmail] = useState(''); // Nuevo estado para el correo electrónico
+  const [email, setEmail] = useState('');
   const [Contrasena, setContrasena] = useState('');
   const [confirmContra, setConfirmContra] = useState('');
   const [error, setError] = useState('');
@@ -37,11 +37,11 @@ const handleSubmit = async (e) => {
     setError('');
 
     try {
-        // Enviar solicitud de cambio de contraseña al backend
+        // Enviar solicitud de cambio de contraseña al back-end
         const response = await axios.post('http://localhost:3001/ChangePassword', 
             {
-                email,          // Asegúrate de que este valor se esté configurando
-                contrasena: Contrasena, // Nueva contraseña
+                email,
+                contrasena: Contrasena,
             }
         );
 

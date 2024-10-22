@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import './assets/css/Styles.css';
+import './assets/css/report.css';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import jsPDF from 'jspdf';  
@@ -97,11 +98,11 @@ const Statistics = () => {
     fetchAllWastes();
   }, []);
 
-  // Generar PDF con estadísticas de alimentos y desperdicios
-  const generatePDF = () => {
+  const generatePDF = async () => {
     const doc = new jsPDF();
     doc.text('Reporte de Estadísticas de Alimentos y Desperdicios', 20, 20);
-
+  
+    // Sección de Alimentos
     const foodTableColumn = ['ID', 'Nombre del Alimento', 'Cantidad Disponible', 'Cantidad Mínima', 'Fecha de Ingreso', 'Categoría'];
     const foodTableRows = allFoods.map(food => [
       food.IdAlimento, 
@@ -111,9 +112,10 @@ const Statistics = () => {
       food.fecha, 
       food.IdCategoria  
     ]);
-
+  
     doc.autoTable(foodTableColumn, foodTableRows, { startY: 30 });
-
+  
+    // Sección de Desperdicios
     const wasteTableColumn = ['ID', 'Fecha', 'Cantidad', 'Descripción', 'ID Menú'];
     const wasteTableRows = allWastes.map(waste => [
       waste.IdDesperdicio, 
@@ -122,10 +124,42 @@ const Statistics = () => {
       waste.descripcion, 
       waste.IdMenu  
     ]);
-
+  
     doc.autoTable(wasteTableColumn, wasteTableRows, { startY: doc.autoTable.previous.finalY + 10 });
-    doc.save('reporte_estadisticas_alimentos_desperdicios.pdf');
+  
+    // Sección del Cronograma
+    const response = await fetch('http://localhost:3001/cronograma');
+    const cronogramaData = await response.json();
+  
+    const cronogramaTableColumn = ['Fecha', 'Proteína', 'Carbohidrato', 'Lácteo', 'Fruta', 'Verdura', 'Legumbre', 'Bebida', 'Descripción'];
+    const cronogramaTableRows = cronogramaData.map(item => [
+      item.Fecha,
+      item.Proteina,
+      item.Carbohidrato,
+      item.Lacteo,
+      item.Fruta,
+      item.Verdura,
+      item.Legumbre,
+      item.Bebida,
+      item.DescripcionMenu
+    ]);
+  
+    doc.autoTable(cronogramaTableColumn, cronogramaTableRows, {
+      startY: doc.autoTable.previous.finalY + 10,
+      columnStyles: {
+        8: { cellWidth: 30 }, // Ajusta el ancho de la columna "Descripción"
+      },
+      styles: {
+        fontSize: 8, // Ajusta el tamaño de fuente si es necesario
+        overflow: 'linebreak', // Permite el salto de línea en celdas con texto largo
+      }
+    });
+    
+  
+    // Guardar PDF
+    doc.save('reporte_estadisticas_alimentos_desperdicios_y_cronograma.pdf');
   };
+  
 
   return (
     <div>
@@ -154,7 +188,6 @@ const Statistics = () => {
 
       <div className="report-buttons-container">
         <button className="report-button" onClick={generatePDF}>Descargar reportes en PDF</button>
-        <button className="report-button">Ver reportes</button>
       </div>
 
       <Footer />

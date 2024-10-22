@@ -1,0 +1,16 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  
+  th, td {
+    word-wrap: break-word;
+    text-align: center;
+  }
+  
+  td {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  

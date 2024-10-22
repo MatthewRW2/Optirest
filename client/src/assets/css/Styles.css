@@ -37,6 +37,16 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
+.form-container-profile {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 900px;
+  margin: 65px auto;
+  text-align: center;
+  position: relative;
+}
 
 .img-forms {
     width: 150px;

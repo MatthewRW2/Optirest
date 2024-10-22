@@ -1,19 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, allowedRoles }) => {
   const [authenticated, setAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Verificar si hay un token en localStorage
+    // Verificar si hay un token y un rol en localStorage
     const token = localStorage.getItem('authToken');
-    if (token) {
+    const role = localStorage.getItem('userRole');
+
+    if (token && role) {
       setAuthenticated(true);
+      setUserRole(role);
+
+      // Verificar si el rol del usuario está en los roles permitidos
+      if (allowedRoles && !allowedRoles.includes(role)) {
+        navigate('/unauthorized');  // Redirigir si no tiene el rol adecuado
+      }
     } else {
-      navigate('/');
+      navigate('/');  // Redirigir a login si no está autenticado
     }
-  }, [navigate]);
+  }, [navigate, allowedRoles]);
 
   return authenticated ? children : null;
 };

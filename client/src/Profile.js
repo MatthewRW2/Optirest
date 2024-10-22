@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import Axios from 'axios';
@@ -12,6 +13,12 @@ const Profile = () => {
     const [rol, setRol] = useState('');
     const [correo, setCorreo] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+
+    const handleNavigation = (path) => {
+        navigate(path);
+    };
 
     useEffect(() => {
         const correoElectronico = localStorage.getItem('userEmail'); // Recupera el correo del localStorage
@@ -20,6 +27,7 @@ const Profile = () => {
             setError('El correo electrónico es requerido para acceder al perfil.');
             return; // Detiene la ejecución si el correo no está disponible
         }
+
 
         Axios.get(`http://localhost:3001/perfil`, { params: { correoElectronico } })
             .then((response) => {
@@ -45,17 +53,25 @@ const Profile = () => {
     return (
         <div>
             <Navbar />
-            <div className="form-container">
+            <div className="form-container-profile">
                 <h2>Perfil del Usuario</h2>
+                <br></br>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 {nombres && apellidos ? (
                     <div>
                             <p><strong>Nombre:</strong> {nombres}</p>
+                            <br></br>
                             <p><strong>Apellidos:</strong> {apellidos}</p>
+                            <br></br>
                             <p><strong>Tipo de Documento:</strong> {tipoDocumento}</p>
+                            <br></br>
                             <p><strong>Número de Documento:</strong> {numeroDocumento}</p>
+                            <br></br>
                             <p><strong>Correo Electrónico:</strong> {correo}</p>
+                            <br></br>
                             <p><strong>Rol:</strong> {rol}</p>
+                            <br></br>
+                            <button onClick={() => handleNavigation('/settings')} >Editar Perfil</button>
                         {/* Agrega otros campos que desees mostrar */}
                     </div>
                 ) : (

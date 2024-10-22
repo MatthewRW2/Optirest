@@ -12,6 +12,11 @@ function ChangePassword() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  const validarContrasena = (contrasena) => {
+    const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return regex.test(contrasena);
+  };
+
   // UseEffect para obtener el email desde localStorage
   useEffect(() => {
     const storedEmail = localStorage.getItem('email');
@@ -27,6 +32,10 @@ function ChangePassword() {
 const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!validarContrasena(Contrasena)) {
+      setError('La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial');
+      return;
+    }
     // Validar que las contraseñas coincidan
     if (Contrasena !== confirmContra) {
         setError('Las contraseñas no coinciden.');

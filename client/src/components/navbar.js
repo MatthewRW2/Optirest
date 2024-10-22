@@ -30,6 +30,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userRole'); // Limpiar el rol del usuario
+    alert("Sesión cerrada exitosamente")
     navigate('/');
   };
 
@@ -92,8 +93,14 @@ const Navbar = () => {
               <button className="navButton" onClick={() => handleNavigation('/inventory')}>
                 Inventario
               </button>
+              <button className="navButton" onClick={() => handleNavigation('/totallunches')}>
+                Almuerzos por realizar
+              </button>
               <button className="navButton" onClick={() => handleNavigation('/schedule')}>
                 Cronograma
+              </button>
+              <button className="navButton" onClick={() => handleNavigation('/waste')}>
+                Registro de desperdicios
               </button>
             </>
           )}

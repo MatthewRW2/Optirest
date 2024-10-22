@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import Axios from 'axios';
@@ -12,6 +13,12 @@ const Profile = () => {
     const [rol, setRol] = useState('');
     const [correo, setCorreo] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+
+    const handleNavigation = (path) => {
+        navigate(path);
+    };
 
     useEffect(() => {
         const correoElectronico = localStorage.getItem('userEmail'); // Recupera el correo del localStorage
@@ -20,6 +27,7 @@ const Profile = () => {
             setError('El correo electrónico es requerido para acceder al perfil.');
             return; // Detiene la ejecución si el correo no está disponible
         }
+
 
         Axios.get(`http://localhost:3001/perfil`, { params: { correoElectronico } })
             .then((response) => {
@@ -44,24 +52,40 @@ const Profile = () => {
 
     return (
         <div>
-            <Navbar />
-            <div className="form-container">
-                <h2>Perfil del Usuario</h2>
+        <Navbar />
+          <div className="form-container-profile">
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                {nombres && apellidos ? (
-                    <div>
-                            <p><strong>Nombre:</strong> {nombres}</p>
-                            <p><strong>Apellidos:</strong> {apellidos}</p>
-                            <p><strong>Tipo de Documento:</strong> {tipoDocumento}</p>
-                            <p><strong>Número de Documento:</strong> {numeroDocumento}</p>
-                            <p><strong>Correo Electrónico:</strong> {correo}</p>
-                            <p><strong>Rol:</strong> {rol}</p>
-                        {/* Agrega otros campos que desees mostrar */}
+                <div className="profile-content">
+                    <div className="profile-logo">
+                    <img
+                        className="img-forms"
+                        src={require('./assets/img/logo2.png')}
+                        alt="Logo"
+                    />
                     </div>
-                ) : (
+                    <h1 className='profile-title'>Perfil del usuario</h1>
+                  {nombres && apellidos ? (
+                    <div className="profile-info">
+                      <p className='profile-items'><strong>Nombres:</strong> {nombres}</p>
+                      <p className='profile-items'><strong>Apellidos:</strong> {apellidos}</p>
+                      <p className='profile-items'><strong>Nombre completo:</strong> {nombres} {apellidos}</p>
+                      <p className='profile-items'><strong>Tipo de Documento:</strong> {tipoDocumento}</p>
+                      <p className='profile-items'><strong>Número de Documento:</strong> {numeroDocumento}</p>
+                      <p className='profile-items'><strong>Correo Electrónico:</strong> {correo}</p>
+                      <p className='profile-items'><strong>Rol:</strong> {rol}</p>
+                    </div>
+                  ) : (
                     <p>Cargando datos del usuario...</p>
-                )}
-            </div>
+                  )}
+                  
+                  {/* Botón de Editar Perfil dentro del div alineado a la derecha */}
+                  <div className="profile-edit">
+                    <button className="edit-profile-btn" onClick={() => handleNavigation('/settings')}>
+                      Editar Perfil
+                    </button>
+                  </div>
+                </div>
+              </div>
             <Footer />
         </div>
     );

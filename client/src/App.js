@@ -19,6 +19,7 @@ import UserList from './UserList';
 import Waste from './Waste';
 import ChangePassword from './ChangePassword';
 import TotalLunches from './totallunches';
+import Unauthorized from './Unauthorized';
 
 function App() {
   return (
@@ -27,22 +28,23 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/Register" element={<Register />} />
-          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/UserRegister" element={<ProtectedRoute><UserRegister /></ProtectedRoute>} />
-          <Route path="/menu-management" element={<ProtectedRoute><MenuManagement /></ProtectedRoute>} />
-          <Route path="/schedule" element={<ProtectedRoute><Schedule /></ProtectedRoute>} />
-          <Route path="/userEdit" element={<ProtectedRoute><UserEdit /></ProtectedRoute>} />
+          <Route path="/home" element={<ProtectedRoute allowedRoles={["Docente", "Administrador","PersonalDeCocina","Inactivo"]}><Home /></ProtectedRoute>} />
+          <Route path="/UserRegister" element={<ProtectedRoute allowedRoles={["Docente", "Administrador"]}><UserRegister /></ProtectedRoute>} />
+          <Route path="/menu-management" element={<ProtectedRoute allowedRoles={["PersonalDeCocina", "Administrador"]}><MenuManagement /></ProtectedRoute>} />
+          <Route path="/schedule" element={<ProtectedRoute allowedRoles={["PersonalDeCocina","Docente", "Administrador"]}><Schedule /></ProtectedRoute>} />
+          <Route path="/userEdit" element={<ProtectedRoute allowedRoles={["Administrador"]}><UserEdit /></ProtectedRoute>} />
           <Route path="/ForgotYourPassword" element={<ForgotYourPassword />} />
           <Route path="/ChangePassword" element={<ChangePassword />} />
-          <Route path="/statistics" element={<ProtectedRoute><Statistics /></ProtectedRoute>} />
-          <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+          <Route path="/statistics" element={<ProtectedRoute allowedRoles={["Docente", "Administrador"]}><Statistics /></ProtectedRoute>} />
+          <Route path="/reports" element={<ProtectedRoute allowedRoles={["Docente", "Administrador"]}><Reports /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-          <Route path="/inventory" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
-          <Route path="/userList" element={<ProtectedRoute><UserList /></ProtectedRoute>} />
-          <Route path="/UserEdit/:nDocumento" element={<ProtectedRoute><UserEdit /></ProtectedRoute>}/>
-          <Route path="/waste" element={<ProtectedRoute><Waste/></ProtectedRoute>}/>
-          <Route path="/totallunches" element={<TotalLunches/>}/>
+          <Route path="/inventory" element={<ProtectedRoute allowedRoles={["PersonalDeCocina", "Administrador"]}><Inventory /></ProtectedRoute>} />
+          <Route path="/userList" element={<ProtectedRoute allowedRoles={["Administrador"]}><UserList /></ProtectedRoute>} />
+          <Route path="/UserEdit/:nDocumento" element={<ProtectedRoute allowedRoles={["Administrador"]}><UserEdit /></ProtectedRoute>}/>
+          <Route path="/waste" element={<ProtectedRoute allowedRoles={["PersonalDeCocina", "Administrador"]}><Waste/></ProtectedRoute>}/>
+          <Route path="/totallunches" element={<ProtectedRoute allowedRoles={["PersonalDeCocina", "Administrador"]}  ><TotalLunches/></ProtectedRoute>}/>
+          <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
       </div>
     </Router>

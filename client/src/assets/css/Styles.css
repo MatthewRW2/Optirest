@@ -1193,3 +1193,52 @@ footer {
   margin-right: 10px;
 }
 /*fin de estilos para waste*/
+
+.form-container-profile {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center; /* Centra el texto dentro del contenedor */
+  margin-bottom: 11.8%;
+}
+
+.profile-logo {
+  margin-top: 15px;
+}
+
+.profile-content {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-title {
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: -30px;
+  margin-bottom: 10px;
+}
+
+.profile-info, .profile-items {
+  text-align: center; /* Alinea el texto a la izquierda dentro de la información */
+  margin-top: 15px;
+}
+
+.profile-edit {
+  margin-top: 50px; /* Espaciado entre la información y el botón */
+}
+
+.edit-profile-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.edit-profile-btn:hover {
+  background-color: #0056b3;
+}

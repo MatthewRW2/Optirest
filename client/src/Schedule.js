@@ -9,42 +9,56 @@ const Cronograma = () => {
   useEffect(() => {
     fetch('http://localhost:3001/cronograma')
       .then((response) => response.json())
-      .then((data) => setCronograma(data))
+      .then((data) => {
+        // Ordena cronológicamente por la fecha
+        const sortedData = data.sort((a, b) => new Date(a.Fecha) - new Date(b.Fecha));
+        setCronograma(sortedData);
+      })
       .catch((error) => console.error("Error al obtener el cronograma:", error));
   }, []);
 
   return (
     <div className="cronograma-page-container">
       <Navbar />
-      <div className="cronograma-content-wrap">
-        <div className="cronograma-cronograma-container">
-          <h1>Cronograma de la Semana</h1>
-          {cronograma.length > 0 ? (
-            <table className="cronograma-cronograma-table">
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Fecha de Inicio</th>
-                  <th>Fecha de Fin</th>
-                  <th>Observación</th>
+
+      <div className="cronograma-content">
+        <h1 className="cronograma-title">Cronograma de Menús</h1>
+        {cronograma.length > 0 ? (
+          <table className="cronograma-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Proteína</th>
+                <th>Carbohidrato</th>
+                <th>Lácteo</th>
+                <th>Fruta</th>
+                <th>Verdura</th>
+                <th>Legumbre</th>
+                <th>Bebida</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cronograma.map((item, index) => (
+                <tr key={index} className="cronograma-row">
+                  <td>{new Date(item.Fecha).toLocaleDateString()}</td>
+                  <td>{item.Proteina}</td>
+                  <td>{item.Carbohidrato}</td>
+                  <td>{item.Lacteo}</td>
+                  <td>{item.Fruta}</td>
+                  <td>{item.Verdura}</td>
+                  <td>{item.Legumbre}</td>
+                  <td>{item.Bebida}</td>
+                  <td>{item.DescripcionMenu}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {cronograma.map((item) => (
-                  <tr key={item.IdCronograma}>
-                    <td>{item.IdCronograma}</td>
-                    <td>{item.fechaInicio}</td>
-                    <td>{item.fechaFin}</td>
-                    <td>{item.Observación}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No hay cronogramas disponibles</p>
-          )}
-        </div>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="cronograma-no-data">No hay datos disponibles en el cronograma.</p>
+        )}
       </div>
+
       <Footer />
     </div>
   );

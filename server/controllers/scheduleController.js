@@ -1,12 +1,13 @@
 const db = require('../config/db');
 
+// Controlador para obtener el cronograma
 exports.cronograma = (req, res) => {
-    const query = "SELECT `IdCronograma`,`fechaInicio`,`fechaFin`,`Observación` FROM cronograma; VALUES (?, ?, ?, ?)";
-    db.query(query, (err, result) => {
-        if (err) {
-            return res.status(500).send("Error al insertar el desperdicio ");
-        } else {
-            res.json(result);
-        }
-    });
+  const query = "SELECT * FROM cronograma"; // Ajusta esta query según los campos de la vista cronograma
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error al obtener el cronograma:", err);
+      return res.status(500).json({ error: "Error al obtener el cronograma" });
+    }
+    res.json(results);
+  });
 };

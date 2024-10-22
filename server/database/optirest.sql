@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-10-2024 a las 03:34:49
+-- Tiempo de generación: 22-10-2024 a las 22:11:59
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -61,7 +61,37 @@ INSERT INTO `alimento` (`IdAlimento`, `IdCategoria`, `nombreAlimento`, `cantidad
 (67, 6, 'Garbanzos', '120', '40', '2024-10-19 21:33:06'),
 (68, 7, 'Agua embotellada', '500', '200', '2024-10-19 21:33:06'),
 (69, 7, 'Jugo de naranja', '300', '100', '2024-10-19 21:33:06'),
-(70, 7, 'Refrescos', '400', '150', '2024-10-19 21:33:06');
+(70, 7, 'Refrescos', '400', '150', '2024-10-19 21:33:06'),
+(71, 1, 'Cerdo', '180', '50', '2024-10-22 15:00:00'),
+(72, 1, 'Pavo', '120', '30', '2024-10-22 15:00:00'),
+(73, 1, 'Tofu', '100', '25', '2024-10-22 15:00:00'),
+(74, 1, 'Atún', '150', '40', '2024-10-22 15:00:00'),
+(75, 2, 'Quinoa', '140', '35', '2024-10-22 15:00:00'),
+(76, 2, 'Cuscús', '130', '30', '2024-10-22 15:00:00'),
+(77, 2, 'Avena', '180', '45', '2024-10-22 15:00:00'),
+(78, 3, 'Mantequilla', '90', '20', '2024-10-22 15:00:00'),
+(79, 3, 'Crema', '60', '15', '2024-10-22 15:00:00'),
+(80, 3, 'Helado', '150', '40', '2024-10-22 15:00:00'),
+(81, 4, 'Fresas', '110', '25', '2024-10-22 15:00:00'),
+(82, 4, 'Mangos', '140', '35', '2024-10-22 15:00:00'),
+(83, 4, 'Cerezas', '90', '20', '2024-10-22 15:00:00'),
+(84, 5, 'Brócoli', '130', '35', '2024-10-22 15:00:00'),
+(85, 5, 'Coliflor', '140', '40', '2024-10-22 15:00:00'),
+(86, 5, 'Pepino', '120', '30', '2024-10-22 15:00:00'),
+(87, 6, 'Chícharos', '110', '25', '2024-10-22 15:00:00'),
+(88, 6, 'Soja', '100', '20', '2024-10-22 15:00:00'),
+(89, 6, 'Alubias', '130', '35', '2024-10-22 15:00:00'),
+(90, 7, 'Té verde', '180', '50', '2024-10-22 15:00:00'),
+(91, 7, 'Café', '200', '60', '2024-10-22 15:00:00'),
+(92, 7, 'Jugo de manzana', '160', '40', '2024-10-22 15:00:00'),
+(93, 7, 'Agua con gas', '190', '50', '2024-10-22 15:00:00'),
+(94, 1, 'Salchichas', '170', '45', '2024-10-22 15:00:00'),
+(95, 2, 'Harina de maíz', '120', '30', '2024-10-22 15:00:00'),
+(96, 2, 'Sémola', '140', '35', '2024-10-22 15:00:00'),
+(97, 3, 'Queso crema', '90', '20', '2024-10-22 15:00:00'),
+(98, 4, 'Kiwi', '110', '25', '2024-10-22 15:00:00'),
+(99, 5, 'Remolacha', '130', '35', '2024-10-22 15:00:00'),
+(100, 6, 'Habas', '120', '30', '2024-10-22 15:00:00');
 
 -- --------------------------------------------------------
 
@@ -128,6 +158,7 @@ CREATE TABLE `cronograma` (
 ,`Verdura` varchar(100)
 ,`Legumbre` varchar(100)
 ,`Bebida` varchar(100)
+,`DescripcionMenu` varchar(255)
 );
 
 -- --------------------------------------------------------
@@ -152,7 +183,8 @@ INSERT INTO `desperdicios` (`IdDesperdicio`, `Fecha`, `cantidad`, `descripcion`,
 (9, '2024-10-16', 5000, 'MUCHO', 1),
 (14, '2024-10-15', 1010, 'Demasiado', 4),
 (15, '2024-10-21', 500, 'a', 3),
-(16, '2024-10-31', 1231, 'Se cancela el servicio', 5);
+(16, '2024-10-31', 1231, 'Se cancela el servicio', 5),
+(17, '2024-10-17', 600, 'MUCHO', 2);
 
 -- --------------------------------------------------------
 
@@ -237,7 +269,27 @@ INSERT INTO `menu` (`IdMenu`, `IdProteina`, `IdCarbohidrato`, `IdLacteo`, `IdFru
 (2, 51, 54, 57, 60, 63, 66, 69, '2024-10-21', 'Carne de res con pasta, queso, bananas, papas, frijoles y jugo de naranja.'),
 (3, 52, 53, 58, 61, 64, 67, 70, '2024-10-22', 'Pescado con arroz, yogur, peras, espinacas, garbanzos y refrescos.'),
 (4, 50, 54, 56, 60, 62, 66, 68, '2024-10-23', 'Pollo con pasta, leche, bananas, zanahorias, frijoles y agua embotellada.'),
-(5, 51, 55, 57, 59, 63, 65, 69, '2024-10-24', 'Carne de res con pan, queso, manzanas, papas, lentejas y jugo de naranja.');
+(5, 51, 55, 57, 59, 63, 65, 69, '2024-10-24', 'Carne de res con pan, queso, manzanas, papas, lentejas y jugo de naranja.'),
+(101, 50, 53, 56, 59, 62, 65, 68, '2024-11-01', 'Pollo asado con arroz integral, acompañado de leche, manzana, zanahoria, lentejas, y agua embotellada.'),
+(102, 51, 54, 57, 60, 63, 66, 69, '2024-11-02', 'Carne de res a la parrilla con pasta, queso, banana, papas al vapor, frijoles y jugo de naranja.'),
+(103, 52, 53, 58, 61, 62, 67, 70, '2024-11-03', 'Pescado al horno con arroz, yogur, pera, zanahorias, garbanzos y refresco.'),
+(104, 71, 55, 56, 81, 84, 65, 68, '2024-11-04', 'Cerdo asado con pan, leche, fresas, brócoli, lentejas y agua embotellada.'),
+(105, 72, 75, 57, 82, 85, 66, 90, '2024-11-05', 'Pavo con quinoa, queso, mango, coliflor, frijoles y té verde.'),
+(106, 73, 53, 56, 83, 84, 67, 91, '2024-11-06', 'Tofu salteado con arroz, leche, cerezas, brócoli, garbanzos y café.'),
+(107, 74, 54, 58, 98, 85, 65, 92, '2024-11-07', 'Atún con pasta, yogur, kiwi, coliflor, lentejas y jugo de manzana.'),
+(108, 94, 55, 57, 59, 63, 88, 93, '2024-11-08', 'Salchichas con pan, queso, manzana, papas, soja y agua con gas.'),
+(109, 52, 76, 56, 60, 99, 65, 68, '2024-11-09', 'Pescado al vapor con cuscús, leche, banana, remolacha, lentejas y agua embotellada.'),
+(110, 50, 54, 58, 81, 84, 66, 69, '2024-11-10', 'Pollo a la parrilla con pasta, yogur, fresas, brócoli, frijoles y jugo de naranja.'),
+(111, 74, 75, 56, 82, 63, 89, 90, '2024-11-11', 'Atún con quinoa, leche, mango, papas, alubias y té verde.'),
+(112, 71, 55, 58, 61, 99, 87, 68, '2024-11-12', 'Cerdo al horno con pan, yogur, pera, remolacha, chícharos y agua embotellada.'),
+(113, 52, 77, 57, 98, 85, 67, 91, '2024-11-13', 'Pescado al horno con avena, queso, kiwi, coliflor, garbanzos y café.'),
+(114, 73, 53, 56, 60, 84, 66, 93, '2024-11-14', 'Tofu salteado con arroz, leche, banana, brócoli, frijoles y agua con gas.'),
+(115, 51, 76, 57, 59, 84, 65, 92, '2024-11-15', 'Carne de res con cuscús, queso, manzana, brócoli, lentejas y jugo de manzana.'),
+(116, 50, 54, 56, 83, 85, 65, 68, '2024-11-16', 'Pollo al vapor con pasta, leche, cerezas, coliflor, lentejas y agua embotellada.'),
+(117, 52, 53, 58, 81, 62, 67, 90, '2024-11-17', 'Pescado asado con arroz, yogur, fresas, zanahorias, garbanzos y té verde.'),
+(118, 51, 75, 56, 82, 63, 66, 92, '2024-11-18', 'Carne de res a la parrilla con quinoa, leche, mango, papas, frijoles y jugo de manzana.'),
+(119, 73, 55, 57, 59, 84, 89, 93, '2024-11-19', 'Tofu con pan, queso, manzana, brócoli, alubias y agua con gas.'),
+(120, 72, 77, 56, 98, 85, 87, 91, '2024-11-20', 'Pavo asado con avena, leche, kiwi, coliflor, chícharos y café.');
 
 -- --------------------------------------------------------
 
@@ -262,6 +314,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`nDocumento`, `Nombres`, `Apellidos`, `correoElectronico`, `Rol`, `tipoDocumento`, `Contraseña`, `activo`) VALUES
 (123456789, 'mateo', 'lopez', 'mateo@gmai.com', 'Inactivo', 'CC', '$2b$10$6ztGmwbRuNQ1Q4ymceBg9OvzWv2e2UfAt4uho.uS./lulL2bdewUu', 1),
+(1032654791, 'juan fernando', 'quintero', 'juanfer@gmail.com', 'Administrador', 'CC', '$2b$10$JcbJWgogGfPeyX.vIJgudevM37ZbsCzXlotwUC5EhV5KzctX5Zana', 1),
 (2147483647, 'Ingrid', 'Roa', 'Ingrid@gmail.com', 'Administrador', 'CC', '$2b$10$0lc8cChpV52IRDU9mc5XdeJCavCitO7CEachNinCfeQj8SoNfdWxq', 1);
 
 -- --------------------------------------------------------
@@ -271,7 +324,7 @@ INSERT INTO `usuario` (`nDocumento`, `Nombres`, `Apellidos`, `correoElectronico`
 --
 DROP TABLE IF EXISTS `cronograma`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cronograma`  AS SELECT `m`.`Fecha` AS `Fecha`, `p`.`nombreAlimento` AS `Proteina`, `c`.`nombreAlimento` AS `Carbohidrato`, `l`.`nombreAlimento` AS `Lacteo`, `f`.`nombreAlimento` AS `Fruta`, `v`.`nombreAlimento` AS `Verdura`, `leg`.`nombreAlimento` AS `Legumbre`, `b`.`nombreAlimento` AS `Bebida` FROM (((((((`menu` `m` join `alimento` `p` on(`m`.`IdProteina` = `p`.`IdAlimento`)) join `alimento` `c` on(`m`.`IdCarbohidrato` = `c`.`IdAlimento`)) join `alimento` `l` on(`m`.`IdLacteo` = `l`.`IdAlimento`)) join `alimento` `f` on(`m`.`IdFruta` = `f`.`IdAlimento`)) join `alimento` `v` on(`m`.`IdVerdura` = `v`.`IdAlimento`)) join `alimento` `leg` on(`m`.`IdLegumbre` = `leg`.`IdAlimento`)) join `alimento` `b` on(`m`.`IdBebida` = `b`.`IdAlimento`)) ORDER BY `m`.`Fecha` ASC ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cronograma`  AS SELECT `m`.`Fecha` AS `Fecha`, `a1`.`nombreAlimento` AS `Proteina`, `a2`.`nombreAlimento` AS `Carbohidrato`, `a3`.`nombreAlimento` AS `Lacteo`, `a4`.`nombreAlimento` AS `Fruta`, `a5`.`nombreAlimento` AS `Verdura`, `a6`.`nombreAlimento` AS `Legumbre`, `a7`.`nombreAlimento` AS `Bebida`, `m`.`Descripcion` AS `DescripcionMenu` FROM (((((((`menu` `m` join `alimento` `a1` on(`m`.`IdProteina` = `a1`.`IdAlimento`)) join `alimento` `a2` on(`m`.`IdCarbohidrato` = `a2`.`IdAlimento`)) join `alimento` `a3` on(`m`.`IdLacteo` = `a3`.`IdAlimento`)) join `alimento` `a4` on(`m`.`IdFruta` = `a4`.`IdAlimento`)) join `alimento` `a5` on(`m`.`IdVerdura` = `a5`.`IdAlimento`)) join `alimento` `a6` on(`m`.`IdLegumbre` = `a6`.`IdAlimento`)) join `alimento` `a7` on(`m`.`IdBebida` = `a7`.`IdAlimento`)) ;
 
 --
 -- Índices para tablas volcadas
@@ -346,7 +399,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `alimento`
 --
 ALTER TABLE `alimento`
-  MODIFY `IdAlimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `IdAlimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT de la tabla `asignacion_alimenticia`
@@ -370,7 +423,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `desperdicios`
 --
 ALTER TABLE `desperdicios`
-  MODIFY `IdDesperdicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `IdDesperdicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `grupo`
@@ -382,7 +435,7 @@ ALTER TABLE `grupo`
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `IdMenu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `IdMenu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

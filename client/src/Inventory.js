@@ -281,15 +281,8 @@ const Inventory = () => {
               </div>
             </div>
 
-            <div className="menu-right-unique-custom">
-              <div className="right-box-unique-custom">
-                <h2 className="menu-heading-unique-custom">Resumen de inventario</h2>
-                <div className="inventory-summary-custom">
-                  <p>Total de alimentos: {filteredAlimentos.length}</p>
-                  <p>Categorías únicas:</p>
-                  <p>Alimentos por categorías:</p>
-                </div>
-              </div>
+            <div>
+
             </div>
           </div>
         </div>

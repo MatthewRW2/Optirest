@@ -70,7 +70,13 @@ const Navbar = () => {
               <button className="navButton" onClick={() => handleNavigation('/statistics')}>
                 Estadísticas
               </button>
-            
+              <button className="navButton" onClick={() => handleNavigation('/schedule')}>
+                Cronograma
+              </button>
+              <button className="navButton" onClick={() => handleNavigation('/waste')}>
+                Registro de desechos
+              </button>
+              
             </>
           )}
 

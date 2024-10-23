@@ -1309,12 +1309,4 @@ footer {
   background-color: #0056b3;
 }
 
-/* Ajustes del footer */
-footer {
-  margin-top: 20px; /* Asegura que el footer no esté pegado al contenido */
-  padding: 10px 0;
-  text-align: center;
-  background-color: #f9f9f9;
-  position: relative; /* Cambia si el footer debe estar siempre visible */
-  width: 100%;
-}
+

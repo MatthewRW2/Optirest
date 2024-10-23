@@ -73,6 +73,8 @@ const Profile = () => {
              <input type="text" value={nDocumento} readOnly className="special-input" />
              <label><strong>Rol:</strong></label>
              <input type="text" value={rol} readOnly className="special-input" />
+             <label><strong>Correo Electronico:</strong></label>
+             <input type="text" value={correo} readOnly className="special-input" />
          </div>
           ) : (
             <p>Cargando datos del usuario...</p>

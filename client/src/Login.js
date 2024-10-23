@@ -27,9 +27,12 @@ function Login() {
           const token = response.data.token;
           const nombre = response.data.nombre;
           const rol = response.data.rol;
+          const numeroDocumento = response.data.nDocumento;
           localStorage.setItem('userRole', rol);
           localStorage.setItem('userEmail', CorreoElectronico);
           localStorage.setItem('authToken', token);
+          localStorage.setItem('userDocument', numeroDocumento);
+
           setError('');
           
           // Guardar el nombre y rol para mostrar en el modal

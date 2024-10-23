@@ -8,12 +8,15 @@ const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userRole, setUserRole] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userDocument, setUserDocument] = useState(null); // Corregido el uso de useState
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const role = localStorage.getItem('userRole');
     setUserRole(role);
+    const document = localStorage.getItem('userDocument');
+    setUserDocument(document); // Se corrige el uso de setUserDocument
   }, []);
 
   const toggleNav = () => {
@@ -31,12 +34,10 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userRole');
-    setIsModalOpen(true); // Mostrar el modal cuando se cierre la sesión
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false); // Función para cerrar el modal
-    navigate('/'); // Redirigir al usuario después de cerrar el modal
+    localStorage.removeItem('userEmail'); 
+    localStorage.removeItem('userDocument'); 
+    alert("Sesión cerrada exitosamente");
+    navigate('/');
   };
 
   return (
@@ -69,9 +70,13 @@ const Navbar = () => {
               <button className="navButton" onClick={() => handleNavigation('/statistics')}>
                 Estadísticas
               </button>
-              <button className="navButton" onClick={() => handleNavigation('/reports')}>
-                Reportes
+              <button className="navButton" onClick={() => handleNavigation('/schedule')}>
+                Cronograma
               </button>
+              <button className="navButton" onClick={() => handleNavigation('/waste')}>
+                Registro de desechos
+              </button>
+              
             </>
           )}
 
@@ -83,9 +88,8 @@ const Navbar = () => {
               <button className="navButton" onClick={() => handleNavigation('/statistics')}>
                 Estadísticas
               </button>
-              <button className="navButton" onClick={() => handleNavigation('/reports')}>
-                Reportes
-              </button>
+             
+
             </>
           )}
 
@@ -117,7 +121,7 @@ const Navbar = () => {
               <button className="menuButton" onClick={() => handleNavigation('/Profile')}>
                 Perfil
               </button>
-              <button className="menuButton" onClick={() => handleNavigation('/settings')}>
+              <button className="menuButton" onClick={() => handleNavigation(`/settings/${userDocument}`)}>
                 Configuración
               </button>
               <button className="menuButton" onClick={handleLogout}>
@@ -127,16 +131,6 @@ const Navbar = () => {
           )}
         </div>
       </div>
-
-      {/* Modal */}
-      {isModalOpen && (
-        <div id="myModal" className="modal">
-          <div className="modal-content">
-            <p>Sesión cerrada exitosamente.</p>
-            <button className="close-modal-btn" onClick={closeModal}>Aceptar</button>
-          </div>
-        </div>
-      )}
     </header>
   );
 };

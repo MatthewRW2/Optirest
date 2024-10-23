@@ -35,7 +35,7 @@ const UserEdit = () => {
 
     Axios.get('http://localhost:3001/tipos_documentos')
       .then((response) => {
-        const tDocumento = response.data.map((tipoDocumento) => tipoDocumento.TipoDocumento);
+        const tDocumento = response.data.map((tipoDocumento ) => tipoDocumento.tipoDocumento);
         setDocumentosDisponibles(tDocumento);
       })
       .catch((error) => {

@@ -53,6 +53,102 @@ exports.getPerfil = (req, res) => {
     });
 };
 
+exports.getPerfilE = (req, res) => {
+    const { nDocumento } = req.params; // Obtenemos nDocumento de los parámetros
+    console.log('Número de documento recibido:', nDocumento);
+
+    // Consulta SQL para obtener el usuario específico
+    db.query('SELECT nDocumento, Nombres, Apellidos, tipoDocumento, Rol, correoElectronico FROM usuario WHERE nDocumento = ?', [nDocumento], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error en el servidor' });
+        }
+
+        console.log('Resultados de la consulta:', results);
+
+        if (results.length > 0) {
+            res.json(results[0]); // Devuelve el primer resultado
+        } else {
+            res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+    });
+};
+
+exports.editProfile = (req, res) => {
+    const { nDocumento } = req.params;
+    const { nombres, apellidos, correo, tipoDocumento, contrasena } = req.body;
+
+    // Si la contraseña está presente, la hasheamos
+    const hashedPasswordPromise = contrasena ? 
+        new Promise((resolve, reject) => {
+            bcrypt.hash(contrasena, 10, (err, hash) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(hash);
+            });
+        }) : 
+        Promise.resolve(null); // Si no hay contraseña, resolvemos con null
+
+    // Actualizamos el perfil
+    hashedPasswordPromise
+        .then(hashedPassword => {
+            // Preparamos los valores para la consulta
+            const values = [nombres, apellidos, correo, tipoDocumento, hashedPassword, nDocumento];
+
+            // Si no hay contraseña, no la incluimos en la consulta
+            const query = `
+                UPDATE usuario 
+                SET Nombres = ?, Apellidos = ?, correoElectronico = ?, tipoDocumento = ?
+                ${hashedPassword ? ', Contraseña = ?' : ''}
+                WHERE NDocumento = ?
+            `;
+
+            // Filtramos los valores para evitar que el hash nulo se pase a la consulta
+            const filteredValues = hashedPassword ? [...values] : values.slice(0, -1).concat(nDocumento);
+
+            db.query(query, filteredValues, (err, result) => {
+                if (err) {
+                    res.status(500).send("Error al actualizar el usuario");
+                } else {
+                    res.send("Usuario actualizado exitosamente");
+                }
+            });
+        })
+        .catch(err => {
+            res.status(500).send("Error al hashear la contraseña");
+        });
+};
+
+exports.verifyPassword = (req, res) => {
+    const { nDocumento } = req.params;
+    const { contrasenaActual } = req.body;
+
+    db.query('SELECT Contraseña FROM usuario WHERE nDocumento = ?', [nDocumento], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error en el servidor' });
+        }
+
+        if (results.length > 0) {
+            const user = results[0];
+
+            // Compara la contraseña actual con la almacenada
+            bcrypt.compare(contrasenaActual, user.Contraseña, (err, match) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Error al verificar la contraseña' });
+                }
+
+                if (match) {
+                    res.json({ valid: true });
+                } else {
+                    res.json({ valid: false });
+                }
+            });
+        } else {
+            res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+    });
+};
+
 exports.deleteUser = (req, res) => {
     const { nDocumento } = req.params;
 

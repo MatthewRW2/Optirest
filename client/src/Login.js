@@ -24,9 +24,11 @@ function Login() {
           const token = response.data.token; // Asegúrate de que el token se envíe si lo usas
           const nombre = response.data.nombre; // Obtener el nombre del usuario
           const rol = response.data.rol; // Obtener el rol del usuario
+          const numeroDocumento = response.data.nDocumento; // Obtener el nDocumento del usuario
           localStorage.setItem('userRole', rol); // Guardar el rol en localStorage
-          localStorage.setItem('userEmail', CorreoElectronico);
+          localStorage.setItem('userEmail', CorreoElectronico); // Guardar el correo electrónico
           localStorage.setItem('authToken', token); // Guardar el token en localStorage
+          localStorage.setItem('userDocument', numeroDocumento); // Guardar el documento del usuario en localStorage
           setError('');
           
           // Mostrar el mensaje de alerta
@@ -37,8 +39,15 @@ function Login() {
           setError('Correo electrónico o contraseña incorrectos');
         }
       })
-      .catch(() => {
-        setError('Hubo un error en el inicio de sesión');
+      .catch((error) => {
+        if (error.response) {
+          // Capturamos el error del backend
+          setError(error.response.data.message || 'Hubo un error en el inicio de sesión');
+          console.log(Contrasena);
+        } else {
+          // Error de red u otro tipo de error
+          setError('Error de red o servidor, por favor intenta de nuevo más tarde');
+        }
       });
   };
 

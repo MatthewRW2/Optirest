@@ -7,13 +7,17 @@ import '../assets/css/Navbar.css';
 const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [userRole, setUserRole] = useState(null); // Nuevo estado para el rol del usuario
+  const [userRole, setUserRole] = useState(null);
+  const [userDocument, setUserDocument] = useState(null); // Corregido el uso de useState
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const role = localStorage.getItem('userRole'); // Obtener el rol del usuario almacenado en localStorage
-    setUserRole(role); // Establecer el rol del usuario en el estado
-  }, []); // Se ejecuta solo cuando el componente se monta
+    const role = localStorage.getItem('userRole');
+    setUserRole(role);
+    const document = localStorage.getItem('userDocument');
+    setUserDocument(document); // Se corrige el uso de setUserDocument
+  }, []);
 
   const toggleNav = () => {
     setNavOpen(!navOpen);
@@ -29,8 +33,10 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
-    localStorage.removeItem('userRole'); // Limpiar el rol del usuario
-    alert("Sesión cerrada exitosamente")
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userEmail'); 
+    localStorage.removeItem('userDocument'); 
+    alert("Sesión cerrada exitosamente");
     navigate('/');
   };
 
@@ -50,7 +56,6 @@ const Navbar = () => {
         </div>
 
         <nav className={`nav ${navOpen ? 'nav-open' : ''}`}>
-          {/* Mostrar botones según el rol */}
           {userRole === 'Administrador' && (
             <>
               <button className="navButton" onClick={() => handleNavigation('/menu-management')}>
@@ -113,7 +118,7 @@ const Navbar = () => {
               <button className="menuButton" onClick={() => handleNavigation('/Profile')}>
                 Perfil
               </button>
-              <button className="menuButton" onClick={() => handleNavigation('/settings')}>
+              <button className="menuButton" onClick={() => handleNavigation(`/settings/${userDocument}`)}>
                 Configuración
               </button>
               <button className="menuButton" onClick={handleLogout}>

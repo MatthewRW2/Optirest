@@ -37,8 +37,8 @@ function App() {
           <Route path="/ChangePassword" element={<ChangePassword />} />
           <Route path="/statistics" element={<ProtectedRoute allowedRoles={["Docente", "Administrador"]}><Statistics /></ProtectedRoute>} />
           <Route path="/reports" element={<ProtectedRoute allowedRoles={["Docente", "Administrador"]}><Reports /></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/settings/:nDocumento" element={<ProtectedRoute allowedRoles={["Docente", "Administrador","PersonalDeCocina","Inactivo"]}><Settings /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute allowedRoles={["Docente", "Administrador","PersonalDeCocina","Inactivo"]}><Profile /></ProtectedRoute>} />
           <Route path="/inventory" element={<ProtectedRoute allowedRoles={["PersonalDeCocina", "Administrador"]}><Inventory /></ProtectedRoute>} />
           <Route path="/userList" element={<ProtectedRoute allowedRoles={["Administrador"]}><UserList /></ProtectedRoute>} />
           <Route path="/UserEdit/:nDocumento" element={<ProtectedRoute allowedRoles={["Administrador"]}><UserEdit /></ProtectedRoute>}/>

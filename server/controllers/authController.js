@@ -51,8 +51,9 @@ exports.login = (req, res) => {
 
                 return res.json({
                     message: "Inicio de sesión exitoso",
-                    nombre: usuario.Nombres, // Asegúrate de que el campo sea correcto
-                    rol: usuario.Rol // Asegúrate de que el campo sea correcto
+                    nombre: usuario.Nombres,
+                    rol: usuario.Rol,
+                    nDocumento: usuario.nDocumento
                 });
             } else {
                 return res.status(401).json({ message: "Correo electrónico o contraseña incorrectos" });

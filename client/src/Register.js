@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import './assets/css/Styles.css';
 import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faUserPen, faAddressCard, faAddressBook, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faUserPen, faAddressCard, faAddressBook, faEnvelope, faEye, faEyeSlash  } from '@fortawesome/free-solid-svg-icons';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './assets/css/Styles.css';
 
 const Register = () => {
   const [Nombres, setNombres] = useState('');
@@ -15,7 +15,9 @@ const Register = () => {
   const [Contrasena, setContrasena] = useState('');
   const [ConfirmarContrasena, setConfirmarContrasena] = useState('');
   const [error, setError] = useState('');
-  const [showModal, setShowModal] = useState(false);  // Estado para el modal
+  const [showModal, setShowModal] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar contraseña
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Estado para mostrar/ocultar confirmar contraseña
   const navigate = useNavigate();
 
   const validarContrasena = (contrasena) => {
@@ -98,19 +100,20 @@ const Register = () => {
           </div>
           <div className="form-group">
             <FontAwesomeIcon icon={faAddressBook} fontSize={20} className='icons' />
-            <label className="l">*Tipo de Documento:</label>
-            <select
+            <label className="l">*Tipo de documento:</label>
+            <select 
               onChange={(event) => setTipoDocumento(event.target.value)}
               required
             >
-              <option value="">*Seleccione su tipo de documento</option>
-              <option value="CC">Cédula de Ciudadanía</option>
-              <option value="CE">Cédula de Extranjería</option>
+              <option value="">Seleccione...</option>
+              <option value="C.C.">Cédula de Ciudadanía</option>
+              <option value="C.E.">Cédula de Extranjería</option>
+              <option value="T.I.">Tarjeta de Identidad</option>
             </select>
           </div>
           <div className="form-group">
             <FontAwesomeIcon icon={faAddressCard} fontSize={20} className='icons' />
-            <label className="l">*N° de Documento:</label>
+            <label className="l">*Número de documento:</label>
             <input
               type="text"
               onChange={(event) => setNumeroDocumento(event.target.value)}
@@ -118,45 +121,61 @@ const Register = () => {
               required
             />
           </div>
-          <div className="form-group">
-            <FontAwesomeIcon icon={faLock} fontSize={20} className='icons'></FontAwesomeIcon>
+          <div className="form-group password-group">
+            <FontAwesomeIcon icon={faLock} fontSize={20} className='icons' />
             <label className="l">*Contraseña:</label>
-            <input
-              type="password"
-              onChange={(event) => setContrasena(event.target.value)}
-              placeholder="Ingrese su contraseña"
-              required
-            />
+            <div className="password-container">
+              <input
+                type={showPassword ? "text" : "password"} // Alterna entre texto y contraseña
+                onChange={(event) => setContrasena(event.target.value)}
+                placeholder="Ingrese su contraseña"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)} // Cambia el estado al hacer clic
+                className="toggle-button"
+              >
+                <FontAwesomeIcon fontSize={20} icon={showPassword ? faEye : faEyeSlash} />
+              </button>
+            </div>
           </div>
-          <div className="form-group">
-            <FontAwesomeIcon icon={faLock} fontSize={20} className='icons'></FontAwesomeIcon>
-            <label className="l">*Confirmar contraseña:</label>
-            <input
-              type="password"
-              onChange={(event) => setConfirmarContrasena(event.target.value)}
-              placeholder="Confirme su contraseña"
-              required
-            />
+          <div className="form-group password-group">
+            <FontAwesomeIcon icon={faLock} fontSize={20} className='icons' />
+            <label className="l">*Confirmar Contraseña:</label>
+            <div className="password-container">
+              <input
+                type={showConfirmPassword ? "text" : "password"} // Alterna entre texto y contraseña
+                onChange={(event) => setConfirmarContrasena(event.target.value)}
+                placeholder="Confirme su contraseña"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Cambia el estado al hacer clic
+                className="toggle-button"
+              >
+                <FontAwesomeIcon fontSize={20} icon={showConfirmPassword ? faEye : faEyeSlash} />
+              </button>
+            </div>
           </div>
-
-          {error && <p style={{ color: 'red', marginBottom: '15px'}}>{error}</p>}
-
-          <button className='form-button' type="submit">Registrarse</button>
-          <div className="links">
-            <a href="/">¿Ya tienes cuenta? Inicia sesión</a>
-          </div>
+          {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
+          <button className="form-button" type="submit">Registrar</button>
         </form>
+        <div className="links">
+            <a href="/">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
       </div>
 
-      {/* Modal Personalizado */}
+      {/* Modal de éxito */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h2>¡Registro Exitoso!</h2>
-            <p>Tu cuenta ha sido creada correctamente, ya puedes iniciar sesión.</p>
+            <h2>Registro exitoso</h2>
+            <p>Su cuenta ha sido creada con éxito.</p>
             <button onClick={() => {
               setShowModal(false);
-              navigate('/');  // Redirige al login u otra pantalla
+              navigate('/');
             }}>Aceptar</button>
           </div>
         </div>

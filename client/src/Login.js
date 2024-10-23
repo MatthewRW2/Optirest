@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './assets/css/Styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from './components/footer';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ function Login() {
   const [showModal, setShowModal] = useState(false);
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar contraseña
   const navigate = useNavigate();
 
   const handleLogin = (event) => {
@@ -34,12 +35,9 @@ function Login() {
           localStorage.setItem('userDocument', numeroDocumento);
 
           setError('');
-          
-          // Guardar el nombre y rol para mostrar en el modal
           setUserName(nombre);
           setUserRole(rol);
           setShowModal(true); // Mostrar el modal
-
         } else {
           setError('Correo electrónico o contraseña incorrectos');
         }
@@ -61,11 +59,7 @@ function Login() {
         <form onSubmit={handleLogin}>
           <div className="placeholder-container">
             <div className="form-group">
-              <FontAwesomeIcon
-                icon={faUser}
-                fontSize={20}
-                className="icons"
-              />
+              <FontAwesomeIcon icon={faUser} fontSize={20} className="icons" />
               <label htmlFor="username">Correo Electrónico:</label>
               <input
                 onChange={(event) => {
@@ -77,22 +71,27 @@ function Login() {
                 required
               />
             </div>
-            <div className="form-group">
-              <FontAwesomeIcon
-                icon={faLock}
-                fontSize={20}
-                className="icons"
-              />
+            <div className="form-group password-group">
+              <FontAwesomeIcon icon={faLock} fontSize={20} className="icons" />
               <label htmlFor="password">Contraseña:</label>
-              <input
-                onChange={(event) => {
-                  setContrasena(event.target.value);
-                }}
-                type="password"
-                id="password"
-                placeholder="Ingrese su contraseña"
-                required
-              />
+              <div className="password-container">
+                <input
+                  onChange={(event) => {
+                    setContrasena(event.target.value);
+                  }}
+                  type={showPassword ? "text" : "password"} // Alterna entre texto y contraseña
+                  id="password"
+                  placeholder="Ingrese su contraseña"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)} // Cambia el estado al hacer clic
+                  className="toggle-button"
+                >
+                  <FontAwesomeIcon fontSize={20} icon={showPassword ? faEye : faEyeSlash} />
+                </button>
+              </div>
             </div>
           </div>
           {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}

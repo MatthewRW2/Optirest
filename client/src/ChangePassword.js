@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './assets/css/Forms.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from './components/footer';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
-import './assets/css/Forms.css';
+import { faLock, faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 
 function ChangePassword() {
   const [email, setEmail] = useState('');
@@ -11,6 +11,8 @@ function ChangePassword() {
   const [confirmContra, setConfirmContra] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const validarContrasena = (contrasena) => {
     const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
@@ -80,25 +82,35 @@ const handleSubmit = async (e) => {
               <FontAwesomeIcon icon={faLock} fontSize={20} className='icons' />
               <label htmlFor="Contrasena">Nueva Contraseña:</label>
               <input
-                type="password"
-                id="Contrasena"
-                placeholder="Ingresa tu nueva contraseña"
-                value={Contrasena}
-                onChange={(e) => setContrasena(e.target.value)}
+                type={showNewPassword ? "text" : "password"} // Alterna entre texto y contraseña
+                onChange={(event) => setContrasena(event.target.value)}
+                placeholder="Ingrese su nueva contraseña"
                 required
               />
+              <button
+                type="button"
+                onClick={() => setShowNewPassword(!showNewPassword)} // Cambia el estado al hacer clic
+                className="toggle-button"
+              >
+                <FontAwesomeIcon fontSize={20} icon={showNewPassword ? faEye : faEyeSlash} />
+              </button>
             </div>
             <div className="form-group">
               <FontAwesomeIcon icon={faLock} fontSize={20} className='icons' />
               <label htmlFor="confirmContra">Confirma la contraseña:</label>
               <input
-                type="password"
-                id="confirmContra"
-                placeholder="Confirma tu contraseña"
-                value={confirmContra}
-                onChange={(e) => setConfirmContra(e.target.value)}
+                type={showConfirmPassword ? "text" : "password"} // Alterna entre texto y contraseña
+                onChange={(event) => setConfirmContra(event.target.value)}
+                placeholder="Confirme su nueva contraseña"
                 required
               />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Cambia el estado al hacer clic
+                className="toggle-button"
+              >
+                <FontAwesomeIcon fontSize={20} icon={showConfirmPassword ? faEye : faEyeSlash} />
+              </button>
             </div>
           </div>
           {error && <p className="error-message">{error}</p>}

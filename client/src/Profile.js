@@ -62,14 +62,18 @@ const Profile = () => {
           </div>
           <h1 className='profile-title'>Perfil del usuario</h1>
           {nombres && apellidos ? (
-            <div className="profile-info">
-              <p className='profile-items'><strong>Nombres:</strong> {nombres}</p>
-              <p className='profile-items'><strong>Apellidos:</strong> {apellidos}</p>
-              <p className='profile-items'><strong>Tipo de Documento:</strong> {tipoDocumento}</p>
-              <p className='profile-items'><strong>Número de Documento:</strong> {nDocumento}</p>
-              <p className='profile-items'><strong>Correo Electrónico:</strong> {correo}</p>
-              <p className='profile-items'><strong>Rol:</strong> {rol}</p>
-            </div>
+             <div className="profile-info">
+             <label><strong>Nombres:</strong></label>
+             <input type="text" value={nombres} readOnly className="special-input" />
+             <label><strong>Apellidos:</strong></label>
+             <input type="text" value={apellidos} readOnly className="special-input" />
+             <label><strong>Tipo de Documento:</strong></label>
+             <input type="text" value={tipoDocumento} readOnly className="special-input" />
+             <label><strong>Número de Documento:</strong></label>
+             <input type="text" value={nDocumento} readOnly className="special-input" />
+             <label><strong>Rol:</strong></label>
+             <input type="text" value={rol} readOnly className="special-input" />
+         </div>
           ) : (
             <p>Cargando datos del usuario...</p>
           )}

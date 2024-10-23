@@ -70,9 +70,7 @@ const Navbar = () => {
               <button className="navButton" onClick={() => handleNavigation('/statistics')}>
                 Estadísticas
               </button>
-              <button className="navButton" onClick={() => handleNavigation('/reports')}>
-                Reportes
-              </button>
+            
             </>
           )}
 
@@ -84,9 +82,8 @@ const Navbar = () => {
               <button className="navButton" onClick={() => handleNavigation('/statistics')}>
                 Estadísticas
               </button>
-              <button className="navButton" onClick={() => handleNavigation('/reports')}>
-                Reportes
-              </button>
+             
+
             </>
           )}
 

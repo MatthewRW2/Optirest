@@ -261,6 +261,7 @@ const Inventory = () => {
                           <td>{alimento.cantidadMinima}</td>
                           <td>{alimento.fecha}</td>
                           <td>
+                          <div className="action-buttons">
                             <button className="edit-btn-custom" onClick={() => openEditModal(alimento)}>Editar</button>
                             <button
                               className="delete-btn-custom"
@@ -268,6 +269,7 @@ const Inventory = () => {
                             >
                               Eliminar
                             </button>
+                            </div>
                           </td>
                         </tr>
                       ))

@@ -232,6 +232,8 @@ const MenuManagement = () => {
               value={menuDate} // Enlaza el valor con el estado
               onChange={(e) => setMenuDate(e.target.value)} // Actualiza el estado cuando cambia
             />
+            </div>
+             <div className="menu-management-group">
             <textarea
               placeholder="Ingrese una descripción (máximo 255 caracteres)"
               className="menu-management-input"

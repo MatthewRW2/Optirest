@@ -1284,13 +1284,13 @@ footer {
   font-size: 20px; /* Ajuste para un tamaño de texto razonable */
 }
 
-
-input {
+.special-input {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 18px;
   
 }
 
@@ -1302,7 +1302,7 @@ input {
   border-radius: 5px;
   cursor: pointer;
   font-size: 20px;
-  margin-top: 30px;
+  margin-top: 10px;
   width: 60%;
   height: 50px;
   display: block; /* Asegura que se comporte como un bloque */

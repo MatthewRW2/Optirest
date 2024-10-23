@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; // Asegúrate de importar useState y useEffect
+import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
-import Axios from 'axios';
 import './assets/css/Styles.css';
 
 const Profile = () => {
@@ -44,6 +44,10 @@ const Profile = () => {
             });
     }, []);
 
+    const handleNavigation = () => {
+        navigate(`/UserEdit/${numeroDocumento}`); 
+    };
+
     return (
         <div>
             <Navbar />
@@ -61,26 +65,26 @@ const Profile = () => {
                     {nombres && apellidos ? (
                         <div className="profile-info">
                             <label><strong>Nombres:</strong></label>
-                            <input type="text" value={nombres} readOnly />
+                            <input type="text" value={nombres} readOnly className="special-input" />
                             
                             <label><strong>Apellidos:</strong></label>
-                            <input type="text" value={apellidos} readOnly />
+                            <input type="text" value={apellidos} readOnly className="special-input" />
                             
                             <label><strong>Tipo de Documento:</strong></label>
-                            <input type="text" value={tipoDocumento} readOnly />
+                            <input type="text" value={tipoDocumento} readOnly className="special-input" />
                             
                             <label><strong>Número de Documento:</strong></label>
-                            <input type="text" value={numeroDocumento} readOnly />
+                            <input type="text" value={numeroDocumento} readOnly className="special-input" />
                             
                             <label><strong>Rol:</strong></label>
-                            <input type="text" value={rol} readOnly />
+                            <input type="text" value={rol} readOnly className="special-input" />
                         </div>
                     ) : (
                         <p>Cargando datos del usuario...</p>
                     )}
                     
                     <div className="profile-edit">
-                        <button className="edit-profile-btn" onClick={() => navigate('/settings')}>
+                        <button className="edit-profile-btn" onClick={handleNavigation}>
                             Editar Perfil
                         </button>
                     </div>

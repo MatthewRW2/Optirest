@@ -15,19 +15,14 @@ const Profile = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-
-    const handleNavigation = (path) => {
-        navigate(path);
-    };
-
+    // Obtener los datos del usuario
     useEffect(() => {
         const correoElectronico = localStorage.getItem('userEmail'); // Recupera el correo del localStorage
 
         if (!correoElectronico) {
             setError('El correo electrónico es requerido para acceder al perfil.');
-            return; // Detiene la ejecución si el correo no está disponible
+            return;
         }
-
 
         Axios.get(`http://localhost:3001/perfil`, { params: { correoElectronico } })
             .then((response) => {
@@ -39,7 +34,6 @@ const Profile = () => {
                     setNumeroDocumento(user.nDocumento || '');
                     setRol(user.Rol || '');
                     setCorreo(user.correoElectronico || '');
-
                 } else {
                     setError('No se encontraron datos para este usuario.');
                 }
@@ -52,40 +46,46 @@ const Profile = () => {
 
     return (
         <div>
-        <Navbar />
-          <div className="form-container-profile">
+            <Navbar />
+            <div className="form-container-profile">
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <div className="profile-content">
                     <div className="profile-logo">
-                    <img
-                        className="img-forms"
-                        src={require('./assets/img/logo2.png')}
-                        alt="Logo"
-                    />
+                        <img
+                            className="img-forms"
+                            src={require('./assets/img/logo2.png')}
+                            alt="Logo"
+                        />
                     </div>
-                    <h1 className='profile-title'>Perfil del usuario</h1>
-                  {nombres && apellidos ? (
-                    <div className="profile-info">
-                      <p className='profile-items'><strong>Nombres:</strong> {nombres}</p>
-                      <p className='profile-items'><strong>Apellidos:</strong> {apellidos}</p>
-                      <p className='profile-items'><strong>Nombre completo:</strong> {nombres} {apellidos}</p>
-                      <p className='profile-items'><strong>Tipo de Documento:</strong> {tipoDocumento}</p>
-                      <p className='profile-items'><strong>Número de Documento:</strong> {numeroDocumento}</p>
-                      <p className='profile-items'><strong>Correo Electrónico:</strong> {correo}</p>
-                      <p className='profile-items'><strong>Rol:</strong> {rol}</p>
+                    <h1 className='profile-title'>Mi Perfil</h1>
+                    {nombres && apellidos ? (
+                        <div className="profile-info">
+                            <label><strong>Nombres:</strong></label>
+                            <input type="text" value={nombres} readOnly />
+                            
+                            <label><strong>Apellidos:</strong></label>
+                            <input type="text" value={apellidos} readOnly />
+                            
+                            <label><strong>Tipo de Documento:</strong></label>
+                            <input type="text" value={tipoDocumento} readOnly />
+                            
+                            <label><strong>Número de Documento:</strong></label>
+                            <input type="text" value={numeroDocumento} readOnly />
+                            
+                            <label><strong>Rol:</strong></label>
+                            <input type="text" value={rol} readOnly />
+                        </div>
+                    ) : (
+                        <p>Cargando datos del usuario...</p>
+                    )}
+                    
+                    <div className="profile-edit">
+                        <button className="edit-profile-btn" onClick={() => navigate('/settings')}>
+                            Editar Perfil
+                        </button>
                     </div>
-                  ) : (
-                    <p>Cargando datos del usuario...</p>
-                  )}
-                  
-                  {/* Botón de Editar Perfil dentro del div alineado a la derecha */}
-                  <div className="profile-edit">
-                    <button className="edit-profile-btn" onClick={() => handleNavigation('/settings')}>
-                      Editar Perfil
-                    </button>
-                  </div>
                 </div>
-              </div>
+            </div>
             <Footer />
         </div>
     );

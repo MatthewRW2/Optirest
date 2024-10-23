@@ -65,9 +65,7 @@ const Navbar = () => {
               <button className="navButton" onClick={() => handleNavigation('/statistics')}>
                 Estadísticas
               </button>
-              <button className="navButton" onClick={() => handleNavigation('/reports')}>
-                Reportes
-              </button>
+            
             </>
           )}
 
@@ -79,9 +77,8 @@ const Navbar = () => {
               <button className="navButton" onClick={() => handleNavigation('/statistics')}>
                 Estadísticas
               </button>
-              <button className="navButton" onClick={() => handleNavigation('/reports')}>
-                Reportes
-              </button>
+             
+
             </>
           )}
 
@@ -112,9 +109,6 @@ const Navbar = () => {
             <div className="profileMenu">
               <button className="menuButton" onClick={() => handleNavigation('/Profile')}>
                 Perfil
-              </button>
-              <button className="menuButton" onClick={() => handleNavigation('/settings')}>
-                Configuración
               </button>
               <button className="menuButton" onClick={handleLogout}>
                 Cerrar sesión

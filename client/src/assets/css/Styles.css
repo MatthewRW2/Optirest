@@ -462,68 +462,99 @@ input::placeholder {
   
   /* --- Cronograma Styles --- */
 
-.cronograma-page-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  .cronograma-page-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #D9D9D9;
+    font-weight: bold;
+  }
+  
+  .cronograma-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    width: 90%;
+    margin: 65px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cronograma-title {
+    font-size: 25px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .cronograma-table {
+    width: 90%;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    margin: 10px auto;
+    
+  }
+  
+  .cronograma-table th,
+  .cronograma-table td {
+    padding: 15px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    
+  }
+  
+ 
+  .cronograma-table th {
+    background-color: #f2f2f2;
+  font-size: 17px; /* Aumentar el tamaño de la fuente */
+  border-bottom: 2px solid #ccc;
+  font-weight: bold;
+  box-shadow: 0 3px 0px rgba(0, 0, 0, 0.1); /* Añadir sombra */
 }
 
-.cronograma-content-wrap {
-  flex: 1;
-}
-
-.cronograma-cronograma-container {
-  width: 80%;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.cronograma-cronograma-container h1 {
-  font-size: 2em;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.cronograma-cronograma-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 0 auto;
-}
-
-.cronograma-cronograma-table th, 
-.cronograma-cronograma-table td {
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.cronograma-cronograma-table thead {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.cronograma-cronograma-table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.cronograma-cronograma-table tr:hover {
-  background-color: #ddd;
-}
-
-.cronograma-cronograma-table th {
-  background-color: #007CFF;
-  color: white;
-}
-
-.cronograma-cronograma-table td {
-  color: #555;
-  font-size: 1em;
-  font-weight: 400;
-}
+  
+  .cronograma-table td {
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .cronograma-table tr {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cronograma-table tr:hover {
+    background-color:#ccc;
+  }
+  
+  .cronograma-table tr td {
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .cronograma-table th {
+    border-left: none;
+    border-right: none;
+  }
+  
+  .cronograma-table td:last-child,
+  .cronograma-table th:last-child {
+    border-right: none;
+  }
+  
+  .cronograma-table td:first-child,
+  .cronograma-table th:first-child {
+    border-left: none;
+  }
+  .buttons-container-cro{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 20px;
+  }
+ 
+  
 
 /* --- Inventory Page Styles --- */
 .main-content {
@@ -577,6 +608,8 @@ input::placeholder {
   padding: 5px 10px; 
   font-size: 14px;  
   color: white;
+  width: 35%;
+  height:35px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -640,6 +673,7 @@ input::placeholder {
 .menu-table-unique-custom th {
   background-color: #007CFF;
   color: white;
+  text-align: center;
 }
 
 .menu-table-unique-custom td {
@@ -808,6 +842,7 @@ input::placeholder {
 
 .action-buttons {
   display: flex;
+  gap: 5px;
   justify-content: space-evenly;
   align-items: center;
 }
@@ -968,6 +1003,7 @@ input::placeholder {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  
   transition: background-color 0.3s ease;
 }
 
@@ -995,6 +1031,7 @@ input::placeholder {
   width: 80%;
   margin: 0 auto;
   padding: 20px;
+  background-color: #f2f2f2;
 }
 
 .statistics-container h2 {
@@ -1196,38 +1233,65 @@ footer {
 /*fin de estilos para waste*/
 
 .form-container-profile {
-  max-width: 800px;
+  width: 35%; /* Ajusta el ancho para que sea más pequeño */
   margin: 0 auto;
   padding: 20px;
-  text-align: center; /* Centra el texto dentro del contenedor */
-  margin-bottom: 11.8%;
+  justify-content: center;
+  text-align: center;
+  background-color: #f9f9f9; /* Fondo ligeramente gris */
+  border-radius: 10px; /* Bordes redondeados */
+  margin-top: 50px; /* Añade espacio entre el contenedor y el navbar */
+  margin-bottom: 50px; /* Ajuste para evitar el espacio vacío debajo */
 }
 
 .profile-logo {
-  margin-top: 15px;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  margin-bottom: 20px;
+}
+
+.profile-logo img {
+  width: 200px; /* Tamaño del logo */
+  display: block;
+  margin: 0 auto; /* Asegura que la imagen esté centrada */
 }
 
 .profile-content {
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 95%; /* Ajuste para que el contenido no sea tan amplio */
+  margin: 0 auto; /* Elimina margen innecesario */
+  text-align: left; /* Cambia el alineamiento del texto a la izquierda */
 }
 
 .profile-title {
-  font-size: 40px;
+  font-size: 30px; /* Tamaño de la fuente */
   font-weight: bold;
-  margin-top: -30px;
-  margin-bottom: 10px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center; /* Centra solo el título */
 }
 
-.profile-info, .profile-items {
-  text-align: center; /* Alinea el texto a la izquierda dentro de la información */
+.profile-items {
   margin-top: 15px;
+  font-size: 30px; /* Ajuste para un tamaño de texto razonable */
 }
 
-.profile-edit {
-  margin-top: 50px; /* Espaciado entre la información y el botón */
+.profile-info {
+  margin-top: 15px;
+  font-size: 20px; /* Ajuste para un tamaño de texto razonable */
+}
+
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  
 }
 
 .edit-profile-btn {
@@ -1237,9 +1301,24 @@ footer {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
+  margin-top: 30px;
+  width: 60%;
+  height: 50px;
+  display: block; /* Asegura que se comporte como un bloque */
+  margin: 30px auto; /* Centra el botón horizontalmente */
 }
 
 .edit-profile-btn:hover {
   background-color: #0056b3;
+}
+
+/* Ajustes del footer */
+footer {
+  margin-top: 20px; /* Asegura que el footer no esté pegado al contenido */
+  padding: 10px 0;
+  text-align: center;
+  background-color: #f9f9f9;
+  position: relative; /* Cambia si el footer debe estar siempre visible */
+  width: 100%;
 }

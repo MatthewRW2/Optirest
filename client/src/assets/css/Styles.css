@@ -1309,4 +1309,24 @@ footer {
   background-color: #0056b3;
 }
 
+.password-group {
+  position: relative; /* Para posicionar el botón de alternar visibilidad */
+}
 
+.password-container {
+  display: flex; /* Para alinear el input y el botón */
+  align-items: center; /* Centrar verticalmente */
+}
+
+.password-container input {
+  flex: 1; /* Para que el input ocupe el espacio restante */
+  padding-right: 40px; /* Espacio para el botón */
+}
+
+.toggle-button {
+  position: absolute; /* Para posicionar el botón dentro del input */
+  right: 5px; /* Espacio desde el lado derecho */
+  border: none; /* Sin borde */
+  background: transparent; /* Fondo transparente */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+}

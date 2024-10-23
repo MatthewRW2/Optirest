@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Footer from './components/footer';
 import Navbar from './components/navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faAddressCard, faAddressBook, faPeopleGroup, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faAddressCard, faAddressBook, faPeopleGroup, faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './assets/css/Styles.css';
 
 const Settings = () => {
@@ -23,10 +23,15 @@ const Settings = () => {
   const { nDocumento } = useParams();  // Número de documento de la URL
   const navigate = useNavigate();
 
+  // Estado para controlar la visibilidad de las contraseñas
+  const [showContrasenaActual, setShowContrasenaActual] = useState(false);
+  const [showContrasena, setShowContrasena] = useState(false);
+  const [showConfirmarContrasena, setShowConfirmarContrasena] = useState(false);
+
   // Cargar datos del usuario y opciones disponibles al montar el componente
   useEffect(() => {
     console.log(`Cargando datos del usuario con documento: ${nDocumento}`);
-    
+
     // Cargar información del perfil del usuario
     if (nDocumento) {
       Axios.get(`http://localhost:3001/perfilE/${nDocumento}`)
@@ -105,7 +110,7 @@ const Settings = () => {
             .then(() => {
               alert('Perfil actualizado exitosamente');
               navigate('/profile');
-              console.log(contrasena)
+              console.log(contrasena);
             })
             .catch((error) => {
               console.error('Hubo un error al actualizar el perfil:', error);
@@ -130,7 +135,7 @@ const Settings = () => {
           alt="Logo"
         />
         <h2 className='title-form'>Editar Perfil</h2>
-        
+
         <form onSubmit={handleSubmit}>
           {/* Campo de Nombres */}
           <div className="form-group">
@@ -216,39 +221,54 @@ const Settings = () => {
           </div>
 
           {/* Campo de Contraseña Actual */}
-          <div className="form-group">
+          <div className="form-group password-group">
             <FontAwesomeIcon icon={faLock} fontSize={20} className='icons' />
             <label>Contraseña Actual:</label>
-            <input
-              type="password"
-              value={contrasenaActual}
-              onChange={(e) => setContrasenaActual(e.target.value)}
-              required
-            />
+            <div className="password-container">
+              <input
+                type={showContrasenaActual ? "text" : "password"}
+                value={contrasenaActual}
+                onChange={(e) => setContrasenaActual(e.target.value)}
+                required
+              />
+              <button type="button" onClick={() => setShowContrasenaActual(!showContrasenaActual)} className="toggle-button">
+                <FontAwesomeIcon fontSize={20} icon={showContrasenaActual ? faEye : faEyeSlash} />
+              </button>
+            </div>
           </div>
 
           {/* Campo de Contraseña Nueva */}
-          <div className="form-group">
+          <div className="form-group password-group">
             <FontAwesomeIcon icon={faLock} fontSize={20} className='icons' />
             <label>Contraseña Nueva:</label>
-            <input
-              type="password"
-              value={contrasena}
-              onChange={(e) => setContrasena(e.target.value)}
-              required
-            />
+            <div className="password-container">
+              <input
+                type={showContrasena ? "text" : "password"}
+                value={contrasena}
+                onChange={(e) => setContrasena(e.target.value)}
+                required
+              />
+              <button type="button" onClick={() => setShowContrasena(!showContrasena)} className="toggle-button">
+                <FontAwesomeIcon fontSize={20} icon={showContrasena ? faEye : faEyeSlash} />
+              </button>
+            </div>
           </div>
 
           {/* Campo de Confirmar Contraseña Nueva */}
-          <div className="form-group">
+          <div className="form-group password-group">
             <FontAwesomeIcon icon={faLock} fontSize={20} className='icons' />
             <label>Confirmar Contraseña Nueva:</label>
-            <input
-              type="password"
-              value={confirmarContrasena}
-              onChange={(e) => setConfirmarContrasena(e.target.value)}
-              required
-            />
+            <div className="password-container">
+              <input
+                type={showConfirmarContrasena ? "text" : "password"}
+                value={confirmarContrasena}
+                onChange={(e) => setConfirmarContrasena(e.target.value)}
+                required
+              />
+              <button type="button" onClick={() => setShowConfirmarContrasena(!showConfirmarContrasena)} className="toggle-button">
+                <FontAwesomeIcon fontSize={20} icon={showConfirmarContrasena ? faEye : faEyeSlash} />
+              </button>
+            </div>
           </div>
 
           {error && <p className="error">{error}</p>}  {/* Mostrar errores si los hay */}

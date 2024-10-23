@@ -10,6 +10,9 @@ function Login() {
   const [CorreoElectronico, setCorreoElectronico] = useState('');
   const [Contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userRole, setUserRole] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = (event) => {
@@ -21,33 +24,25 @@ function Login() {
     })
       .then((response) => {
         if (response.data.message === "Inicio de sesión exitoso") {
-          const token = response.data.token; // Asegúrate de que el token se envíe si lo usas
-          const nombre = response.data.nombre; // Obtener el nombre del usuario
-          const rol = response.data.rol; // Obtener el rol del usuario
-          const numeroDocumento = response.data.nDocumento; // Obtener el nDocumento del usuario
-          localStorage.setItem('userRole', rol); // Guardar el rol en localStorage
-          localStorage.setItem('userEmail', CorreoElectronico); // Guardar el correo electrónico
-          localStorage.setItem('authToken', token); // Guardar el token en localStorage
-          localStorage.setItem('userDocument', numeroDocumento); // Guardar el documento del usuario en localStorage
+          const token = response.data.token;
+          const nombre = response.data.nombre;
+          const rol = response.data.rol;
+          localStorage.setItem('userRole', rol);
+          localStorage.setItem('userEmail', CorreoElectronico);
+          localStorage.setItem('authToken', token);
           setError('');
           
-          // Mostrar el mensaje de alerta
-          alert(`Inicio de sesión exitoso. Bienvenido ${nombre}, su rol es: ${rol}`);
-          
-          navigate('/home');
+          // Guardar el nombre y rol para mostrar en el modal
+          setUserName(nombre);
+          setUserRole(rol);
+          setShowModal(true); // Mostrar el modal
+
         } else {
           setError('Correo electrónico o contraseña incorrectos');
         }
       })
-      .catch((error) => {
-        if (error.response) {
-          // Capturamos el error del backend
-          setError(error.response.data.message || 'Hubo un error en el inicio de sesión');
-          console.log(Contrasena);
-        } else {
-          // Error de red u otro tipo de error
-          setError('Error de red o servidor, por favor intenta de nuevo más tarde');
-        }
+      .catch(() => {
+        setError('Hubo un error en el inicio de sesión');
       });
   };
 
@@ -108,6 +103,21 @@ function Login() {
           <a href="/ForgotYourPassword">¿Olvidaste tu contraseña?</a>
         </div>
       </div>
+      
+      {/* Modal Personalizado */}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Inicio de sesión exitoso</h2>
+            <p>Bienvenido {userName}, su rol es: {userRole}</p>
+            <button onClick={() => {
+              setShowModal(false);
+              navigate('/home');
+            }}>Aceptar</button>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );

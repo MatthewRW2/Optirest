@@ -15,6 +15,7 @@ const Register = () => {
   const [Contrasena, setContrasena] = useState('');
   const [ConfirmarContrasena, setConfirmarContrasena] = useState('');
   const [error, setError] = useState('');
+  const [showModal, setShowModal] = useState(false);  // Estado para el modal
   const navigate = useNavigate();
 
   const validarContrasena = (contrasena) => {
@@ -25,7 +26,7 @@ const Register = () => {
   const add = (event) => {
     event.preventDefault();
 
-    if (NumeroDocumento.length !== 8 && NumeroDocumento.length !== 10){
+    if (NumeroDocumento.length !== 8 && NumeroDocumento.length !== 10) {
       setError('Ingrese un número de documento válido');
       return;
     }
@@ -48,9 +49,8 @@ const Register = () => {
       numeroDocumento: NumeroDocumento,
       contrasena: Contrasena
     }).then(() => {
-      alert("¡Registro exitoso! Bienvenido, tu cuenta ha sido creada, ya puedes iniciar sesión");
       setError('');
-      navigate('/');
+      setShowModal(true); // Mostrar el modal al registrar correctamente
     }).catch(() => {
       setError('Hubo un error en el registro');
     });
@@ -147,6 +147,21 @@ const Register = () => {
           </div>
         </form>
       </div>
+
+      {/* Modal Personalizado */}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>¡Registro Exitoso!</h2>
+            <p>Tu cuenta ha sido creada correctamente, ya puedes iniciar sesión.</p>
+            <button onClick={() => {
+              setShowModal(false);
+              navigate('/');  // Redirige al login u otra pantalla
+            }}>Aceptar</button>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );

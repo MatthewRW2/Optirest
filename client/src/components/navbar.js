@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Navbar.css';
+import '../assets/css/Modal.css';
 
 const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);

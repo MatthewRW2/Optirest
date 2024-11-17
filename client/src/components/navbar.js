@@ -135,14 +135,16 @@ const Navbar = () => {
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
-        <div id="myModal" className="modal">
-          <div className="modal-content">
-            <p>Sesión cerrada exitosamente.</p>
-            <button className="close-modal-btn" onClick={closeModal}>Aceptar</button>
+        {isModalOpen && (
+          <div id="myModal" className="zork-modal-overlay">
+            <div className="zork-modal-content">
+              <p className="zork-parafo">Sesión cerrada exitosamente.</p>
+              <button className="zork-modal-close" onClick={closeModal}>
+                Aceptar
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </header>
   );
 };

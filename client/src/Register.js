@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './assets/css/Styles.css';
+import './assets/css/Modal.css'; 
 import Footer from './components/footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faUserPen, faAddressCard, faAddressBook, faEnvelope, faEye, faEyeSlash  } from '@fortawesome/free-solid-svg-icons';
@@ -169,14 +170,19 @@ const Register = () => {
 
       {/* Modal de éxito */}
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Registro exitoso</h2>
-            <p>Su cuenta ha sido creada con éxito.</p>
-            <button onClick={() => {
-              setShowModal(false);
-              navigate('/');
-            }}>Aceptar</button>
+        <div className="zork-modal-overlay">
+          <div className="zork-modal-content">
+            <h2 className="zork-modal-header">Registro exitoso</h2>
+            <p className="zork-parafo">Su cuenta ha sido creada con éxito.</p>
+            <button 
+              className="zork-modal-close"
+              onClick={() => {
+                setShowModal(false);
+                navigate('/');
+              }}
+            >
+              Aceptar
+            </button>
           </div>
         </div>
       )}

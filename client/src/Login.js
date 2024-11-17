@@ -106,20 +106,27 @@ function Login() {
         </div>
       </div>
       
-      {/* Modal Personalizado */}
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Inicio de sesión exitoso</h2>
-            <p>Bienvenido {userName}, su rol es: {userRole}</p>
-            <button onClick={() => {
-              setShowModal(false);
-              navigate('/home');
-            }}>Aceptar</button>
+        {/* Modal Personalizado */}
+        {showModal && (
+          <div className="zork-modal-overlay">
+            <div className="zork-modal-content">
+              <h2 className="zork-modal-header">Inicio de sesión exitoso</h2>
+              <p className="zork-parafo">
+                Bienvenido {userName}, su rol es: {userRole}
+              </p>
+              <button 
+                className="zork-modal-close"
+                onClick={() => {
+                  setShowModal(false);
+                  navigate('/home');
+                }}
+              >
+                Aceptar
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-
+        )}
+        
       <Footer />
     </div>
   );

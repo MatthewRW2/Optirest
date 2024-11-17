@@ -56,10 +56,11 @@ const MenuManagement = () => {
     setSelectedFoods({ ...selectedFoods, [category]: value });
   };
 
-  // Manejar el envío del formulario
+  const [errorMessage, setErrorMessage] = useState(''); // Nuevo estado para almacenar el mensaje de error
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Preparamos los datos a enviar
     const newMenu = {
       IdProteina: selectedFoods.protein,
@@ -72,7 +73,7 @@ const MenuManagement = () => {
       Fecha: menuDate,
       Descripcion: description
     };
-
+  
     try {
       // Realizamos la petición POST al backend para crear el menú
       const response = await fetch('http://localhost:3001/crear_menu', {
@@ -82,20 +83,42 @@ const MenuManagement = () => {
         },
         body: JSON.stringify(newMenu)
       });
-
+  
       if (!response.ok) {
-        throw new Error('Error al crear el menú');
+        const errorData = await response.json();
+  
+        // Verificamos si el error es por duplicidad de la fecha
+        if (errorData.message === 'Ya existe un menú para esta fecha') {
+          setErrorMessage('No se puede registrar más de un menú en la misma fecha.');
+        } else {
+          setErrorMessage('Error al crear el menú. Por favor, inténtelo de nuevo.');
+        }
+  
+        throw new Error(errorData.message || 'Error al crear el menú');
       }
-
+  
       // Menú creado exitosamente
       const result = await response.json();
       alert('Menú creado exitosamente: ' + result.menuId);
-
+  
+      // Reseteamos los estados del formulario
+      setSelectedFoods({
+        protein: '',
+        carbohydrate: '',
+        dairy: '',
+        fruit: '',
+        vegetable: '',
+        legume: '',
+        drink: ''
+      });
+      setMenuDate('');
+      setDescription('');
+      setErrorMessage('');
     } catch (error) {
       console.error('Error al crear el menú:', error);
-      alert('Error al crear el menú');
     }
-  }
+  };
+  
   const goToSchedule = () => {
     navigate('/schedule'); // Navega a la página del cronograma
     navigate('/schedule');
@@ -112,7 +135,12 @@ const MenuManagement = () => {
       <div className="menu-management-form-container">
         <h1 className="menu-management-title">Ingresar Menú</h1>
         <form className="menu-management-form" onSubmit={handleSubmit}>
-  
+        {errorMessage && (
+              <div className="menu-management-error">
+                <p>{errorMessage}</p>
+              </div>
+            )}
+
         {/* Dropdown de Proteínas */}
         <div className="menu-management-group">
           <select

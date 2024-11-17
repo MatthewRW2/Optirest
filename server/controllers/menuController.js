@@ -25,26 +25,38 @@ const createMenu = async (req, res) => {
     const { IdProteina, IdCarbohidrato, IdLacteo, IdFruta, IdVerdura, IdLegumbre, IdBebida, Fecha, Descripcion } = req.body;
 
     try {
-        // Consulta para insertar el nuevo menú
-        const query = `
-            INSERT INTO menu (IdProteina, IdCarbohidrato, IdLacteo, IdFruta, IdVerdura, IdLegumbre, IdBebida, Fecha, Descripcion)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `;
-
-        // Ejecutar la consulta
-        db.query(query, [IdProteina, IdCarbohidrato, IdLacteo, IdFruta, IdVerdura, IdLegumbre, IdBebida, Fecha, Descripcion], (error, results) => {
+        // Verificar si ya existe un menú en la misma fecha
+        const checkQuery = `SELECT * FROM menu WHERE Fecha = ?`;
+        db.query(checkQuery, [Fecha], (error, results) => {
             if (error) {
-                console.error('Error al crear el menú:', error.sqlMessage);  // Mostrar mensaje SQL específico
-                return res.status(500).json({ message: 'Error al crear el menú', error: error.sqlMessage });
+                console.error('Error al verificar la fecha del menú:', error.sqlMessage);
+                return res.status(500).json({ message: 'Error al verificar la fecha del menú', error: error.sqlMessage });
             }
-            res.status(201).json({ message: 'Menú creado exitosamente', menuId: results.insertId });
+
+            if (results.length > 0) {
+                // Si ya existe un menú para esta fecha
+                return res.status(400).json({ message: 'Ya existe un menú para esta fecha. Por favor, selecciona otra.' });
+            }
+
+            // Si no existe, se procede a crear el nuevo menú
+            const query = `
+                INSERT INTO menu (IdProteina, IdCarbohidrato, IdLacteo, IdFruta, IdVerdura, IdLegumbre, IdBebida, Fecha, Descripcion)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `;
+            db.query(query, [IdProteina, IdCarbohidrato, IdLacteo, IdFruta, IdVerdura, IdLegumbre, IdBebida, Fecha, Descripcion], (error, results) => {
+                if (error) {
+                    console.error('Error al crear el menú:', error.sqlMessage);
+                    return res.status(500).json({ message: 'Error al crear el menú', error: error.sqlMessage });
+                }
+                res.status(201).json({ message: 'Menú creado exitosamente', menuId: results.insertId });
+            });
         });
-        
     } catch (error) {
         console.error('Error al crear el menú:', error);
         res.status(500).json({ message: 'Error al crear el menú' });
     }
 };
+
 
 module.exports = {
     getMenuStatistics,

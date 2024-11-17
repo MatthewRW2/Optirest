@@ -7,6 +7,7 @@ const Cronograma = () => {
   const [cronograma, setCronograma] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(3); // Número de elementos por página
+  const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
 
   useEffect(() => {
     fetch('http://localhost:3001/cronograma')
@@ -19,11 +20,31 @@ const Cronograma = () => {
       .catch((error) => console.error("Error al obtener el cronograma:", error));
   }, []);
 
+  // Formateador de fechas
+  const formatDate = (date) => {
+    return new Intl.DateTimeFormat('es-ES').format(new Date(date));
+  };
+
+  // Filtra los datos del cronograma en función del término de búsqueda
+  const filteredCronograma = cronograma.filter((item) => {
+    const fechaFormateada = formatDate(item.Fecha); // Normaliza la fecha
+    return (
+      fechaFormateada.includes(searchTerm) || // Compara con el término de búsqueda
+      item.Proteina.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.Carbohidrato.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.Lacteo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.Fruta.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.Verdura.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.Legumbre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.Bebida.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
   // Cálculo de las páginas
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = cronograma.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(cronograma.length / itemsPerPage); // Cálculo total de páginas
+  const currentItems = filteredCronograma.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredCronograma.length / itemsPerPage);
 
   const nextPage = () => {
     if (currentPage < totalPages) {
@@ -37,13 +58,27 @@ const Cronograma = () => {
     }
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1); // Reiniciar a la primera página al realizar una búsqueda
+  };
+
   return (
     <div className="cronograma-page-container">
       <Navbar />
       <div className="cronograma-container">
         <h1 className="cronograma-title">Cronograma de Menús</h1>
         
-        {cronograma.length > 0 && (
+        {/* Barra de búsqueda */}
+        <input
+          type="text"
+          placeholder="Buscar por fecha o alimentos..."
+          className="search-input-custom"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+
+        {filteredCronograma.length > 0 ? (
           <table className="cronograma-table">
             <thead>
               <tr>
@@ -61,7 +96,7 @@ const Cronograma = () => {
             <tbody>
               {currentItems.map((item, index) => (
                 <tr key={index}>
-                  <td>{new Date(item.Fecha).toLocaleDateString()}</td>
+                  <td>{formatDate(item.Fecha)}</td>
                   <td>{item.Proteina}</td>
                   <td>{item.Carbohidrato}</td>
                   <td>{item.Lacteo}</td>
@@ -74,6 +109,8 @@ const Cronograma = () => {
               ))}
             </tbody>
           </table>
+        ) : (
+          <p>No se encontraron resultados para "{searchTerm}"</p>
         )}
 
         {/* Controles de navegación de páginas */}

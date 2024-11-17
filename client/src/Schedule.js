@@ -69,7 +69,7 @@ const Cronograma = () => {
       <div className="cronograma-container">
         <h1 className="cronograma-title">Cronograma de Menús</h1>
         
-        {/* Barra de búsqueda */}
+        {/* Barra de búsqueda que busca por alimento o fecha */}
         <input
           type="text"
           placeholder="Buscar por fecha o alimentos..."

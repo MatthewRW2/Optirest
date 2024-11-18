@@ -9,15 +9,19 @@ const Inventory = () => {
   const [searchTrigger, setSearchTrigger] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false); 
-  const [IdAlimento, setIdAlimento] = useState(''); 
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [IdAlimento, setIdAlimento] = useState('');
   const [alimento, setAlimento] = useState('');
   const [cantidadDisponible, setCantidadDisponible] = useState('');
   const [cantidadMinima, setCantidadMinima] = useState('');
-  const [fecha, setFecha] = useState(''); // Estado para la fecha
+  const [fecha, setFecha] = useState('');
   const [categoria, setCategoria] = useState('');
   const [categorias, setCategorias] = useState([]);
   const [nombreCategoria, setNombreCategoria] = useState('');
+  
+  // Paginación
+  const [currentPage, setCurrentPage] = useState(1);  // Página actual
+  const [itemsPerPage, setItemsPerPage] = useState(8); // Elementos por página
 
   useEffect(() => {
     fetch('http://localhost:3001/alimento')
@@ -37,7 +41,7 @@ const Inventory = () => {
   };
 
   const openCategoryModal = () => {
-    setIsCategoryModalOpen(true); 
+    setIsCategoryModalOpen(true);
   };
 
   const closeModal = () => {
@@ -45,7 +49,7 @@ const Inventory = () => {
   };
 
   const closeCategoryModal = () => {
-    setIsCategoryModalOpen(false); 
+    setIsCategoryModalOpen(false);
   };
 
   const openEditModal = (alimento) => {
@@ -71,7 +75,7 @@ const Inventory = () => {
       cantidadMinima,
       fecha,
     };
-  
+
     try {
       const response = await fetch(`http://localhost:3001/alimento/${IdAlimento}`, {
         method: 'PUT',
@@ -80,7 +84,7 @@ const Inventory = () => {
         },
         body: JSON.stringify(updatedAlimento),
       });
-  
+
       if (response.ok) {
         const updatedAlimentos = await fetch('http://localhost:3001/alimento')
           .then((res) => res.json());
@@ -109,92 +113,6 @@ const Inventory = () => {
       .catch((error) => console.error('Error al obtener categorías:', error));
   };
 
-  const handleSubmit = async () => {  
-    const nuevoAlimento = {
-      IdCategoria: categoria,
-      nombreAlimento: alimento,
-      cantidadDisponible,
-      cantidadMinima,
-      fecha,
-    };
-  
-    try {
-      const response = await fetch('http://localhost:3001/insertar_alimento', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(nuevoAlimento),
-      });
-  
-      if (response.ok) {
-        const updatedAlimentos = await fetch('http://localhost:3001/alimento')
-          .then((res) => res.json());
-        setAlimentos(updatedAlimentos);
-        alert('Alimento agregado correctamente.');
-        closeModal();
-      } else {
-        const errorText = await response.text();
-        alert(`Error al agregar el alimento: ${errorText}`);
-      }
-    } catch (error) {
-      console.error('Error al agregar alimento:', error);
-      alert('Hubo un error al intentar agregar el alimento.');
-    }
-  };
-  
-  const handleCategorySubmit = async () => {
-    const nuevaCategoria = {
-      IdCategoria: categorias.length + 1, 
-      nombreCategoria,
-    };
-
-    try {
-      const response = await fetch('http://localhost:3001/insertar_categoria', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(nuevaCategoria),
-      }); 
-
-      if (response.ok) {
-        const data = await response.json();
-        setCategorias([...categorias, data]);
-        alert('Categoría agregada correctamente.');
-        closeCategoryModal();
-      } else {
-        alert('Error al agregar la categoría.');
-      }
-    } catch (error) {
-      console.error('Error al agregar la categoría:', error);
-      alert('Hubo un error al intentar agregar la categoría.');
-    }
-  };
-
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar este alimento?');
-    if (confirmDelete) {
-      try {
-        const response = await fetch(`http://localhost:3001/alimento/${id}`, {
-          method: 'DELETE',
-        });
-  
-        if (response.ok) {
-          const updatedAlimentos = await fetch('http://localhost:3001/alimento')
-          .then((res) => res.json());
-        setAlimentos(updatedAlimentos);
-          alert('Alimento eliminado correctamente.');
-        } else {
-          alert('Error al eliminar el alimento.');
-        }
-      } catch (error) {
-        console.error('Error al eliminar el alimento:', error);
-        alert('Hubo un error al intentar eliminar el alimento.');
-      }
-    }
-  };
-  
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -207,60 +125,70 @@ const Inventory = () => {
     alimento.nombreAlimento.toLowerCase().includes(searchTrigger.toLowerCase())
   );
 
+  // Lógica de paginación
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredAlimentos.slice(indexOfFirstItem, indexOfLastItem);
 
-    return (
-      <div>
-        <Navbar className="navbar-custom" />
-        <div className="main-content">
-          <div className="inventory-container-custom">
-            <div className="menu-left-unique-custom">
-              <div className="inventory-search-custom">
-                <input
-                  type="text"
-                  placeholder="Buscar alimentos..."
-                  className="search-input-custom"
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                />
-                <button className="search-button-custom" onClick={handleSearchSubmit}>
-                  <i className="fas fa-search"></i> 
-                </button>
-                <button 
-                  className="action-button-custom action-button-insert" 
-                  onClick={openModal}
-                >
-                  Insertar Alimentos
-                </button>
-                <button
-                  className="action-button-custom action-button-category"
-                  onClick={openCategoryModal} 
-                >
-                  Crear Categoría
-                </button>
-              </div>
-              <div className="menu-left-container-unique-custom">
-                <h2 className="menu-heading-unique-custom">Inventario de alimentos</h2>
-                <table className="menu-table-unique-custom">
-                  <thead>
-                    <tr>
-                      <th>ALIMENTO</th>
-                      <th>CATEGORÍA</th>
-                      <th>CANTIDAD EXISTENTE</th>
-                      <th>CANTIDAD MÍNIMA</th>
-                      <th>FECHA</th>
-                      <th>ACCIONES</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredAlimentos.length > 0 ? (
-                      filteredAlimentos.map((alimento) => (
-                        <tr key={alimento.IdAlimento}>
-                          <td>{alimento.nombreAlimento}</td>
-                          <td>{alimento.IdCategoria}</td>
-                          <td>{alimento.cantidadDisponible}</td>
-                          <td>{alimento.cantidadMinima}</td>
-                          <td>{alimento.fecha}</td>
-                          <td>
+  const totalPages = Math.ceil(filteredAlimentos.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  return (
+    <div>
+      <Navbar className="navbar-custom" />
+      <div className="main-content">
+        <div className="inventory-container-custom">
+          <div className="menu-left-unique-custom">
+            <div className="inventory-search-custom">
+              <input
+                type="text"
+                placeholder="Buscar alimentos..."
+                className="search-input-custom"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <button className="search-button-custom" onClick={handleSearchSubmit}>
+                <i className="fas fa-search"></i>
+              </button>
+              <button
+                className="action-button-custom action-button-insert"
+                onClick={openModal}
+              >
+                Insertar Alimentos
+              </button>
+              <button
+                className="action-button-custom action-button-category"
+                onClick={openCategoryModal}
+              >
+                Crear Categoría
+              </button>
+            </div>
+            <div className="menu-left-container-unique-custom">
+              <h2 className="menu-heading-unique-custom">Inventario de alimentos</h2>
+              <table className="menu-table-unique-custom">
+                <thead>
+                  <tr>
+                    <th>ALIMENTO</th>
+                    <th>CATEGORÍA</th>
+                    <th>CANTIDAD EXISTENTE</th>
+                    <th>CANTIDAD MÍNIMA</th>
+                    <th>FECHA</th>
+                    <th>ACCIONES</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentItems.length > 0 ? (
+                    currentItems.map((alimento) => (
+                      <tr key={alimento.IdAlimento}>
+                        <td>{alimento.nombreAlimento}</td>
+                        <td>{alimento.IdCategoria}</td>
+                        <td>{alimento.cantidadDisponible}</td>
+                        <td>{alimento.cantidadMinima}</td>
+                        <td>{alimento.fecha}</td>
+                        <td>
                           <div className="action-buttons">
                             <button className="edit-btn-custom" onClick={() => openEditModal(alimento)}>Editar</button>
                             <button
@@ -269,27 +197,43 @@ const Inventory = () => {
                             >
                               Eliminar
                             </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="5">No hay alimentos disponibles</td>
+                          </div>
+                        </td>
                       </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5">No hay alimentos disponibles</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
 
-            <div>
-
-            </div>
+            {/* Paginación */}
+            <div className="buttons-container-cro">
+             <button
+             className="save-button-list"
+              onClick={() => handlePageChange(currentPage - 1)}
+             disabled={currentPage === 1}
+              >
+              Anterior
+              </button>
+             <span className="page-counter">
+               Página {currentPage} de {totalPages}
+              </span>
+            <button
+               className="delete-button-list"
+              onClick={() => handlePageChange(currentPage + 1)}
+             disabled={currentPage === totalPages}
+            >
+            Siguiente
+           </button>
+          </div>
           </div>
         </div>
-
-        <Footer className="footer-custom" />
+      </div>
+      <Footer className="footer-custom" />
 
   {/* Modal para Alimentos */}
   {isModalOpen && (

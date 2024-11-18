@@ -74,7 +74,7 @@ const UserEdit = () => {
 
   // Manejar la eliminación del usuario con confirmación
   const handleDelete = () => {
-    const confirmed = window.confirm('¿Estás seguro de que deseas eliminar este usuario?');
+    const confirmed = window.confirm('¿Estás seguro de que deseas inactivar su usuario?');
 
     if (confirmed) {
       Axios.delete(`http://localhost:3001/usuario/${nDocumento}`)

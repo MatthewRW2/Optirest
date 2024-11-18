@@ -28,7 +28,7 @@ const UserList = () => {
     };
 
     const handleDelete = (nDocumento) => {
-        const confirmed = window.confirm('¿Estás seguro de que deseas eliminar este usuario?');
+        const confirmed = window.confirm('¿Estás seguro de que deseas inactivar este usuario?');
     
         if (confirmed) {
             Axios.delete(`http://localhost:3001/usuario/${nDocumento}`)

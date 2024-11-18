@@ -630,6 +630,7 @@ input::placeholder {
 .main-content {
   padding: 20px;
   max-width: 1600px;
+  min-height: 88vh;
   margin: 0 auto;
 }
 

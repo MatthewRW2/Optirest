@@ -810,6 +810,10 @@ input::placeholder {
 .search-button-custom i {
   margin-right: 5px; 
 }
+.search-button-custom:hover {
+  background-color: #005BB5; 
+  transform: scale(1.05);
+}
 
 /* Estilos para el modal */
 .modal-overlay {

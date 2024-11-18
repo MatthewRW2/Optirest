@@ -693,6 +693,31 @@ input::placeholder {
   background-color: #DC3545; 
 }
 
+.action-button-custom:hover {
+  background-color: #005BB5; 
+  transform: scale(1.05); 
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.action-button-danger-custom:hover {
+  background-color: #C9302C; 
+  transform: scale(1.05); 
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-btn-custom:hover {
+  background-color: #E66A00; 
+  transform: scale(1.05); 
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-btn-custom:hover {
+  background-color: #C82333; 
+  transform: scale(1.05); 
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
 .category-buttons-container {
   display: flex;
   gap: 10px;

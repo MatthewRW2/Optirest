@@ -42,8 +42,25 @@ function Login() {
           setError('Correo electrónico o contraseña incorrectos');
         }
       })
-      .catch(() => {
-        setError('Hubo un error en el inicio de sesión');
+      .catch((error) => {
+        if (error.response) {
+            // Manejo de mensajes de error según el código de estado
+            switch (error.response.status) {
+                case 404:
+                    setError("El usuario no existe");
+                    break;
+                case 403:
+                    setError("El usuario está inactivo");
+                    break;
+                case 401:
+                    setError("Contraseña incorrecta");
+                    break;
+                default:
+                    setError("Hubo un error en el inicio de sesión");
+            }
+        } else {
+            setError("Hubo un error en el inicio de sesión");
+        }
       });
   };
 

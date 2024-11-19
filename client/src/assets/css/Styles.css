@@ -1324,11 +1324,17 @@ html, body {
 /*fin de estilos para waste*/
 
 .form-container-profile {
-  width: 35%; /* Ajusta el ancho para que sea más pequeño */
+  width: 50%; /* Ajusta el ancho para que sea más pequeño */
   margin: 0 auto;
   padding: 20px;
   text-align: center; /* Centra el texto dentro del contenedor */
   margin-bottom: 13.6%;
+}
+
+@media (max-width: 480px) {
+  .form-container-profile{
+    width: 100%;
+  }
 }
 
 .profile-logo {

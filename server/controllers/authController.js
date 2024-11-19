@@ -1,3 +1,5 @@
+
+
 const db = require('../config/db');
 const bcrypt = require('bcrypt');
 
@@ -32,23 +34,22 @@ exports.login = (req, res) => {
 
         // Verificar si hay resultados (usuario existe)
         if (results.length === 0) {
-            return res.status(404).json({ message: "El usuario no existe" }); // Usuario no encontrado
+            return res.status(404).json({ message: "El usuario no existe" }); 
         }
 
         const usuario = results[0];
 
         // Verificar si el usuario está activo
         if (usuario.activo === 0) {
-            return res.status(403).json({ message: "El usuario no existe" });
+            return res.status(403).json({ message: "El usuario está inactivo" });
         }
 
         bcrypt.compare(contrasena, usuario.Contraseña, (err, esIgual) => {
             if (err) {
                 return res.status(500).send("Error al autenticar usuario");
             }
-
+        
             if (esIgual) {
-
                 return res.json({
                     message: "Inicio de sesión exitoso",
                     nombre: usuario.Nombres,
@@ -56,7 +57,7 @@ exports.login = (req, res) => {
                     nDocumento: usuario.nDocumento
                 });
             } else {
-                return res.status(401).json({ message: "Correo electrónico o contraseña incorrectos" });
+                return res.status(401).json({ message: "Contraseña incorrecta" });
             }
         });
     });
@@ -119,4 +120,3 @@ exports.cambiarContra = (req, res) => {
         });
     });
 };
-

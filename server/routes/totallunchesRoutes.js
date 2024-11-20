@@ -1,8 +1,9 @@
 const express = require('express');
-const { almuerzos } = require('../controllers/totallunchesController');  // Asegúrate de que el nombre es correcto
+const { obtenerVistaAsistenciasYCronograma } = require('../controllers/totallunchesController');
 
 const router = express.Router();
 
-router.get('/almuerzo', almuerzos);  // Aquí también debe coincidir el nombre
+router.get('/vista-asistencias-cronograma', obtenerVistaAsistenciasYCronograma);
+router.get('/vista-asistencias-cronograma/:fecha', obtenerVistaAsistenciasYCronograma);
 
 module.exports = router;

@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import './assets/css/Styles.css';
-import almuerzo1 from './assets/img/almuerzo1.jpg';
-import almuerzo2 from './assets/img/almuerzo2.jpg';
-
 
 const Almuerzos = () => {
     const [fecha, setFecha] = useState('');
-    const [almuerzos, setAlmuerzos] = useState(null);
+    const [datosVista, setDatosVista] = useState([]);
     const [error, setError] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        fetch(`http://localhost:3001/almuerzo?fecha=${fecha}`)
+
+        const url = fecha
+            ? `http://localhost:3001/vista-asistencias-cronograma?fecha=${fecha}`
+            : `http://localhost:3001/vista-asistencias-cronograma`;
+
+        fetch(url)
             .then((res) => {
                 if (!res.ok) {
-                    throw new Error("No se encontraron registros para esa fecha");
+                    throw new Error("No se encontraron registros.");
                 }
                 return res.json();
             })
             .then((data) => {
-                setAlmuerzos(data[0]?.totalAsistencia || 0);
+                setDatosVista(data);
                 setError(null);
             })
             .catch((err) => {
                 setError(err.message);
-                setAlmuerzos(null);
+                setDatosVista([]);
             });
     };
 
@@ -36,34 +37,60 @@ const Almuerzos = () => {
             <Navbar />
             <div className="content-almuerzo">
                 <div className="form-container-almuerzo">
-                    <h1>Almuerzos Para Realizar</h1>
+                    <h1>Vista de Asistencias y Cronograma</h1>
                     <form onSubmit={handleSubmit} className="form-almuerzo">
                         <label>
-                            Ingrese la fecha:
+                            Ingrese la fecha (opcional):
                             <input
                                 type="date"
                                 value={fecha}
                                 onChange={(e) => setFecha(e.target.value)}
-                                required
                             />
                         </label>
                         <button type="submit">Consultar</button>
                     </form>
-
-                    {error && <p className="error-almuerzo">{error}</p>}
-                    {almuerzos !== null && (
-                        <div className="almuerzos-result-container">
-                            <h2>Almuerzos Registrados</h2>
-                            <p>Total: {almuerzos}</p>
-                        </div>
-                    )}
                 </div>
 
-                {/* Contenedor de las imágenes */}
-                <div className="image-container-almuerzo">
-                    <img src={almuerzo1} alt="Almuerzo 1" />
-                    <img src={almuerzo2} alt="Almuerzo 2" />
-                </div>
+                {error && <p className="error-almuerzo">{error}</p>}
+
+                {datosVista.length > 0 ? (
+                    <table className="cronograma-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha Asistencia</th>
+                                <th>Total Asistencias</th>
+                                <th>Fecha Cronograma</th>
+                                <th>Proteína</th>
+                                <th>Carbohidrato</th>
+                                <th>Lácteo</th>
+                                <th>Fruta</th>
+                                <th>Verdura</th>
+                                <th>Legumbre</th>
+                                <th>Bebida</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {datosVista.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.fecha_asistencia || 'N/A'}</td>
+                                    <td>{item.total_asistencias || 'N/A'}</td>
+                                    <td>{item.fecha_cronograma || 'N/A'}</td>
+                                    <td>{item.Proteina || 'N/A'}</td>
+                                    <td>{item.Carbohidrato || 'N/A'}</td>
+                                    <td>{item.Lacteo || 'N/A'}</td>
+                                    <td>{item.Fruta || 'N/A'}</td>
+                                    <td>{item.Verdura || 'N/A'}</td>
+                                    <td>{item.Legumbre || 'N/A'}</td>
+                                    <td>{item.Bebida || 'N/A'}</td>
+                                    <td>{item.DescripcionMenu || 'N/A'}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    !error && <p>No hay datos para mostrar.</p>
+                )}
             </div>
             <Footer />
         </div>

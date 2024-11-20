@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
-import './assets/css/Styles.css';
+import '../src/assets/css/Styles.css';
 
 const Almuerzos = () => {
     const [fecha, setFecha] = useState('');
@@ -92,7 +92,7 @@ const Almuerzos = () => {
                     !error && <p>No hay datos para mostrar.</p>
                 )}
             </div>
-            <Footer />
+            <Footer /> {/* Aseguramos que esté dentro del contenedor */}
         </div>
     );
 };

@@ -90,7 +90,7 @@ const handleSubmit = async (e) => {
               <button
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)} // Cambia el estado al hacer clic
-                className="toggle-button"
+                className="toggle-button-icon"
               >
                 <FontAwesomeIcon fontSize={20} icon={showNewPassword ? faEye : faEyeSlash} />
               </button>
@@ -107,7 +107,7 @@ const handleSubmit = async (e) => {
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Cambia el estado al hacer clic
-                className="toggle-button"
+                className="toggle-button-icon"
               >
                 <FontAwesomeIcon fontSize={20} icon={showConfirmPassword ? faEye : faEyeSlash} />
               </button>

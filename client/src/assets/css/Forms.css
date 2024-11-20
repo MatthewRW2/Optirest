@@ -206,3 +206,12 @@ input::placeholder {
     background: transparent; 
     cursor: pointer; 
   }
+
+  .toggle-button-icon {
+    position: absolute; 
+    right: 5px; 
+    margin-top: 15px;
+    border: none; 
+    background: transparent; 
+    cursor: pointer; 
+  }

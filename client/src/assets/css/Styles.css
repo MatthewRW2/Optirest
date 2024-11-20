@@ -1247,6 +1247,7 @@ input::placeholder {
 /* fin de los estilos de los alimentos a realizar*/
 
 /* WasteRegisterForm.css */
+
 html, body {
   height: 100%; 
   margin: 0; 
@@ -1286,33 +1287,54 @@ html, body {
   margin-bottom: 15px; 
 }
 
+.waste-form-label-container {
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 5px; 
+}
+
+.waste-form-group .fa-icon {
+  font-size: 20px; 
+  margin-right: 10px; 
+}
+
 .waste-form-group label {
   font-weight: bold; 
-  margin-right: 80%;
   font-size: 18px;
+}
+
+input,
+select,
+textarea {
+  width: 100%; 
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  font-size: 16px; 
+}
+
+.waste-textarea {
+  height: 80px; 
 }
 
 .waste-form-button {
   background-color: #0056b3; 
   color: white; 
-  padding: 10px 15px; 
+  padding: 15px 20px; 
+  font-size: 18px; 
+  font-weight: bold;
   border: none; 
-  border-radius: 5px; 
+  border-radius: 8px; 
   cursor: pointer; 
-  transition: background-color 0.3s; 
+  transition: background-color 0.3s, transform 0.2s; 
 }
 
 .waste-form-button:hover {
-  background-color: #0056b3; 
+  background-color: #003f7f; 
+  transform: scale(1.05); 
 }
 
-.waste-textarea {
-  width: 100%; 
-  height: 80px; 
-  padding: 10px; 
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-}
+/* Fin WasteRegisterForm.css */
 
 /* Footer */
 

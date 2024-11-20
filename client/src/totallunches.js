@@ -37,10 +37,10 @@ const Almuerzos = () => {
             <Navbar />
             <div className="content-almuerzo">
                 <div className="form-container-almuerzo">
-                    <h1>Vista de Asistencias y Cronograma</h1>
+                    <h1>Almuerzos por realizar</h1>
                     <form onSubmit={handleSubmit} className="form-almuerzo">
                         <label>
-                            Ingrese la fecha (opcional):
+                            Seleccione la fecha para consultar la cantidad de almuerzos :
                             <input
                                 type="date"
                                 value={fecha}
@@ -92,7 +92,7 @@ const Almuerzos = () => {
                     !error && <p>No hay datos para mostrar.</p>
                 )}
             </div>
-            <Footer /> {/* Aseguramos que esté dentro del contenedor */}
+            <Footer />
         </div>
     );
 };

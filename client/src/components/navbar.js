@@ -37,12 +37,12 @@ const Navbar = () => {
     localStorage.removeItem('userRole');
     localStorage.removeItem('userEmail'); 
     localStorage.removeItem('userDocument'); 
-    setIsModalOpen(true); // Mostrar el modal cuando se cierre la sesión
+    setIsModalOpen(true); 
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Función para cerrar el modal
-    navigate('/'); // Redirigir al usuario después de cerrar el modal
+    setIsModalOpen(false);
+    navigate('/');
   };
 
   return (
